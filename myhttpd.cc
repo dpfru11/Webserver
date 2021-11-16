@@ -1,6 +1,23 @@
 
 #include <pthread.h>
 
+void Server::run_thread() const {
+   while (1) {
+      // Accept request
+      Socket_tsock = _acceptor.accept_connection();
+      // Put socket in new ThreadParams struct
+      ThreadParams* threadParams= new ThreadParams;
+      threadParams->server = this;
+      threadParams->sock = std::move(sock);
+      // Create thread
+      pthread_t thrID;
+      pthread_attr_t attr;
+      pthread_attr_init(&attr);
+      pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+      pthread_create(&thrID, &attr, (void* (*)(void*) )dispatchThread, (void *) threadParams);
+   }
+}
+
 struct ThreadParams{
    const Server * server;
    Socket_t sock;
@@ -18,20 +35,5 @@ main(int argc, char** argv)
 
 }
 
-void Server::run_thread() const {
-   while (1) {
-      // Accept request
-      Socket_tsock = _acceptor.accept_connection();
-      // Put socket in new ThreadParams struct
-      ThreadParams* threadParams= new ThreadParams;
-      threadParams->server = this;
-      threadParams->sock = std::move(sock);
-      // Create thread
-      pthread_t thrID;
-      pthread_attr_t attr;
-      pthread_attr_init(&attr);
-      pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
-      pthread_create(&thrID, &attr, (void* (*)(void*) )dispatchThread, (void *) threadParams);
-   }
-}
+
 
