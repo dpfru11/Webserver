@@ -1,6 +1,14 @@
 
 #include <pthread.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
+
 
 void processRequest(int socket);
 
@@ -62,9 +70,8 @@ void processRequest(int socket) {
          break;
       } else{
          oldChar = newChar;
-         if (gotGet == 1) {
-            head[length-1] = newChar;
-         }
+         head[length-1] = newChar;
+         
          
       }
    }
