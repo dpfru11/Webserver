@@ -35,12 +35,3 @@ void Server::run_thread() const {
    }
 }
 
-void iterativeServer(int masterSocket) 
-{
-   while (1) {
-      int slaveSocket=accept(masterSocket,&sockInfo, &alen);
-      if (slaveSocket>= 0) {
-         dispatchHTTP(slaveSocket);
-      } 
-   } 
-}
