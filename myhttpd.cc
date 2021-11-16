@@ -7,7 +7,7 @@ const void Server::run_thread() {
       // Accept request
       socket_t sock = _acceptor.accept_connection();
       // Put socket in new ThreadParams struct
-      ThreadParams* threadParams= new ThreadParams;
+      ThreadParams * threadParams= new ThreadParams();
       threadParams->server = this;
       threadParams->sock = std::move(sock);
       // Create thread
