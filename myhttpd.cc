@@ -1,5 +1,6 @@
 
 #include <pthread.h>
+#include <stdio.h>
 
 void Server::run_thread() const {
    while (1) {
