@@ -5,7 +5,7 @@
 void Server::run_thread() const {
    while (1) {
       // Accept request
-      Socket_tsock = _acceptor.accept_connection();
+      Socket_t sock = _acceptor.accept_connection();
       // Put socket in new ThreadParams struct
       ThreadParams* threadParams= new ThreadParams;
       threadParams->server = this;
