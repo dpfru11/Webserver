@@ -2,7 +2,7 @@
 #include <pthread.h>
 #include <stdio.h>
 
-void Server::run_thread() const {
+const void Server::run_thread() {
    while (1) {
       // Accept request
       Socket_t sock = _acceptor.accept_connection();
