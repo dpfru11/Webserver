@@ -1,7 +1,6 @@
 
 #include <pthread.h>
 #include <stdio.h>
-#include <tcp.h>
 
 const void Server::run_thread() {
    while (1) {
