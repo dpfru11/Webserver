@@ -16,6 +16,10 @@ int QueueLength = 5;
 
 int main(int argc, char** argv)
 {
+   if (argc != 2) {
+      perror("Usage: Port");
+   }
+   
    int port = atoi( argv[1] );
    
    struct sockaddr_in serverIPAddress; 
