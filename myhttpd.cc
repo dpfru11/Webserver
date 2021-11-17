@@ -102,7 +102,7 @@ void processRequest(int socket) {
    if (strncmp(docpath, "/htdocs") == 0) {
       filepath = cwd+"http-root-dir/"+docpath
    } 
-   if (strlen(docpath == 1 && docpath[0] == '/')) {
+   if (strlen(docpath) == 1 && docpath[0] == '/')) {
       filepath = cwd+"http-root-dir/htdocs/index.html" 
    } else {
       filepath = cwd+"http-root-dir/htdocs"+docpath
