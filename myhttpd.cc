@@ -46,7 +46,7 @@ int main(int argc, char** argv)
 
    error = listen( masterSocket, QueueLength);
 
-   while(1){
+   while(1) {
       struct sockaddr_in clientIPAddress;
       int alen = sizeof( clientIPAddress );
       int slaveSocket = accept( masterSocket, (struct sockaddr *)&clientIPAddress,
@@ -70,7 +70,7 @@ void processRequest(int socket) {
   // Last character
    unsigned char lastChar = 0;
 
-   while((n = read(socket, &newChar, sizeof(newChar)) {
+   while(n = read(socket, &newChar, sizeof(newChar))) {
       length++;
       if(newChar == ' ') {
          if (gotGet == 0) {
@@ -81,9 +81,10 @@ void processRequest(int socket) {
          }
       } else if(newChar == '\n' && oldChar == '\r') {
          break;
-      } else{
+      } else {
          oldChar = newChar;
          head[length-1] = newChar;
-      }   }
+      } 
+   }
 }
 
