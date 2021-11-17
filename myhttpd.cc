@@ -95,11 +95,11 @@ void processRequest(int socket) {
    char cwd[256] = {0};
    char filepath[4000];
    cwd = getcwd(cwd);
-   if (strncmp(docpath, "/icons") == 0) {
+   if (strncmp(docpath, "/icons", 7) == 0) {
       filepath = cwd  +"http-root-dir/" +docpath;
    }
    
-   if (strncmp(docpath, "/htdocs") == 0) {
+   if (strncmp(docpath, "/htdocs", 8) == 0) {
       filepath = cwd+"http-root-dir/"+docpath
    } 
    if (strlen(docpath) == 1 && docpath[0] == '/')) {
