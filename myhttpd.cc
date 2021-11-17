@@ -92,8 +92,8 @@ void processRequest(int socket) {
       } 
    }
    
-   char * cwd = malloc(256);
-   char * filepath = malloc(4000);
+   char * cwd = (char *)malloc(256);
+   char * filepath = (char *)malloc(4000);
    cwd = getcwd(cwd);
    if (strncmp(docpath, "/icons", 7) == 0) {
       filepath = strcat(cwd, "http-root-dir/");
