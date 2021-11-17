@@ -79,12 +79,22 @@ void processRequest(int socket) {
             head[length-1]=0;
             strcpy(docpath, head);
          }
-      } else if(newChar == '\n' && oldChar == '\r') {
+      } else if(newChar == '\n' && lastChar == '\r') {
          break;
       } else {
-         oldChar = newChar;
+         lastChar = newChar;
          head[length-1] = newChar;
       } 
    }
+   char cwd[256] = {0};
+   cwd = getcwd(cwd);
+   if docpath begins with “/icons” make filepath
+   cwd+”http-root-dir/”+docpath
+   if docpath begins with “/htdocs” make filepath
+   cwd+”http-root-dir/”+docpath
+   else make filepath
+   cwd+”http-root-dir/htdocs”+docpath
+
+
 }
 
