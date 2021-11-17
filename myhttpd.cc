@@ -86,6 +86,7 @@ void processRequest(int socket) {
          head[length-1] = newChar;
       } 
    }
+   /*
    char cwd[256] = {0};
    cwd = getcwd(cwd);
    if docpath begins with “/icons” make filepath
@@ -94,7 +95,7 @@ void processRequest(int socket) {
    cwd+”http-root-dir/”+docpath
    else make filepath
    cwd+”http-root-dir/htdocs”+docpath
-
+   */
 
 }
 
