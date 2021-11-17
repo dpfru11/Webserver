@@ -97,15 +97,19 @@ void processRequest(int socket) {
    cwd = getcwd(cwd);
    if (strncmp(docpath, "/icons", 7) == 0) {
       filepath = cwd  +"http-root-dir/" +docpath;
+      filepath = strcat(cwd, "http-root-dir/");
+      filepath = strcat(filepath, docpath);
    }
    
    if (strncmp(docpath, "/htdocs", 8) == 0) {
-      filepath = cwd+"http-root-dir/"+docpath
+      filepath = strcat(cwd, "http-root-dir/");
+      filepath = strcat(filepath, docpath);
    } 
    if (strlen(docpath) == 1 && docpath[0] == '/')) {
-      filepath = cwd+"http-root-dir/htdocs/index.html" 
+      filepath = strcat(cwd, "http-root-dir/htdocs/index.html");
    } else {
-      filepath = cwd+"http-root-dir/htdocs"+docpath
+      filepath = strcat(cwd, "http-root-dir/htdocs");docpath
+      filepath = strcat(filepath, docpath);
    }
    
    
