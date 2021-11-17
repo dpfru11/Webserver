@@ -18,6 +18,7 @@ int main(int argc, char** argv)
 {
    if (argc != 2) {
       perror("Usage: Port");
+      exit(1);
    }
    
    int port = atoi( argv[1] );
