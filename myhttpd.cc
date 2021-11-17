@@ -13,15 +13,17 @@
 void processRequest(int socket);
 
 
-main(int argc, char** argv)
+int main(int argc, char** argv)
 {
    // Add your HTTP implementation here
    int masterSocket = socket(PF_INET, SOCK_STREAM, 0);
+   
    if (masterSocket < 0) {
       perror("socket");
       exit(1);
    }
 
+   int optval = 1;
    int err = setsockopt(masterSocket, SOL_SOCKET, SO_REUSEADDR, (char *) &optval, sizeof( int ) );
    if (err < 0) {
       perror("sockopt error");
@@ -59,7 +61,7 @@ void processRequest(int socket) {
 
    while((n = read(socket, &newChar, sizeof(newChar)) {
       length++;
-      if(newChar == ' '){
+      if(newChar == ' ') {
          if gotGet == 0 {
             gotGet = 1;
          } else {
@@ -71,8 +73,6 @@ void processRequest(int socket) {
       } else{
          oldChar = newChar;
          head[length-1] = newChar;
-         
-         
       }
    }
 }
