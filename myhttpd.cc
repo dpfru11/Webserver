@@ -50,7 +50,7 @@ int main(int argc, char** argv)
       struct sockaddr_in clientIPAddress;
       int alen = sizeof( clientIPAddress );
       int slaveSocket = accept( masterSocket, (struct sockaddr *)&clientIPAddress,
-      (socklen_t*)&alen)
+      (socklen_t*)&alen);
       processRequest(slaveSocket);
       close(slaveSocket);
    }
