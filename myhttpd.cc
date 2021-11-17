@@ -91,16 +91,24 @@ void processRequest(int socket) {
          head[length-1] = newChar;
       } 
    }
-   /*
+   
    char cwd[256] = {0};
+   char filepath[4000];
    cwd = getcwd(cwd);
-   if docpath begins with “/icons” make filepath
-   cwd+”http-root-dir/”+docpath
-   if docpath begins with “/htdocs” make filepath
-   cwd+”http-root-dir/”+docpath
-   else make filepath
-   cwd+”http-root-dir/htdocs”+docpath
-   */
+   if (strncmp(docpath, "/icons") == 0) {
+      filepath = cwd  +"http-root-dir/" +docpath;
+   }
+   
+   if (strncmp(docpath, "/htdocs") == 0) {
+      filepath = cwd+"http-root-dir/"+docpath
+   } 
+   if (strlen(docpath == 1 && docpath[0] == '/')) {
+      filepath = cwd+"http-root-dir/htdocs/index.html" 
+   } else {
+      filepath = cwd+"http-root-dir/htdocs"+docpath
+   }
+   
+   
 
 }
 
