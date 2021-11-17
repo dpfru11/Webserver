@@ -96,7 +96,6 @@ void processRequest(int socket) {
    char filepath[4000];
    cwd = getcwd(cwd);
    if (strncmp(docpath, "/icons", 7) == 0) {
-      filepath = cwd  +"http-root-dir/" +docpath;
       filepath = strcat(cwd, "http-root-dir/");
       filepath = strcat(filepath, docpath);
    }
