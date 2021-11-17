@@ -15,6 +15,14 @@ void processRequest(int socket);
 
 int main(int argc, char** argv)
 {
+   int port = atoi( argv[1] );
+   
+   struct sockaddr_in serverIPAddress; 
+   memset( &serverIPAddress, 0, sizeof(serverIPAddress) );
+   serverIPAddress.sin_family = AF_INET;
+   serverIPAddress.sin_addr.s_addr = INADDR_ANY;
+   serverIPAddress.sin_port = htons((u_short) port);
+   
    // Add your HTTP implementation here
    int masterSocket = socket(PF_INET, SOCK_STREAM, 0);
    
@@ -62,7 +70,7 @@ void processRequest(int socket) {
    while((n = read(socket, &newChar, sizeof(newChar)) {
       length++;
       if(newChar == ' ') {
-         if gotGet == 0 {
+         if (gotGet == 0) {
             gotGet = 1;
          } else {
             head[length-1]=0;
@@ -73,7 +81,6 @@ void processRequest(int socket) {
       } else{
          oldChar = newChar;
          head[length-1] = newChar;
-      }
-   }
+      }   }
 }
 
