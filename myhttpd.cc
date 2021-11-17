@@ -47,6 +47,8 @@ int main(int argc, char** argv)
    error = listen( masterSocket, QueueLength);
 
    while(1){
+      struct sockaddr_in clientIPAddress;
+      int alen = sizeof( clientIPAddress );
       int slaveSocket = accept( masterSocket, (struct sockaddr *)&clientIPAddress,
       (socklen_t*)&alen)
       processRequest(slaveSocket);
