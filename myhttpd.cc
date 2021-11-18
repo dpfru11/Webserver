@@ -126,9 +126,9 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
       sendErr(405, socket, NULL);
       return;
    }
-   
+
    //Determine content type
-   const char * cont = contentType(filepath);
+   const char * cont = contentType(finalPath);
 
 
 }
