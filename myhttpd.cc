@@ -12,7 +12,7 @@
 
 void processRequest(int socket);
 void expandFilePath(char * fpath, char * cwd, int socket);
-void sendErr(int errno, int socket, char * conttype);
+void sendErr(int errno, int socket, const char * conttype);
 const char * contentType(char * str);
 int QueueLength = 5;
 
@@ -129,16 +129,22 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
 
 }
 
-void sendErr(int errno, int socket, char * conttype) {
+void sendErr(int errno, int socket, const char * conttype) {
    if (errno == 405) {
       const char * err = "\r\n405 ERROR: Invalid directory backtrack\r\n";
       write(socket, err, strlen(err));
    } else if (errno == 404) {
-      const char * errtype = "\r\nHTTP/1.1 200 Document follows \r\n";
-      const char * server = "Server: \r\n CS252 lab5 \r\n";
+      const char * errtype = "\r\nHTTP/1.1 404 File not found\r\n";
+      const char * server = "Server: CS252 lab5\r\n";
       char * content = (char *) malloc(30);
-      sprintf(content, " %s \r\n", conttype);
+      sprintf(content, " %s\r\n", conttype);
       const char * finalcont = content;
+      const char * notFound = "File not found!\r\n\r\n";
+
+      write(socket, errtype, strlen(errtype));
+      write(socket, server, strlen(server));
+      write(socket, finalcont, strlen(finalcont));
+      write(socket, notFound, strlen(notFound));
    }
    
 }
