@@ -11,6 +11,8 @@
 
 
 void processRequest(int socket);
+expandFilePath(char * fpath, int socket);
+sendErr(int errno);
 int QueueLength = 5;
 
 
@@ -111,7 +113,17 @@ void processRequest(int socket) {
       filepath = strcat(filepath, docpath);
    }
    
-   
+   //file expansion
+   expandFilePath(filepath, socket);
+}
+
+expandFilePath(char * fpath, int socket) {
+   char * newPath = malloc(strlen(fpath) + 10);
+   realpath(fpath, newPath);
+
+}
+
+sendErr(int errno) {
 
 }
 
