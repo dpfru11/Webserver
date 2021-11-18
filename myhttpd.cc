@@ -115,17 +115,21 @@ void processRequest(int socket) {
    //file expansion
    expandFilePath(filepath, cwd, socket);
    
-   //Determine content type
-   const char * cont = contentType(filepath);
 
 }
 
 void expandFilePath(char * fpath, char * cwd, int socket) {
    char * newPath = (char *) malloc(strlen(fpath) + 10);
-   realpath(fpath, newPath);
+   char * finalPath = realpath(fpath, newPath);
+
    if (strlen(newPath) < strlen(cwd) + strlen("/http-root-dir")) {
       sendErr(405, socket, NULL);
+      return;
    }
+   
+   //Determine content type
+   const char * cont = contentType(filepath);
+
 
 }
 
@@ -145,6 +149,7 @@ void sendErr(int errno, int socket, const char * conttype) {
       write(socket, server, strlen(server));
       write(socket, finalcont, strlen(finalcont));
       write(socket, notFound, strlen(notFound));
+      delete content;
    }
    
 }
