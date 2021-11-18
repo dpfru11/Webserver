@@ -115,7 +115,7 @@ void processRequest(int socket) {
    
    //Determine content type
    const char * cont = contentType(filepath);
-   
+
 }
 
 void expandFilePath(char * fpath, char * cwd, int socket) {
@@ -136,9 +136,9 @@ void sendErr(int errno, int socket) {
 }
 
 const char * contentType(char * str) {
-   if (strstr(".html") != NULL || strstr(".html/") != NULL) {
+   if (strstr(str, ".html") != NULL || strstr(str, ".html/") != NULL) {
       return "text/html";
-   } else if (strstr(".gif") != NULL || strstr(".gif/")) {
+   } else if (strstr(str, ".gif") != NULL || strstr(str, ".gif/")) {
       return "image/gif";
    } else {
       return "text/plain";
