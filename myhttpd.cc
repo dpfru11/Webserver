@@ -12,18 +12,19 @@
 
 void processRequest(int socket);
 void expandFilePath(char * fpath, char * cwd, int socket)
-void sendErr(int errno, int socket);
+void sendErr(int errno, int socket, char * servtype, char * conttype);
 int QueueLength = 5;
 
 
 int main(int argc, char** argv)
 {
-   if (argc != 2) {
-      perror("Usage: Port");
-      exit(0);
+   int port;
+
+   if (argc == 1) {
+      port = 15000;
+   } else {
+      int port = atoi( argv[1] );
    }
-   
-   int port = atoi( argv[1] );
    
    struct sockaddr_in serverIPAddress; 
    memset( &serverIPAddress, 0, sizeof(serverIPAddress) );
@@ -127,11 +128,14 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
 
 }
 
-void sendErr(int errno, int socket) {
+void sendErr(int errno, int socket, char * servtype, char * conttype) {
    if (errno == 405) {
       const char * err = "\n405 ERROR: Invalid directory backtrack\n";
       write(socket, err, strlen(err));
-   } else if (errno)
+   } else if (errno == 404) {
+      const char * errtype = "HTTP/1.1 404 File Not Found";
+      const char * 
+   }
    
 }
 
