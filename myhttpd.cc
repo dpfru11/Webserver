@@ -136,7 +136,7 @@ void sendErr(int errno, int socket, char * conttype) {
    } else if (errno == 404) {
       const char * errtype = "\r\nHTTP/1.1 200 Document follows \r\n";
       const char * server = "Server: \r\n CS252 lab5 \r\n";
-      const char * content = malloc(30);
+      char * content = malloc(30);
       sprintf(content, " %s ", conttype);
    }
    
