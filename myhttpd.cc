@@ -117,14 +117,14 @@ void processRequest(int socket) {
    expandFilePath(filepath, socket);
 }
 
-expandFilePath(char * fpath, char * cwd, int socket) {
+void expandFilePath(char * fpath, char * cwd, int socket) {
    char * newPath = (char *) malloc(strlen(fpath) + 10);
    realpath(fpath, newPath);
    if (strlen(newPath) < )
 
 }
 
-sendErr(int errno, int socket) {
+void sendErr(int errno, int socket) {
    const char * err = "Invalid directory backtrack";
    write(socket, err, strlen(err))
 }
