@@ -128,11 +128,20 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    }
 
    //Determine content type
-   const char * cont = contentType(finalPath);
+   const char * contType = contentType(finalPath);
+
+   //Attempt to open
+   int fd = open(finalPath, O_RDONLY);
+
+   if (fd < 0) {
+      sendErr(404, socket, contType);
+      return;
+   }
 
 
 }
 
+//TODO: Not just for error, also for writing (200)
 void sendErr(int errno, int socket, const char * conttype) {
    if (errno == 405) {
       const char * err = "\r\n405 ERROR: Invalid directory backtrack\r\n";
