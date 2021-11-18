@@ -125,7 +125,10 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
 }
 
 void sendErr(int errno, int socket) {
-   const char * err = "Invalid directory backtrack";
-   write(socket, err, strlen(err))
+   if (errno == 405) {
+      const char * err = "405 ERROR: Invalid directory backtrack";
+      write(socket, err, strlen(err));
+   }
+   
 }
 
