@@ -12,7 +12,7 @@
 
 void processRequest(int socket);
 expandFilePath(char * fpath, int socket);
-sendErr(int errno);
+sendErr(int errno, int socket);
 int QueueLength = 5;
 
 
@@ -118,12 +118,14 @@ void processRequest(int socket) {
 }
 
 expandFilePath(char * fpath, int socket) {
-   char * newPath = malloc(strlen(fpath) + 10);
+   char * newPath = (char *) malloc(strlen(fpath) + 10);
    realpath(fpath, newPath);
+   if (strlen(newPath) < )
 
 }
 
-sendErr(int errno) {
-
+sendErr(int errno, int socket) {
+   const char * err = "Invalid directory backtrack";
+   write(socket, err, strlen(err))
 }
 
