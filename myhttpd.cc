@@ -11,8 +11,8 @@
 
 
 void processRequest(int socket);
-expandFilePath(char * fpath, char * cwd, int socket)
-sendErr(int errno, int socket);
+void expandFilePath(char * fpath, char * cwd, int socket)
+void sendErr(int errno, int socket);
 int QueueLength = 5;
 
 
