@@ -100,13 +100,10 @@ void processRequest(int socket) {
    if (strncmp(docpath, "/icons", 7) == 0) {
       filepath = strcat(cwd, "http-root-dir/");
       filepath = strcat(filepath, docpath);
-   }
-   
-   if (strncmp(docpath, "/htdocs", 8) == 0) {
+   } else if (strncmp(docpath, "/htdocs", 8) == 0) {
       filepath = strcat(cwd, "http-root-dir/");
       filepath = strcat(filepath, docpath);
-   } 
-   if (strlen(docpath) == 1 && docpath[0] == '/') {
+   } else if (strlen(docpath) == 1 && docpath[0] == '/') {
       filepath = strcat(cwd, "http-root-dir/htdocs/index.html");
    } else {
       filepath = strcat(cwd, "http-root-dir/htdocs");
@@ -114,21 +111,37 @@ void processRequest(int socket) {
    }
    
    //file expansion
-   expandFilePath(filepath, socket);
+   expandFilePath(filepath, cwd, socket);
+   
+   //Determine content type
+   const char * cont = contentType(filepath);
+   
 }
 
 void expandFilePath(char * fpath, char * cwd, int socket) {
    char * newPath = (char *) malloc(strlen(fpath) + 10);
    realpath(fpath, newPath);
-   if (strlen(newPath) < )
+   if (strlen(newPath) < strlen(cwd) + strlen("/http-root-dir")) {
+      sendErr(405, socket);
+   }
 
 }
 
 void sendErr(int errno, int socket) {
    if (errno == 405) {
-      const char * err = "405 ERROR: Invalid directory backtrack";
+      const char * err = "\n405 ERROR: Invalid directory backtrack\n";
       write(socket, err, strlen(err));
-   }
+   } else if (errno)
    
+}
+
+const char * contentType(char * str) {
+   if (strstr(".html") != NULL || strstr(".html/") != NULL) {
+      return "text/html";
+   } else if (strstr(".gif") != NULL || strstr(".gif/")) {
+      return "image/gif";
+   } else {
+      return "text/plain";
+   }
 }
 
