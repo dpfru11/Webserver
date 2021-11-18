@@ -137,7 +137,8 @@ void sendErr(int errno, int socket, char * conttype) {
       const char * errtype = "\r\nHTTP/1.1 200 Document follows \r\n";
       const char * server = "Server: \r\n CS252 lab5 \r\n";
       char * content = (char *) malloc(30);
-      sprintf(content, " %s ", conttype);
+      sprintf(content, " %s \r\n", conttype);
+      const char * finalcont = content;
    }
    
 }
