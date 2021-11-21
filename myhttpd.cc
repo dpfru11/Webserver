@@ -122,6 +122,7 @@ void processRequest(int socket) {
    token = strtok(str, " ");
    while ( token != NULL)
    {
+      printf("in here");
       if (token == "GET") {
          gotGet = true;
       }
