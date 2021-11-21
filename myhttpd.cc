@@ -93,6 +93,7 @@ void processRequest(int socket) {
          printf("made it");
          break;
       } else {
+         printf("%s", lastChar)
          lastChar = newChar;
          str[length-1] = newChar;
       } 
