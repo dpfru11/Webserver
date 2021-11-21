@@ -100,7 +100,7 @@ void processRequest(int socket) {
    }
    
    //read the rest, look for authentication
-   char * authHead = (char *) malloc(maxHead);
+   /*char * authHead = (char *) malloc(maxHead);
    int authPtr = 0;
    while(n = read(socket, &newChar, sizeof(newChar))) {
       authPtr++;
@@ -110,7 +110,7 @@ void processRequest(int socket) {
          lastChar = newChar;
          authHead[authPtr-1] = newChar;
       } 
-   }
+   }*/
 
    //if (strcmp(authHead, "Authorization: Basic <User-password in base 64>") != 0) {
      // sendErr(401, socket, NULL);
