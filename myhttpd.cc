@@ -101,7 +101,7 @@ void processRequest(int socket) {
    
    //read the rest, look for authentication
    char * authHead = malloc(maxHead);
-   authPtr = 0
+   int authPtr = 0
    while(n = read(socket, &newChar, sizeof(newChar))) {
       authPtr++;
       if(newChar == '\n' && lastChar == '\r') {
@@ -113,7 +113,7 @@ void processRequest(int socket) {
    }
 
    if (strcmp(authHead, "Authorization: Basic <User-password in base 64>") != 0) {
-      sendErr(401, socket, NULL)
+      sendErr(401, socket, NULL);
    }
 
    char * cwd = (char *)malloc(256);
@@ -181,11 +181,8 @@ void sendErr(int errno, int socket, const char * conttype) {
       delete content;
    } else if (errno == 401) {
       const char * errtype = "\r\nHTTP/1.1 401 Unauthorized\r\n";
-      const char * auth = "Server: CS252 lab5\r\n";
+      const char * auth = "WWW-Authenticate: Basic realm=myhttpd-cs252\r\n";
       char * content = (char *) malloc(30);
-      sprintf(content, " %s\r\n", conttype);
-      const char * finalcont = content;
-      const char * notFound = "File not found!\r\n\r\n";
    }
    
 }
