@@ -85,7 +85,7 @@ void processRequest(int socket) {
    unsigned char lastChar = 0;
    unsigned char lastlastChar = 0;
    unsigned char lastlastlastChar = 0;
-
+   printf("made it");
    while(n = read(socket, &newChar, sizeof(newChar))) {
        
       length++;
