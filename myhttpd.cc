@@ -16,7 +16,7 @@ void processRequest(int socket);
 void expandFilePath(char * fpath, char * cwd, int socket);
 void sendErr(int errno, int socket, const char * conttype);
 const char * contentType(char * str);
-const char * realm = "CS252 DANREALM";
+const char * realm = "CS252-DANREALM";
 int QueueLength = 5;
 
 
@@ -114,6 +114,7 @@ void processRequest(int socket) {
 
    if (strcmp(authHead, "Authorization: Basic <User-password in base 64>") != 0) {
       sendErr(401, socket, NULL);
+      return;
    }
 
    char * cwd = (char *)malloc(256);
@@ -181,8 +182,9 @@ void sendErr(int errno, int socket, const char * conttype) {
       delete content;
    } else if (errno == 401) {
       const char * errtype = "\r\nHTTP/1.1 401 Unauthorized\r\n";
-      const char * auth = "WWW-Authenticate: Basic realm=myhttpd-cs252\r\n";
-      char * content = (char *) malloc(30);
+      const char * auth = "WWW-Authenticate: Basic realm=CS252-DANREALM\r\n";
+      write(socket, errtype, strlen(errtype));
+      write(socket, auth, strlen(auth));
    }
    
 }
