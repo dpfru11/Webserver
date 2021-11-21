@@ -104,7 +104,7 @@ void processRequest(int socket) {
        
       length++;
       if(newChar == '\n' && lastChar == '\r' && lastlastChar == '\n' && lastlastlastChar=='\r') {
-         printf("made it\n");
+         //printf("made it\n");
          break;
       } else {
          lastlastlastChar = lastlastChar;
@@ -155,7 +155,7 @@ void processRequest(int socket) {
       token = strtok(NULL, " ");
       i++;
    }
-   printf("??");
+   printf("\n??");
 
    char * cwd = (char *)malloc(256);
    char * filepath = (char *)malloc(4000);
