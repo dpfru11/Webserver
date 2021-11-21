@@ -108,6 +108,7 @@ void processRequest(int socket) {
          authorized = true;
          break;
       }
+      token = strtok(str, "\n");
    }
 
    if (authorized == false) {
@@ -128,6 +129,7 @@ void processRequest(int socket) {
          docpath = strdup(token);
          break;
       }
+      token = strtok(str, " ");
    }
    
 
