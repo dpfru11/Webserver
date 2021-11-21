@@ -144,7 +144,7 @@ void processRequest(int socket) {
    token = strtok(str, " ");
    while (token)
    {
-      printf("token: %sjhkgs", token);
+      printf("token: %s jhkgs", token);
       if (token == "GET") {
          gotGet = true;
       }
