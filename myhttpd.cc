@@ -154,7 +154,7 @@ void processRequest(int socket) {
       }
       token = strtok(NULL, " ");
    }
-   
+   printf("did it?\n");
 
    char * cwd = (char *)malloc(256);
    char * filepath = (char *)malloc(4000);
