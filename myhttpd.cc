@@ -82,13 +82,18 @@ void processRequest(int socket) {
 
   // Last character
    unsigned char lastChar = 0;
+   unsigned char lastlastChar = 0;
+   unsigned char lastlastlastChar = 0;
 
    while(n = read(socket, &newChar, sizeof(newChar))) {
        
       length++;
-      if(newChar == '\n' && lastChar == '\r') {
+      if(newChar == '\n' && lastChar == '\r' && lastlastChar == '\n' && lastlastlastChar == '\r' ) {
+         printf("made it");
          break;
       } else {
+         lastlastlastChar = lastlastChar;
+         lastlastChar = lastChar;
          lastChar = newChar;
          str[length-1] = newChar;
       } 
