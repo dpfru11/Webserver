@@ -72,11 +72,10 @@ int main(int argc, char** argv)
 void processRequest(int socket) {
    const int maxHead = 1024;
    char str[ maxHead + 1 ];
-   char docpath[maxHead * 20];
+   char * docpath = (char *) malloc(maxHead * 10);
    int length = 0;
   
    int n;
-   int gotGet = 0;
 
    // Current character 
    unsigned char newChar;
