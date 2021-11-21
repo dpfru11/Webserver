@@ -84,7 +84,7 @@ void processRequest(int socket) {
    unsigned char lastChar = 0;
 
    while(n = read(socket, &newChar, sizeof(newChar))) {
-      
+       printf("%s", str);
       length++;
       if(newChar == '\n' && lastChar == '\r') {
          break;
@@ -93,7 +93,7 @@ void processRequest(int socket) {
          str[length-1] = newChar;
       } 
    }
-   printf("%s", str);
+  
    
    char * token;
 
