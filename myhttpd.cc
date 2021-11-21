@@ -141,7 +141,7 @@ void processRequest(int socket) {
    //obtain docpath
    int i = 0;
    bool gotGet = false;
-   token = strtok(str, " \n");
+   token = strtok(str, " \r\n");
    while (token)
    {
       printf("token: %s\n", token);
