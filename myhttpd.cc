@@ -154,7 +154,7 @@ void processRequest(int socket) {
       }
       token = strtok(NULL, " ");
    }
-   printf("did it?\n");
+   
 
    char * cwd = (char *)malloc(256);
    char * filepath = (char *)malloc(4000);
@@ -171,7 +171,7 @@ void processRequest(int socket) {
       filepath = strcat(cwd, "http-root-dir/htdocs");
       filepath = strcat(filepath, docpath);
    }
-   
+   printf("did it?\n");
    //file expansion
    expandFilePath(filepath, cwd, socket);
    
