@@ -140,11 +140,11 @@ void processRequest(int socket) {
 
    //obtain docpath
    int i = 0;
-   bool gotGet = false;
    token = strtok(str, " ");
    while (token)
    {
       printf("token: %s\n", token);
+      fflush(stdout);
       
       if (i == 1) {
          docpath =(char *) malloc(strlen(token) + 1);
