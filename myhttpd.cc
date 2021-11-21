@@ -15,6 +15,7 @@
 void processRequest(int socket);
 void expandFilePath(char * fpath, char * cwd, int socket);
 void sendErr(int errno, int socket, const char * conttype);
+const char * pass = ZGFuaWVsc29uOmZlbmNl;
 const char * contentType(char * str);
 const char * realm = "CS252-DANREALM";
 int QueueLength = 5;
@@ -27,7 +28,7 @@ int main(int argc, char** argv)
    if (argc == 1) {
       port = 15000;
    } else {
-      int port = atoi( argv[1] );
+      port = atoi( argv[1] );
    }
    
    struct sockaddr_in serverIPAddress; 
