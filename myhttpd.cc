@@ -95,22 +95,35 @@ void processRequest(int socket) {
       } 
    }
    
-   char ** checkAuth = (char**) malloc(maxHead * 10);
-   char ** obtainPath = (char **) malloc(maxHead * 10);
+   char * token;
 
-   checkAuth = strtok(str, "\n");
+   //Check for authorization
+   bool authorized = false;
+   token = strtok(str, "\n");
+   while (token) {
+      if (strcmp(token, "Authorization: Basic ZGFuaWVsc29uOmZlbmNl") == 0) {
+         authorized = true;
+      }
+   }
 
-   if (strstr(checkAuth[1], "Authorization: Basic ZGFuaWVsc29uOmZlbmNl") != 0) {
+   if (authorized == false) {
       sendErr(401, socket, NULL);
       return;
    }
 
-   obtainPath = strtok(str, " ");
-   if (strcmp(obtainPath[0], "GET") == 0) {
-      docpath = obtainPath[1]
-   } else {
-      perror("No Doc Path");
-      return;
+   //obtain docpath
+   int i = 0;
+   bool gotGet = false;
+   token = strtok(str, " ");
+   while ( token)
+   {
+      if (token == "GET") {
+         gotGet = true;
+      }
+      if (gotGet == true) {
+         docpath = strdup(token);
+         break;
+      }
    }
    
 
