@@ -159,6 +159,7 @@ void processRequest(int socket) {
    char * cwd = (char *)malloc(256);
    char * filepath = (char *)malloc(4000);
    cwd = getcwd(cwd, sizeof(cwd));
+   printf("did it?\n");
    if (strstr(docpath, "/icons") != NULL) {
       filepath = strcat(cwd, "http-root-dir/");
       filepath = strcat(filepath, docpath);
@@ -171,7 +172,7 @@ void processRequest(int socket) {
       filepath = strcat(cwd, "http-root-dir/htdocs");
       filepath = strcat(filepath, docpath);
    }
-   printf("did it?\n");
+   
    //file expansion
    expandFilePath(filepath, cwd, socket);
    
