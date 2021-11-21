@@ -136,7 +136,7 @@ void processRequest(int socket) {
    //file expansion
    expandFilePath(filepath, cwd, socket);
    
-
+   close( socket );
 }
 
 void expandFilePath(char * fpath, char * cwd, int socket) {
