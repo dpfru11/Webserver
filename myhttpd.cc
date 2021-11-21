@@ -113,11 +113,6 @@ void processRequest(int socket) {
          head[length-1] = newChar;
       } 
    }
-   /*while (str[i] != "\0") {
-      if (str[i] == " ") {
-
-      }
-   }*/
 
   
    
@@ -134,7 +129,7 @@ void processRequest(int socket) {
          authorized = true;
          break;
       }
-      token = strtok(NULL, "\n");
+      token = strtok(NULL, "\r\n");
    }
 
    if (authorized == false) {
