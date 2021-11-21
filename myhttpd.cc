@@ -112,10 +112,10 @@ void processRequest(int socket) {
       } 
    }
 
-   if (strcmp(authHead, "Authorization: Basic <User-password in base 64>") != 0) {
-      sendErr(401, socket, NULL);
-      return;
-   }
+   //if (strcmp(authHead, "Authorization: Basic <User-password in base 64>") != 0) {
+     // sendErr(401, socket, NULL);
+      //return;
+   //}
 
    char * cwd = (char *)malloc(256);
    char * filepath = (char *)malloc(4000);
