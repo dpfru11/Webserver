@@ -16,6 +16,7 @@ void processRequest(int socket);
 void expandFilePath(char * fpath, char * cwd, int socket);
 void sendErr(int errno, int socket, const char * conttype);
 const char * contentType(char * str);
+const char * realm = "CS252 DANREALM";
 int QueueLength = 5;
 
 
@@ -98,6 +99,23 @@ void processRequest(int socket) {
       } 
    }
    
+   //read the rest, look for authentication
+   char * authHead = malloc(maxHead);
+   authPtr = 0
+   while(n = read(socket, &newChar, sizeof(newChar))) {
+      authPtr++;
+      if(newChar == '\n' && lastChar == '\r') {
+         break;
+      } else {
+         lastChar = newChar;
+         authHead[authPtr-1] = newChar;
+      } 
+   }
+
+   if (strcmp(authHead, "Authorization: Basic <User-password in base 64>") != 0) {
+      sendErr(401, socket, NULL)
+   }
+
    char * cwd = (char *)malloc(256);
    char * filepath = (char *)malloc(4000);
    cwd = getcwd(cwd, sizeof(cwd));
@@ -161,6 +179,13 @@ void sendErr(int errno, int socket, const char * conttype) {
       write(socket, finalcont, strlen(finalcont));
       write(socket, notFound, strlen(notFound));
       delete content;
+   } else if (errno == 401) {
+      const char * errtype = "\r\nHTTP/1.1 401 Unauthorized\r\n";
+      const char * auth = "Server: CS252 lab5\r\n";
+      char * content = (char *) malloc(30);
+      sprintf(content, " %s\r\n", conttype);
+      const char * finalcont = content;
+      const char * notFound = "File not found!\r\n\r\n";
    }
    
 }
