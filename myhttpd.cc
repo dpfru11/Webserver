@@ -93,6 +93,7 @@ void processRequest(int socket) {
          str[length-1] = newChar;
       } 
    }
+   printf("%s", str);
    
    char * token;
 
