@@ -95,8 +95,8 @@ void processRequest(int socket) {
       } 
    }
    
-   char * checkAuth = (char*) malloc(maxHead * 10);
-   char * obtainPath = (char *) malloc(maxHead * 10);
+   char ** checkAuth = (char**) malloc(maxHead * 10);
+   char ** obtainPath = (char **) malloc(maxHead * 10);
 
    checkAuth = strtok(str, "\n");
 
