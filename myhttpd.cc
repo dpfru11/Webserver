@@ -100,8 +100,8 @@ void processRequest(int socket) {
    }
    
    //read the rest, look for authentication
-   char * authHead = malloc(maxHead);
-   int authPtr = 0
+   char * authHead = (char *) malloc(maxHead);
+   int authPtr = 0;
    while(n = read(socket, &newChar, sizeof(newChar))) {
       authPtr++;
       if(newChar == '\n' && lastChar == '\r') {
