@@ -15,7 +15,7 @@
 void processRequest(int socket);
 void expandFilePath(char * fpath, char * cwd, int socket);
 void sendErr(int errno, int socket, const char * conttype);
-const char * pass = ZGFuaWVsc29uOmZlbmNl;
+const char * pass = "ZGFuaWVsc29uOmZlbmNl";
 const char * contentType(char * str);
 const char * realm = "CS252-DANREALM";
 int QueueLength = 5;
@@ -71,9 +71,10 @@ int main(int argc, char** argv)
 
 void processRequest(int socket) {
    const int maxHead = 1024;
-   char head[ maxHead + 1 ];
-   char docpath[maxHead * 2];
+   char str[ maxHead + 1 ];
+   char docpath[maxHead * 20];
    int length = 0;
+  
    int n;
    int gotGet = 0;
 
@@ -84,39 +85,34 @@ void processRequest(int socket) {
    unsigned char lastChar = 0;
 
    while(n = read(socket, &newChar, sizeof(newChar))) {
+      
       length++;
-      if(newChar == ' ') {
-         if (gotGet == 0) {
-            gotGet = 1;
-         } else {
-            head[length-1]=0;
-            strcpy(docpath, head);
-         }
-      } else if(newChar == '\n' && lastChar == '\r') {
-         break;
-      } else {
-         lastChar = newChar;
-         head[length-1] = newChar;
-      } 
-   }
-   
-   //read the rest, look for authentication
-   char * authHead = (char *) malloc(maxHead);
-   int authPtr = 0;
-   while(n = read(socket, &newChar, sizeof(newChar))) {
-      authPtr++;
       if(newChar == '\n' && lastChar == '\r') {
          break;
       } else {
          lastChar = newChar;
-         authHead[authPtr-1] = newChar;
+         str[length-1] = newChar;
       } 
    }
+   
+   char * checkAuth = (char*) malloc(maxHead * 10);
+   char * obtainPath = (char *) malloc(maxHead * 10);
 
-   if (strcmp(authHead, "Authorization: Basic <User-password in base 64>") != 0) {
+   checkAuth = strtok(str, "\n");
+
+   if (strstr(checkAuth[1], "Authorization: Basic ZGFuaWVsc29uOmZlbmNl") != 0) {
       sendErr(401, socket, NULL);
       return;
    }
+
+   obtainPath = strtok(str, " ");
+   if (strcmp(obtainPath[0], "GET") == 0) {
+      docpath = obtainPath[1]
+   } else {
+      perror("No Doc Path");
+      return;
+   }
+   
 
    char * cwd = (char *)malloc(256);
    char * filepath = (char *)malloc(4000);
