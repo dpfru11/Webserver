@@ -89,6 +89,7 @@ void processRequest(int socket) {
       if(newChar == '\n' && lastChar == '\r') {
          break;
       } else {
+         printf("in here?");
          lastChar = newChar;
          str[length-1] = newChar;
       } 
