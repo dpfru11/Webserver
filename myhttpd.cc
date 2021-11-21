@@ -144,7 +144,6 @@ void processRequest(int socket) {
    while (token)
    {
       printf("token: %s\n", token);
-      fflush(stdout);
       
       if (i == 1) {
          docpath =(char *) malloc(strlen(token) + 1);
