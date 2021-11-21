@@ -159,13 +159,13 @@ void processRequest(int socket) {
    char * cwd = (char *)malloc(256);
    char * filepath = (char *)malloc(4000);
    cwd = getcwd(cwd, sizeof(cwd));
-   if (strncmp(docpath, "/icons", 7) == 0) {
+   if (strstr(docpath, "/icons") != NULL) {
       filepath = strcat(cwd, "http-root-dir/");
       filepath = strcat(filepath, docpath);
-   } else if (strncmp(docpath, "/htdocs", 8) == 0) {
+   } else if (strstr(docpath, "/htdocs") != NULL) {
       filepath = strcat(cwd, "http-root-dir/");
       filepath = strcat(filepath, docpath);
-   } else if (strlen(docpath) == 1 && docpath[0] == '/') {
+   } else if (strstr(docpath) == 1 && docpath[0] == '/') {
       filepath = strcat(cwd, "http-root-dir/htdocs/index.html");
    } else {
       filepath = strcat(cwd, "http-root-dir/htdocs");
