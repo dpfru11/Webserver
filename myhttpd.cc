@@ -147,7 +147,7 @@ void processRequest(int socket) {
       printf("token: %s\n", token);
       
       if (i == 1) {
-         docpath =(char *) malloc(strlen(token));
+         docpath =(char *) malloc(strlen(token) + 1);
          strcpy(docpath, token);
          printf("\n");
          break;
