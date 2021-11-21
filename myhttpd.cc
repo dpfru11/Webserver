@@ -64,7 +64,7 @@ int main(int argc, char** argv)
       int alen = sizeof( clientIPAddress );
       int slaveSocket = accept( masterSocket, (struct sockaddr *)&clientIPAddress,
       (socklen_t*)&alen);
-      printf("kajhgjagl");
+      //printf("kajhgjagl");
       processRequest(slaveSocket);
       close(slaveSocket);
    }
@@ -86,12 +86,12 @@ void processRequest(int socket) {
    unsigned char lastChar = 0;
    unsigned char lastlastChar = 0;
    unsigned char lastlastlastChar = 0;
-   printf("made it");
+   //printf("made it");
    while(n = read(socket, &newChar, sizeof(newChar))) {
        
       length++;
       if(newChar == '\n' && lastChar == '\r') {
-         printf("made it");
+         //printf("made it");
          break;
       } else {
          printf("%c", lastChar);
@@ -104,7 +104,7 @@ void processRequest(int socket) {
        
       length++;
       if(newChar == '\n' && lastChar == '\r' && lastlastChar == '\n' && lastlastlastChar=='\r') {
-         printf("made it");
+         printf("made it\n");
          break;
       } else {
          lastlastlastChar = lastlastChar;
