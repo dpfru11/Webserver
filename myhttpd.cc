@@ -64,6 +64,7 @@ int main(int argc, char** argv)
       int alen = sizeof( clientIPAddress );
       int slaveSocket = accept( masterSocket, (struct sockaddr *)&clientIPAddress,
       (socklen_t*)&alen);
+      printf("kajhgjagl");
       processRequest(slaveSocket);
       close(slaveSocket);
    }
