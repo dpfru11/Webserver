@@ -147,7 +147,7 @@ void processRequest(int socket) {
       printf("token: %s\n", token);
       
       if (i == 1) {
-         docpath = strdup(token);
+         docpath = token;
          printf("in here!!!!");
          break;
       }
