@@ -26,7 +26,7 @@ int main(int argc, char** argv)
    int port;
 
    if (argc == 1) {
-      port = 15000;
+      port = 5555;
    } else {
       port = atoi( argv[1] );
    }
@@ -72,6 +72,7 @@ int main(int argc, char** argv)
 void processRequest(int socket) {
    const int maxHead = 1024;
    char str[ maxHead * 10 ];
+   char head[ maxHead * 10 ];
    char * docpath = (char *) malloc(maxHead * 10);
    int length = 0;
   
@@ -96,6 +97,20 @@ void processRequest(int socket) {
          str[length-1] = newChar;
       } 
    }
+   length = 0;
+   while(n = read(socket, &newChar, sizeof(newChar))) {
+       
+      length++;
+      if(newChar == '\n' && lastChar == '\r') {
+         printf("made it");
+         break;
+      } else {
+         lastlastlastChar = lastlastChar
+         lastlastChar = lastChar;
+         lastChar = newChar;
+         head[length-1] = newChar;
+      } 
+   }
    /*while (str[i] != "\0") {
       if (str[i] == " ") {
 
@@ -108,7 +123,7 @@ void processRequest(int socket) {
 
    //Check for authorization
    bool authorized = false;
-   token = strtok(str, "\n");
+   token = strtok(head, "\r\n");
    while (token)  {
       
       printf("token: %s", token);
