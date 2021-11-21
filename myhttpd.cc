@@ -74,7 +74,7 @@ void processRequest(int socket) {
    const int maxHead = 1024;
    char str[ maxHead * 10 ];
    char head[ maxHead * 10 ];
-   char * docpath = (char *) malloc(maxHead * 10);
+   char * docpath;
    int length = 0;
   
    int n;
@@ -147,8 +147,9 @@ void processRequest(int socket) {
       printf("token: %s\n", token);
       
       if (i == 1) {
+         docpath =(char *) malloc(strlen(token));
          strcpy(docpath, token);
-         printf("\nin here!!!!");
+         printf("\n");
          break;
       }
       token = strtok(NULL, " ");
