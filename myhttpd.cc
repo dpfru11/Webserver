@@ -88,7 +88,7 @@ void processRequest(int socket) {
    while(n = read(socket, &newChar, sizeof(newChar))) {
        
       length++;
-      if(newChar == '\n' && lastChar == '\r' && lastlastChar == '\n' && lastlastlastChar == '\r' ) {
+      if(newChar == '\n' && lastChar == '\r' && lastlastChar == '\r' && lastlastlastChar == '\n' ) {
          printf("made it");
          break;
       } else {
