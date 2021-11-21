@@ -71,7 +71,7 @@ int main(int argc, char** argv)
 
 void processRequest(int socket) {
    const int maxHead = 1024;
-   char str[ maxHead + 1 ];
+   char str[ maxHead * 10 ];
    char * docpath = (char *) malloc(maxHead * 10);
    int length = 0;
   
@@ -87,13 +87,18 @@ void processRequest(int socket) {
        
       length++;
       if(newChar == '\n' && lastChar == '\r') {
-         printf("%c", newChar);
          break;
       } else {
          lastChar = newChar;
          str[length-1] = newChar;
       } 
    }
+   /*while (str[i] != "\0") {
+      if (str[i] == " ") {
+
+      }
+   }*/
+   
   
    
    char * token;
@@ -108,7 +113,7 @@ void processRequest(int socket) {
          authorized = true;
          break;
       }
-      token = strtok(str, "\n");
+      token = strtok(NULL, "\n");
    }
 
    if (authorized == false) {
@@ -130,7 +135,7 @@ void processRequest(int socket) {
          docpath = strdup(token);
          break;
       }
-      token = strtok(str, " ");
+      token = strtok(NULL, " ");
    }
    
 
