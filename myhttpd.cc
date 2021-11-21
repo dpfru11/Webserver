@@ -145,15 +145,14 @@ void processRequest(int socket) {
    while (token)
    {
       printf("token: %s\n", token);
-      if (token == "GET") {
-         gotGet = true;
-      }
-      if (gotGet == true) {
+      
+      if (i == 1) {
          docpath = strdup(token);
          printf("in here!!!!");
          break;
       }
       token = strtok(NULL, " ");
+      i++;
    }
    
 
