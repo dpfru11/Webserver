@@ -101,11 +101,11 @@ void processRequest(int socket) {
    while(n = read(socket, &newChar, sizeof(newChar))) {
        
       length++;
-      if(newChar == '\n' && lastChar == '\r') {
+      if(newChar == '\n' && lastChar == '\r' && lastlastChar == '\n' && lastlastlastChar=='\r') {
          printf("made it");
          break;
       } else {
-         lastlastlastChar = lastlastChar
+         lastlastlastChar = lastlastChar;
          lastlastChar = lastChar;
          lastChar = newChar;
          head[length-1] = newChar;
