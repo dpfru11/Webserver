@@ -137,6 +137,7 @@ void processRequest(int socket) {
    }
 
    if (authorized == false) {
+      printf("AYAYAYAYAYA\n");
       sendErr(401, socket, NULL);
       return;
    }
