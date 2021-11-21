@@ -98,7 +98,7 @@ void processRequest(int socket) {
 
       }
    }*/
-   
+
   
    
    char * token;
@@ -106,7 +106,7 @@ void processRequest(int socket) {
    //Check for authorization
    bool authorized = false;
    token = strtok(str, "\n");
-   while (token[0] != '\0')  {
+   while (token)  {
       
       printf("token: %s", token);
       if (strcmp(token, "Authorization: Basic ZGFuaWVsc29uOmZlbmNl") == 0) {
@@ -125,7 +125,7 @@ void processRequest(int socket) {
    int i = 0;
    bool gotGet = false;
    token = strtok(str, " ");
-   while ( token != NULL)
+   while (token)
    {
       printf("in here");
       if (token == "GET") {
