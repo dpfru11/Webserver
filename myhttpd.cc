@@ -144,7 +144,7 @@ void processRequest(int socket) {
    token = strtok(str, " ");
    while (token)
    {
-      
+      token = strtok(head, "\r\n");
       if (token == "GET") {
          gotGet = true;
       }
