@@ -158,6 +158,7 @@ void processRequest(int socket) {
          dPathSize++;
       }
    }
+   printf("here");
    //int i = 0;
    /*token = strtok(str, " ");
    while (token)
