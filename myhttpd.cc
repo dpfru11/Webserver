@@ -72,8 +72,8 @@ int main(int argc, char** argv)
 
 void processRequest(int socket) {
    const int maxHead = 1024;
-   char str[ maxHead * 100 ];
-   char head[ maxHead * 100 ];
+   char str[ maxHead * 10000 ];
+   char head[ maxHead * 10000 ];
    char * docpath = (char*)malloc(maxHead * 10);
    int length = 0;
   
