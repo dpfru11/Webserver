@@ -173,9 +173,10 @@ void processRequest(int socket) {
    }*/
    char * cwd = (char *)malloc(256);
    char * filepath = (char *)malloc(4000);
-      printf("%s\n", docpath);
+      
    cwd = getcwd(cwd, sizeof(cwd));
    printf("%ld", strlen(docpath));
+   printf("%s\n", docpath);
    if (strstr(docpath, "/icons") != NULL) {
       filepath = strcat(cwd, "http-root-dir/");
       filepath = strcat(filepath, docpath);
