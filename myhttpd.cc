@@ -200,11 +200,11 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    printf("newpath:%s\n", newPath);
    printf("cwd: %s\n", cwd);
    if (strlen(finalPath) < (strlen(cwd) + strlen("/http-root-dir"))) {
-      printf("in here?\n");
+      
       sendErr(405, socket, NULL);
       return;
    }
-
+   printf("out here?\n");
    //Determine content type
    const char * contType = contentType(finalPath);
 
