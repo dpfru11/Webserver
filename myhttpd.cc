@@ -198,7 +198,7 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    char * finalPath = realpath(fpath, newPath);
    printf("newpath:%s\n", newPath);
    printf("cwd: %s\n", cwd);
-   if (strlen(newPath) < (strlen(cwd) + strlen("/http-root-dir"))) {
+   if (strlen(finalpath) < (strlen(cwd) + strlen("/http-root-dir"))) {
       sendErr(405, socket, NULL);
       return;
    }
@@ -215,7 +215,7 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    } else {
       follow200(socket, contType, fd);
    }
-
+   close(fd);
 }
 
 //TODO: Not just for error, also for writing (200)
