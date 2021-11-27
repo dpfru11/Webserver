@@ -74,7 +74,7 @@ void processRequest(int socket) {
    const int maxHead = 1024;
    char str[ maxHead * 10 ];
    char head[ maxHead * 10 ];
-   char * docpath;
+   char * docpath = (char*)malloc(maxHead * 10);
    int length = 0;
   
    int n;
@@ -149,7 +149,7 @@ void processRequest(int socket) {
       }
       if (foundDPath == true && str[i] == ' ') {
          docpath[dPathSize] = '\0';
-         printf("%s\n",docpath);
+         
          break;
       }
       if (foundDPath == true) {
