@@ -178,13 +178,13 @@ void processRequest(int socket) {
          printf("oops\n");
       }
    } else if (strstr(docpath, "/icons") != NULL) {
-      filepath = strcat(cwd, "http-root-dir/");
+      filepath = strcat(cwd, "/http-root-dir/");
       filepath = strcat(filepath, docpath);
    } else if (strstr(docpath, "/htdocs") != NULL) {
-      filepath = strcat(cwd, "http-root-dir/");
+      filepath = strcat(cwd, "/http-root-dir/");
       filepath = strcat(filepath, docpath);
    } else {
-      filepath = strcat(cwd, "http-root-dir/htdocs");
+      filepath = strcat(cwd, "/http-root-dir/htdocs");
       filepath = strcat(filepath, docpath);
    }
    printf("missed?\n");
