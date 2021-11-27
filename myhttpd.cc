@@ -15,6 +15,7 @@
 void processRequest(int socket);
 void expandFilePath(char * fpath, char * cwd, int socket);
 void sendErr(int errno, int socket, const char * conttype);
+void follow200(int socket, const char * conttype, int fd);
 const char * pass = "ZGFuaWVsc29uOmZlbmNl";
 const char * contentType(char * str);
 const char * realm = "CS252-DANREALM";
@@ -224,8 +225,11 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    if (fd < 0) {
       sendErr(404, socket, contType);
       return;
+   } else {
+      follow200(socket, conttype, fd);
    }
 
+   close(socket);
 
 }
 
@@ -236,7 +240,7 @@ void sendErr(int errno, int socket, const char * conttype) {
       write(socket, err, strlen(err));
    } else if (errno == 404) {
       const char * errtype = "\r\nHTTP/1.1 404 File not found\r\n";
-      const char * server = "Server: CS252 lab5\r\n";
+      const char * server = "Server: CS 252 lab5\r\n";
       char * content = (char *) malloc(30);
       sprintf(content, " %s\r\n", conttype);
       const char * finalcont = content;
@@ -253,7 +257,26 @@ void sendErr(int errno, int socket, const char * conttype) {
       write(socket, errtype, strlen(errtype));
       write(socket, auth, strlen(auth));
    }
-   
+}
+
+void follow200(int socket, const char * conttype, int fd) {
+   /*
+      HTTP/1.1 <sp> 200 <sp> Document <sp> follows <crlf> 
+      Server: <sp> <Server-Type> <crlf> 
+      Content-type: <sp> <Document-Type> <crlf> 
+      {<Other Header Information> <crlf>}* 
+      <crlf> 
+      <Document Data>
+   */
+   const char * message = "HTTP/1.1 200 Document follows\r\nServer: CS 252 lab5\r\nContent-Type: "
+   write(socket, message, strlen(message));
+   write(socket, message, strlen(message));
+   write(socket, "\r\n\r\n", 4);
+   int n;
+   char c;
+   while(n = read(fd, &c, 1) > 0) {
+      write(socket, &c, 1);
+   }
 }
 
 const char * contentType(char * str) {
