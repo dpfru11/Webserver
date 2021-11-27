@@ -207,7 +207,7 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
 
    //Attempt to open
    int fd = open(finalPath, O_RDONLY);
-
+   printf("fd:%d\n", fd);
    if (fd < 0) {
       sendErr(404, socket, contType);
       return;
