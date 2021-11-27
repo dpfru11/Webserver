@@ -203,7 +203,7 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    }
 
    //Determine content type
-   const char * contType = contentType(finalPath);
+   const char * contType = contentType(fpath);
 
    //Attempt to open
    int fd = open(finalPath, O_RDONLY);
