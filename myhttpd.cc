@@ -168,6 +168,7 @@ void processRequest(int socket) {
    //char* h = strstr(docpath, "/icons");
    printf("hmmm\n");
    printf("cwdddd:%s\n", cwd);
+   char * cwdCopy = strdup(cwd);
    //printf("%s\n", docpath);
    if (dPathSize == 1 && strcmp(docpath, "/") == 0) {
       printf("in here\n");
@@ -188,7 +189,7 @@ void processRequest(int socket) {
    }
    printf("missed?\n");
    //file expansion
-   expandFilePath(filepath, cwd, socket);
+   expandFilePath(filepath, cwdCopy, socket);
    printf("closed\n");
    close( socket );
 }
