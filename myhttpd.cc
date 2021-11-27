@@ -189,32 +189,30 @@ void processRequest(int socket) {
    }
    printf("missed?\n");
    //file expansion
+   char * newPath = (char *) malloc(500);
+   filepath = realpath(filepath, newPath);
    expandFilePath(filepath, cwdCopy, socket);
    printf("closed\n");
    close( socket );
 }
 
 void expandFilePath(char * fpath, char * cwd, int socket) {
-   char * newPath = (char *) malloc(500);
-   char * finalPath = (char *) malloc(500);
-   finalPath = realpath(fpath, newPath);
+   
    printf("newpath:%s\n", newPath);
    printf("finalpath: %s\n", finalPath);
-   if (strlen(finalPath) < (strlen(cwd) + strlen("/http-root-dir"))) {
+   if (strlen(fpath) < (strlen(cwd) + strlen("/http-root-dir"))) {
       
       sendErr(405, socket, NULL);
       return;
    }
    printf("out here?\n");
    //Determine content type
-   const char * contType = contentType(finalPath);
+   const char * contType = contentType(fpath);
 
    //Attempt to open
-   int fd = open(finalPath, O_RDONLY);
+   int fd = open(fpath, O_RDONLY);
    printf("fd:%d\n", fd);
-   delete finalPath;
-   newPath = NULL;
-   finalPath = NULL;
+   
    if (fd < 0) {
       sendErr(404, socket, contType);
       return;
