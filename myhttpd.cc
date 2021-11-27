@@ -151,6 +151,7 @@ void processRequest(int socket) {
          docpath[dPathSize] = '\0';
          printf("here");
          fflush(stdout);
+         fflush(stdin);
          break;
       }
       if (foundDPath == true) {
@@ -158,7 +159,6 @@ void processRequest(int socket) {
          dPathSize++;
       }
    }
-   printf("here");
    //int i = 0;
    /*token = strtok(str, " ");
    while (token)
