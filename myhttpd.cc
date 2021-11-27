@@ -177,8 +177,7 @@ void processRequest(int socket) {
    char * filepath = (char *)malloc(4000);
    printf("yes\n");
    cwd = getcwd(cwd, sizeof(cwd));
-   
-   filepath = cwd;
+   cwd[0] = "\0";
    //printf("ya\n");
    //char* h = strstr(docpath, "/icons");
    printf("hmmm\n");
