@@ -173,11 +173,10 @@ void processRequest(int socket) {
       token = strtok(NULL, " ");
       i++;
    }*/
-   char *cwd = (char *)malloc(1000);
-   char *filepath = (char *)malloc(1000);
-   printf("yes\n");
-   cwd = getcwd(cwd, sizeof(cwd));
-   //cwd[0] = '\0';
+   char *cwd = (char *)malloc(256*sizeof(char));
+	cwd = getcwd(cwd, 256);
+	char *file_path = (char *)malloc((MaxSize + 1)*sizeof(char));
+	strcpy(file_path, cwd);
    //printf("ya\n");
    //char* h = strstr(docpath, "/icons");
    printf("hmmm\n");
