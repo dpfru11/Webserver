@@ -183,7 +183,7 @@ void processRequest(int socket) {
    } else if (strstr(docpath, "/htdocs") != NULL) {
       filepath = strcat(cwd, "http-root-dir/");
       filepath = strcat(filepath, docpath);
-   } else if (strlen(docpath) == 1 && docpath[0] == '/') {
+   } else if (strlen(docpath) == 1 && strcmp(docpath, "/") == 0) {
       filepath = strcat(cwd, "http-root-dir/htdocs/index.html");
       printf("%s\n", filepath);
    } else {
