@@ -185,7 +185,9 @@ void processRequest(int socket) {
    if (dPathSize == 1 && strcmp(docpath, "/") == 0) {
       printf("in here\n");
       filepath = strcat(cwd, "http-root-dir/htdocs/index.html");
-      printf("%s\n", filepath);
+      if (filepath == NULL) {
+         printf("oops\n");
+      }
    } else if (strstr(docpath, "/icons") != NULL) {
       filepath = strcat(cwd, "http-root-dir/");
       filepath = strcat(filepath, docpath);
