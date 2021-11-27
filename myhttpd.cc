@@ -175,7 +175,7 @@ void processRequest(int socket) {
    }*/
    char *cwd = (char *)malloc(256*sizeof(char));
 	cwd = getcwd(cwd, 256);
-	char *filepath = (char *)malloc((MaxSize + 1)*sizeof(char));
+	char *filepath = (char *)malloc((maxHead + 1)*sizeof(char));
 	strcpy(filepath, cwd);
    //printf("ya\n");
    //char* h = strstr(docpath, "/icons");
