@@ -213,7 +213,8 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    int fd = open(finalPath, O_RDONLY);
    printf("fd:%d\n", fd);
    delete finalPath;
-   delete newPath;
+   newPath = NULL;
+   finalPath = NULL;
    if (fd < 0) {
       sendErr(404, socket, contType);
       return;
