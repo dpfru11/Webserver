@@ -145,10 +145,12 @@ void processRequest(int socket) {
    for (int i = 0; i < maxHead * 10; i++) {
       if (str[i] == ' ' && foundDPath == false) {
          foundDPath = true;
+         i;
          continue;
       }
       if (foundDPath == true && str[i] == ' ') {
          docpath[dPathSize] = '\0';
+         printf("%s", docpath);
          break;
       }
       if (foundDPath == true) {
@@ -178,7 +180,7 @@ void processRequest(int socket) {
    //printf("ya\n");
    printf("%ld", strlen(docpath));
    //printf("%s\n", docpath);
-   if (strlen(docpath) == 1 && strcmp(docpath, "/") == 0) {
+   if (dPathSize == 1 && strcmp(docpath, "/") == 0) {
       printf("in here");
       filepath = strcat(cwd, "http-root-dir/htdocs/index.html");
       printf("%s\n", filepath);
