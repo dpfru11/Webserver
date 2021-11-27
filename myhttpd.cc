@@ -171,7 +171,7 @@ void processRequest(int socket) {
       token = strtok(NULL, " ");
       i++;
    }*/
-   char * cwd = (char *)malloc(256);
+   char * cwd = (char *)malloc(1000);
    char * filepath = (char *)malloc(4000);
    printf("yes\n");
    cwd = getcwd(cwd, sizeof(cwd));
