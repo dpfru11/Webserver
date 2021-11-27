@@ -196,8 +196,8 @@ void processRequest(int socket) {
 
 void expandFilePath(char * fpath, char * cwd, int socket) {
    char * newPath = (char *) malloc(500);
-   char * finalPath = (char *) malloc(500);
-   finalPath = realpath(fpath, newPath);
+   //char * finalPath = (char *) malloc(500);
+   fpath = realpath(fpath, newPath);
    printf("newpath:%s\n", newPath);
    printf("cwd: %s\n", cwd);
    if (strlen(finalPath) < (strlen(cwd) + strlen("/http-root-dir"))) {
