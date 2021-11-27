@@ -176,7 +176,7 @@ void processRequest(int socket) {
    printf("yes\n");
    cwd = getcwd(cwd, sizeof(cwd));
    //printf("ya\n");
-   //printf("%ld", strlen(docpath));
+   printf("%ld", strlen(docpath));
    //printf("%s\n", docpath);
    if (strlen(docpath) == 1 && strcmp(docpath, "/") == 0) {
       printf("in here");
