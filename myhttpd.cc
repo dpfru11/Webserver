@@ -189,9 +189,9 @@ void processRequest(int socket) {
    }
    printf("missed?\n");
    //file expansion
-   char * newPath = (char *) malloc(500);
+   char * newPath = (char *) malloc((maxHead)*sizeof(char));
    filepath = realpath(filepath, newPath);
-   expandFilePath(filepath, cwdCopy, socket);
+   expandFilePath(newPath, cwdCopy, socket);
    printf("closed\n");
    close( socket );
 }
