@@ -159,21 +159,7 @@ void processRequest(int socket) {
          dPathSize++;
       }
    }
-   //int i = 0;
-   /*token = strtok(str, " ");
-   while (token)
-   {
-      printf("token: %s\n", token);
-      
-      if (i == 1) {
-         docpath =(char *) malloc(strlen(token) + 1);
-         strcpy(docpath, token);
-         //printf("\n%s\n", docpath);
-         break;
-      }
-      token = strtok(NULL, " ");
-      i++;
-   }*/
+
    char *cwd = (char *)malloc(maxHead * 5);
 	cwd = getcwd(cwd, 256);
 	char *filepath = (char *)malloc(maxHead * 5);
@@ -228,8 +214,6 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    } else {
       follow200(socket, contType, fd);
    }
-
-   close(socket);
 
 }
 
