@@ -174,7 +174,7 @@ void processRequest(int socket) {
       i++;
    }*/
    char * cwd = (char *)malloc(1000);
-   char * filepath = (char *)malloc(4000);
+   char * filepath = (char *)malloc(1000);
    printf("yes\n");
    cwd = getcwd(cwd, sizeof(cwd));
    cwd[0] = '\0';
