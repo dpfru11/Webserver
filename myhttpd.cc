@@ -197,10 +197,10 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    char * newPath = (char *) malloc(strlen(fpath) + 10);
    char * finalPath = realpath(fpath, newPath);
 
-   if (strlen(newPath) < strlen(cwd) + strlen("/http-root-dir")) {
+   /*if (strlen(newPath) < (strlen(cwd) + strlen("/http-root-dir"))) {
       sendErr(405, socket, NULL);
       return;
-   }
+   }*/
 
    //Determine content type
    const char * contType = contentType(finalPath);
