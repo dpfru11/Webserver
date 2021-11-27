@@ -194,8 +194,8 @@ void processRequest(int socket) {
 }
 
 void expandFilePath(char * fpath, char * cwd, int socket) {
-   char * newPath = (char *) malloc(2000);
-   fpath = realpath(fpath, newPath);
+   char * newPath = (char *) malloc(256);
+   char * finalPath = realpath(fpath, newPath);
 
    if (strlen(newPath) < (strlen(cwd) + strlen("/http-root-dir"))) {
       sendErr(405, socket, NULL);
@@ -203,10 +203,10 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    }
 
    //Determine content type
-   const char * contType = contentType(fpath);
+   const char * contType = contentType(finalPath);
 
    //Attempt to open
-   int fd = open(fpath, O_RDONLY);
+   int fd = open(finalPath, O_RDONLY);
    printf("fd:%d\n", fd);
    if (fd < 0) {
       sendErr(404, socket, contType);
