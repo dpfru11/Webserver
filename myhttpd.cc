@@ -26,7 +26,7 @@ int main(int argc, char** argv)
    int port;
 
    if (argc == 1) {
-      port = 5555;
+      port = 5565;
    } else {
       port = atoi( argv[1] );
    }
@@ -78,7 +78,7 @@ void processRequest(int socket) {
    int length = 0;
   
    int n;
-
+   
    // Current character 
    unsigned char newChar;
 
@@ -107,6 +107,7 @@ void processRequest(int socket) {
          //printf("made it\n");
          break;
       } else {
+         
          lastlastlastChar = lastlastChar;
          lastlastChar = lastChar;
          lastChar = newChar;
@@ -114,7 +115,7 @@ void processRequest(int socket) {
       } 
    }
 
-  
+   
    
    char * token;
 
@@ -137,10 +138,26 @@ void processRequest(int socket) {
       sendErr(401, socket, NULL);
       return;
    }
-
+   
    //obtain docpath
-   int i = 0;
-   token = strtok(str, " ");
+   bool foundDPath = false;
+   int dPathSize = 0;
+   for (int i = 0; i < maxHead * 10; i++) {
+      if (str[i] == ' ' && foundDPath == false) {
+         foundDPath = true;
+         continue;
+      }
+      if (foundDPath == true && str[i] == ' ') {
+         docpath[dPathSize] = '\0';
+         break;
+      }
+      if (foundDPath == true) {
+         docpath[dPathSize] = str[i];
+         dPathSize++;
+      }
+   }
+   //int i = 0;
+   /*token = strtok(str, " ");
    while (token)
    {
       printf("token: %s\n", token);
@@ -153,7 +170,7 @@ void processRequest(int socket) {
       }
       token = strtok(NULL, " ");
       i++;
-   }
+   }*/
    printf("\n??");
 
    char * cwd = (char *)malloc(256);
