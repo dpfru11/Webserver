@@ -178,8 +178,8 @@ void processRequest(int socket) {
    printf("yes\n");
    cwd = getcwd(cwd, sizeof(cwd));
    //printf("ya\n");
-   int h = strcmp(docpath, "/");
-   printf("%d\n", h);
+   char* h = strstr(docpath, "/");
+   printf("%s\n", h);
    
    //printf("%s\n", docpath);
    if (dPathSize == 1 && strcmp(docpath, "/") == 0) {
