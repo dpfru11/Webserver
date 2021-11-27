@@ -252,7 +252,7 @@ void follow200(int socket, const char * conttype, int fd) {
       <crlf> 
       <Document Data>
    */
-  printf("%s\n", conttype);
+  printf("conttype: %s\n", conttype);
    const char * message = "HTTP/1.1 200 Document follows\r\nServer: CS 252 lab5\r\nContent-Type: ";
    write(socket, message, strlen(message));
    write(socket, conttype, strlen(conttype));
