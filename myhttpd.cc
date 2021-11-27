@@ -173,8 +173,7 @@ void processRequest(int socket) {
    }*/
    char * cwd = (char *)malloc(256);
    char * filepath = (char *)malloc(4000);
-      printf("uhmhkfk??\n");
-
+      printf("%s\n", docpath);
    cwd = getcwd(cwd, sizeof(cwd));
    printf("%ld", strlen(docpath));
    if (strstr(docpath, "/icons") != NULL) {
