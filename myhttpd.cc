@@ -202,7 +202,7 @@ void processRequest(int socket) {
    printf("missed?\n");
    //file expansion
    expandFilePath(filepath, cwd, socket);
-   
+   printf("closed\n");
    close( socket );
 }
 
