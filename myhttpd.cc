@@ -177,6 +177,7 @@ void processRequest(int socket) {
    char * filepath = (char *)malloc(4000);
    printf("yes\n");
    cwd = getcwd(cwd, sizeof(cwd));
+   strcpy(filepath, cwd);
    //printf("ya\n");
    //char* h = strstr(docpath, "/icons");
    printf("hmmm\n");
@@ -184,7 +185,7 @@ void processRequest(int socket) {
    //printf("%s\n", docpath);
    if (dPathSize == 1 && strcmp(docpath, "/") == 0) {
       printf("in here\n");
-      filepath = strdup("/http-root-dir/htdocs/index.html");
+      filepath = strcat(cwd, "http-root-dir/htdocs/index.html");
       if (filepath == NULL) {
          printf("oops\n");
       }
@@ -198,7 +199,7 @@ void processRequest(int socket) {
       filepath = strcat(cwd, "http-root-dir/htdocs");
       filepath = strcat(filepath, docpath);
    }
-   printf("%s\n", filepath);
+   printf("missed?\n");
    //file expansion
    expandFilePath(filepath, cwd, socket);
    
