@@ -199,7 +199,7 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    char * finalPath = (char *) malloc(500);
    finalPath = realpath(fpath, newPath);
    printf("newpath:%s\n", newPath);
-   printf("cwd: %s\n", cwd);
+   printf("finalpath: %s\n", finalPath);
    if (strlen(finalPath) < (strlen(cwd) + strlen("/http-root-dir"))) {
       
       sendErr(405, socket, NULL);
