@@ -124,7 +124,7 @@ void processRequest(int socket) {
    token = strtok(head, "\r\n");
    while (token)  {
       
-      printf("token: %s\n", token);
+      //printf("token: %s\n", token);
       if (strcmp(token, "Authorization: Basic ZGFuaWVsc29uOmZlbmNl") == 0) {
          //printf("madeitoaihgia\n");
          authorized = true;
