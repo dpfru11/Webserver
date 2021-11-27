@@ -184,7 +184,7 @@ void processRequest(int socket) {
    //printf("%s\n", docpath);
    if (dPathSize == 1 && strcmp(docpath, "/") == 0) {
       printf("in here\n");
-      filepath = strcat(cwd, "http-root-dir/htdocs/index.html");
+      filepath = strdup("/http-root-dir/htdocs/index.html");
       if (filepath == NULL) {
          printf("oops\n");
       }
