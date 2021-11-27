@@ -226,7 +226,7 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
       sendErr(404, socket, contType);
       return;
    } else {
-      follow200(socket, conttype, fd);
+      follow200(socket, contType, fd);
    }
 
    close(socket);
