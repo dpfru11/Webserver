@@ -179,6 +179,7 @@ void processRequest(int socket) {
    //printf("%ld", strlen(docpath));
    //printf("%s\n", docpath);
    if (strlen(docpath) == 1 && strcmp(docpath, "/") == 0) {
+      printf("in here");
       filepath = strcat(cwd, "http-root-dir/htdocs/index.html");
       printf("%s\n", filepath);
    } else if (strstr(docpath, "/icons") != NULL) {
