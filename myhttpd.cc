@@ -150,6 +150,7 @@ void processRequest(int socket) {
       if (foundDPath == true && str[i] == ' ') {
          docpath[dPathSize] = '\0';
          printf("here\n");
+         fflush(stdout);
          break;
       }
       if (foundDPath == true) {
