@@ -149,9 +149,6 @@ void processRequest(int socket) {
       }
       if (foundDPath == true && str[i] == ' ') {
          docpath[dPathSize] = '\0';
-         printf("here");
-         fflush(stdout);
-         fflush(stdin);
          break;
       }
       if (foundDPath == true) {
@@ -174,8 +171,7 @@ void processRequest(int socket) {
       token = strtok(NULL, " ");
       i++;
    }*/
-   printf("??");
-
+   printf("uhmhkfk??\n");
    char * cwd = (char *)malloc(256);
    char * filepath = (char *)malloc(4000);
    cwd = getcwd(cwd, sizeof(cwd));
