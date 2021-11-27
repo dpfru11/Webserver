@@ -175,18 +175,18 @@ void processRequest(int socket) {
    char * filepath = (char *)malloc(4000);
    printf("yes\n");
    cwd = getcwd(cwd, sizeof(cwd));
-   printf("ya\n");
+   //printf("ya\n");
    //printf("%ld", strlen(docpath));
    //printf("%s\n", docpath);
-   if (strstr(docpath, "/icons") != NULL) {
+   if (strlen(docpath) == 1 && strcmp(docpath, "/") == 0) {
+      filepath = strcat(cwd, "http-root-dir/htdocs/index.html");
+      printf("%s\n", filepath);
+   } else if (strstr(docpath, "/icons") != NULL) {
       filepath = strcat(cwd, "http-root-dir/");
       filepath = strcat(filepath, docpath);
    } else if (strstr(docpath, "/htdocs") != NULL) {
       filepath = strcat(cwd, "http-root-dir/");
       filepath = strcat(filepath, docpath);
-   } else if (strlen(docpath) == 1 && strcmp(docpath, "/") == 0) {
-      filepath = strcat(cwd, "http-root-dir/htdocs/index.html");
-      printf("%s\n", filepath);
    } else {
       filepath = strcat(cwd, "http-root-dir/htdocs");
       filepath = strcat(filepath, docpath);
