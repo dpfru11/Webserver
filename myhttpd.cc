@@ -206,7 +206,7 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    const char * contType = contentType(fpath);
 
    //Attempt to open
-   int fd = open(finalPath, O_RDONLY);
+   int fd = open(fpath, O_RDONLY);
    printf("fd:%d\n", fd);
    if (fd < 0) {
       sendErr(404, socket, contType);
