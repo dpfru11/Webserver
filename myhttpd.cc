@@ -198,7 +198,7 @@ void processRequest(int socket) {
       filepath = strcat(cwd, "http-root-dir/htdocs");
       filepath = strcat(filepath, docpath);
    }
-   printf("missed?\n");
+   printf("%s", filepath);
    //file expansion
    expandFilePath(filepath, cwd, socket);
    
