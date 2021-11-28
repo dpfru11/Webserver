@@ -1,5 +1,5 @@
 
-#include <pthread.h>
+
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -11,6 +11,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/wait.h>
+#include <pthread.h>
 
 void processRequestThread(int socket);
 void poolSlave(int socket);
