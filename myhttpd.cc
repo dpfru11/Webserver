@@ -13,7 +13,7 @@
 #include <sys/wait.h>
 #include <pthread.h>
 
-void processRequestThread(int socket);
+void processRequestThread(int * socket);
 void poolSlave(int socket);
 void processRequest(int socket);
 void expandFilePath(char * fpath, char * cwd, int socket);
