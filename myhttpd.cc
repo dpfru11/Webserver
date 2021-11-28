@@ -290,7 +290,7 @@ void processRequest(int socket) {
    expandFilePath(newPath, cwdCopy, socket);
    
    
-   close( socket );
+   //close( socket );
 }
 
 void expandFilePath(char * fpath, char * cwd, int socket) {
