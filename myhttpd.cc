@@ -382,7 +382,7 @@ const char * contentType(char * str) {
 void processRequestThread(int * socket) {
    int sock = socket[0];
    processRequest(sock);
-   printf("ope");
+   printf("ope\n");
    close(sock);
 }
 
