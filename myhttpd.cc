@@ -136,11 +136,11 @@ int main(int argc, char** argv)
          }
          pthread_join(tid[0], NULL);
         // pthread_join(tid[0], NULL);
-            
+         
       } else {
          return -1;
       }
-      return 0;
+     
    }
 
    //simple iterative server processing
