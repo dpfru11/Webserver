@@ -123,7 +123,7 @@ int main(int argc, char** argv)
          pthread_t tid;
 			pthread_attr_t attr;
 			pthread_attr_init(&attr);
-         pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
+         pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
 
          //pthread_create(&tid, &attr, (void * (*)(void*))processRequestThread,(void *)slaveSocket);
          pthread_create(&tid, &attr, (void *(*)(void *))processRequestThread, (void *)slaveSocket);
