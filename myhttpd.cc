@@ -315,7 +315,7 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    } else {
       follow200(socket, contType, fd);
    }
-   close(fd);
+   //close(fd);
 }
 
 //Sending errors, what else?
