@@ -46,6 +46,7 @@ int main(int argc, char** argv)
    int port;
    char method = '\0';
    printf("argc: %d\n", argc);
+   printf("argv1: %s\n", argv[1]);
    if (argc == 1) {
       port = 5565;
    } else if (argc == 2){
