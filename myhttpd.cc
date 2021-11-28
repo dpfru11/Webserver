@@ -122,7 +122,7 @@ int main(int argc, char** argv)
 			pthread_attr_init(&attr);
          pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
 
-         pthread_create(&tid, &attr, (void * (*)(void*))processRequestThread,(void *)slaveSocket);
+         pthread_create(&tid, &attr, (void * (*)(void*))processRequestThread,(void *)&masterSocket);
       } else if (method == 'p') {
 			pthread_attr_t attr;
 			pthread_attr_init(&attr);
