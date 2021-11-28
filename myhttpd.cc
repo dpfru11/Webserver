@@ -147,15 +147,18 @@ int main(int argc, char** argv)
    }
 
    //simple iterative server processing
-   while(1) {
-      struct sockaddr_in clientIPAddress;
-      int alen = sizeof( clientIPAddress );
-      int slaveSocket = accept( masterSocket, (struct sockaddr *)&clientIPAddress,
-         (socklen_t*)&alen);
-      //printf("kajhgjagl");
-      processRequest(slaveSocket);
-      close(slaveSocket);
+   if (argc != 3) {
+         while(1) {
+         struct sockaddr_in clientIPAddress;
+         int alen = sizeof( clientIPAddress );
+         int slaveSocket = accept( masterSocket, (struct sockaddr *)&clientIPAddress,
+            (socklen_t*)&alen);
+         //printf("kajhgjagl");
+         processRequest(slaveSocket);
+         close(slaveSocket);
+      }
    }
+   
 }
 
 void processRequest(int socket) {
