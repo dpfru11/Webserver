@@ -12,7 +12,8 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
-
+void processRequestThread(int socket);
+void poolSlave(int socket);
 void processRequest(int socket);
 void expandFilePath(char * fpath, char * cwd, int socket);
 void sendErr(int errno, int socket, const char * conttype);
@@ -373,7 +374,7 @@ void poolSlave(int socket){
    while(1){
       struct sockaddr_in clientIPAddress;
       int alen = sizeof( clientIPAddress );
-      int slaveSocket = accept( masterSocket, (struct sockaddr *)&clientIPAddress,
+      int slaveSocket = accept( socket, (struct sockaddr *)&clientIPAddress,
          (socklen_t*)&alen);
       //check if accept worked
       processRequest(slaveSocket);
