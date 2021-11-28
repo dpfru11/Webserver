@@ -382,6 +382,7 @@ const char * contentType(char * str) {
 
 void processRequestThread(int * socket) {
    int sock = socket[0];
+   printf("inhereya\n");
    processRequest(sock);
    printf("ope\n");
    close(sock);
