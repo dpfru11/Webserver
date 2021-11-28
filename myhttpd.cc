@@ -125,7 +125,8 @@ int main(int argc, char** argv)
             pthread_attr_t attr;
             pthread_attr_init(&attr);
             pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
-            pthread_create(&tid, &attr, (void *(*)(void *))processRequestThread, (void *)slaveSocket);
+            pthread_create(&tid, &attr, (void *(*)(void *))processRequestThread, (void *)&slaveSocket);
+            
          }
          
 
@@ -315,7 +316,7 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    } else {
       follow200(socket, contType, fd);
    }
-   //close(fd);
+   close(fd);
 }
 
 //Sending errors, what else?
@@ -377,9 +378,10 @@ const char * contentType(char * str) {
    }
 }
 
-void processRequestThread(int socket) {
-   processRequest(socket);
-   close(socket);
+void processRequestThread(int * socket) {
+   int sock = socket[0];
+   processRequest(sock);
+   close(sock);
 }
 
 void poolSlave(int socket){
