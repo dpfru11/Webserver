@@ -53,11 +53,11 @@ int main(int argc, char** argv)
       port = atoi( argv[1] );
    } else if (argc == 3){
       port = atoi(argv[2]);
-      if (strcmp(argv[1], "-f")) {
+      if (strcmp(argv[1], "-f") == 0) {
          method = 'f';
-      } else if (strcmp(argv[1], "-p")) {
+      } else if (strcmp(argv[1], "-p") == 0) {
          method = 'p';
-      } else if (strcmp(argv[1], "-t")) {
+      } else if (strcmp(argv[1], "-t") == 0) {
          printf("tist\n");
          method = 't';
       } else {
