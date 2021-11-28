@@ -130,10 +130,10 @@ int main(int argc, char** argv)
          pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
 
          pthread_t tid[5];
-         for(int i=0; i< 0;i++){
-            pthread_create(&tid, &attr,
+         for(int i=0; i< 5;i++){
+            pthread_create(&tid[i], &attr,
             (void *(*)(void *))poolSlave,
-            (void *)masterSocket);
+            (void *)&masterSocket);
          }
          pthread_join(tid[0], NULL);
             
