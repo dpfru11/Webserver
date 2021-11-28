@@ -13,7 +13,7 @@
 #include <sys/wait.h>
 #include <pthread.h>
 
-void processRequestThread(int * socket);
+void processRequestThread(int socket);
 void poolSlave(int socket);
 void processRequest(int socket);
 void expandFilePath(char * fpath, char * cwd, int socket);
@@ -44,9 +44,8 @@ int main(int argc, char** argv)
 
    //Handle port args
    int port;
-   char method = '\0';
-   printf("argc: %d\n", argc);
-   printf("argv1: %s\n", argv[1]);
+   char method;
+
    if (argc == 1) {
       port = 5565;
    } else if (argc == 2){
@@ -58,7 +57,6 @@ int main(int argc, char** argv)
       } else if (strcmp(argv[1], "-p") == 0) {
          method = 'p';
       } else if (strcmp(argv[1], "-t") == 0) {
-         printf("tist\n");
          method = 't';
       } else {
          perror("Usage: myhttpd <-t/-f/-p> <port>");
@@ -117,7 +115,6 @@ int main(int argc, char** argv)
          }
          close(slaveSocket);
       } else if (method == 't') {
-         printf("the t sis\n");
          while(1) {
             struct sockaddr_in clientIPAddress;
             int alen = sizeof( clientIPAddress );
@@ -128,11 +125,8 @@ int main(int argc, char** argv)
             pthread_attr_t attr;
             pthread_attr_init(&attr);
             pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
-            pthread_create(&tid, &attr, (void *(*)(void *))processRequestThread, (void *)&slaveSocket);
-            
+            pthread_create(&tid, &attr, (void *(*)(void *))processRequestThread, (void *)slaveSocket);
          }
-         
-
       } else if (method == 'p') {
 			pthread_attr_t attr;
 			pthread_attr_init(&attr);
@@ -292,10 +286,10 @@ void processRequest(int socket) {
    char * newPath = (char *) malloc((maxHead)*sizeof(char));
    filepath = realpath(filepath, newPath);
    expandFilePath(newPath, cwdCopy, socket);
-   printf("yes im p\n");
    
-   
-   //close( socket );
+   delete newPath;
+   filepath = NULL;
+   close( socket );
 }
 
 void expandFilePath(char * fpath, char * cwd, int socket) {
@@ -320,8 +314,7 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    } else {
       follow200(socket, contType, fd);
    }
-   printf("made it out here\n");
-   //close(fd);
+   close(fd);
 }
 
 //Sending errors, what else?
@@ -383,12 +376,9 @@ const char * contentType(char * str) {
    }
 }
 
-void processRequestThread(int * socket) {
-   int sock = socket[0];
-   printf("inhereya\n");
-   processRequest(sock);
-   printf("ope\n");
-   close(sock);
+void processRequestThread(int socket) {
+   processRequest(socket);
+   close(socket);
 }
 
 void poolSlave(int socket){
