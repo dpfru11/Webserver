@@ -45,7 +45,7 @@ int main(int argc, char** argv)
    //Handle port args
    int port;
    char method;
-
+   printf("the t sis\n");
    if (argc == 1) {
       port = 5565;
    } else if (argc == 2){
