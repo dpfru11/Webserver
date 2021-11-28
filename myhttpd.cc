@@ -108,7 +108,7 @@ int main(int argc, char** argv)
          if (pid == 0) {
             processRequest(slaveSocket);
             close(slaveSocket);
-            exit(1)
+            exit(1);
          }
          close(slaveSocket);
       } else if (method == 't') {
@@ -125,6 +125,10 @@ int main(int argc, char** argv)
          pthread_create(&tid, &attr, (void * (*)(void*))processRequestThread,
             (void *)slaveSocket);
       } else if (method == 'p') {
+			pthread_attr_t attr;
+			pthread_attr_init(&attr);
+         pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
+
          pthread_t tid[5];
          for(int i=0; i< 0;i++){
             pthread_create(&tid, &attr,
@@ -134,7 +138,7 @@ int main(int argc, char** argv)
          pthread_join(tid[0], NULL);
             
       } else {
-         return -1
+         return -1;
       }
    }
 
@@ -377,6 +381,10 @@ void poolSlave(int socket){
       int slaveSocket = accept( socket, (struct sockaddr *)&clientIPAddress,
          (socklen_t*)&alen);
       //check if accept worked
+      if (slaveSocket < 0) {
+         perror("accept error");
+         exit(1);
+      }
       processRequest(slaveSocket);
       close(slaveSocket);
    }
