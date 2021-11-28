@@ -49,19 +49,12 @@ int main(int argc, char** argv)
       port = atoi( argv[1] );
    } else if (argc == 3){
       port = atoi(argv[2]);
-      switch(argv[1]) {
-         case "-f":
-            method = 'f';
-            break;
-         case "-p":
-            method = 'p';
-            break;
-         case "-t":
-            method = 't';
-            break;
-         default:
-            perror("Unidentified tag");
-            return -1;
+      if (strcmp(argv[1], "-f")) {
+         method = 'f';
+      } else if (strcmp(argv[1], "-p")) {
+         method = 'p';
+      } else if (strcmp(argv[1], "-t")) {
+         method = 't';
       }
    }
    
