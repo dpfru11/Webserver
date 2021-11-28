@@ -123,7 +123,8 @@ int main(int argc, char** argv)
 			pthread_attr_init(&attr);
          pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
 
-         pthread_create(&tid, &attr, (void * (*)(void*))processRequestThread,(void *)slaveSocket);
+         //pthread_create(&tid, &attr, (void * (*)(void*))processRequestThread,(void *)slaveSocket);
+         pthread_create(&tid, &attr, (void *(*)(void *))processRequestThread, (void *)slaveSocket);
       } else if (method == 'p') {
 			pthread_attr_t attr;
 			pthread_attr_init(&attr);
@@ -131,9 +132,11 @@ int main(int argc, char** argv)
 
          pthread_t tid[5];
          for(int i=0; i < 5;i++){
-            pthread_create(&tid[i], &attr, (void * (*)(void *))poolSlave,(void *)masterSocket);
+           //pthread_create(&tid[i], &attr, (void * (*)(void *))poolSlave,(void *)masterSocket);
+            pthread_create(&tid[i], &attr, (void *(*)(void *))poolSlave, (void *)masterSocket);
          }
          pthread_join(tid[0], NULL);
+        // pthread_join(tid[0], NULL);
             
       } else {
          return -1;
