@@ -31,7 +31,8 @@ extern "C" void zombiehandle(int sig) {
 int main(int argc, char** argv)
 {
    //Let's hunt some zombies >:)
-   struct sigaction saZom;
+   
+   /*struct sigaction saZom;
    saZom.sa_handler = zombiehandle;
    sigemptyset(&saZom.sa_mask);
    saZom.sa_flags = SA_RESTART;
@@ -39,7 +40,7 @@ int main(int argc, char** argv)
    if(sigaction(SIGCHLD, &saZom, NULL)) {
       perror("sigaction");
       exit(1);
-   }
+   }*/
 
    //Handle port args
    int port;
