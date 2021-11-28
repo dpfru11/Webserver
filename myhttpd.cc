@@ -115,7 +115,7 @@ int main(int argc, char** argv)
          }
          close(slaveSocket);
       } else if (method == 't') {
-         printf("the t sis");
+         printf("the t sis\n");
          while(1) {
             struct sockaddr_in clientIPAddress;
             int alen = sizeof( clientIPAddress );
