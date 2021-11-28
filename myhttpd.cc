@@ -289,6 +289,7 @@ void processRequest(int socket) {
    char * newPath = (char *) malloc((maxHead)*sizeof(char));
    filepath = realpath(filepath, newPath);
    expandFilePath(newPath, cwdCopy, socket);
+   printf("yes im p\n");
    
    
    //close( socket );
