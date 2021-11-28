@@ -120,17 +120,17 @@ int main(int argc, char** argv)
          pthread_t tid;
 			pthread_attr_t attr;
 			pthread_attr_init(&attr);
-         pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+         pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
 
          pthread_create(&tid, &attr, (void * (*)(void*))processRequestThread,(void *)&masterSocket);
       } else if (method == 'p') {
 			pthread_attr_t attr;
 			pthread_attr_init(&attr);
-         pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+         pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
 
          pthread_t tid[5];
          for(int i=0; i < 5;i++){
-            pthread_create(&tid[i], &attr, (void *(*)(void *))poolSlave,(void *)&masterSocket);
+            pthread_create(&tid[i], &attr, (void * (*)(void *))poolSlave,(void *)&masterSocket);
          }
          //pthread_join(tid[0], NULL);
             
