@@ -132,7 +132,7 @@ int main(int argc, char** argv)
          for(int i=0; i < 5;i++){
             pthread_create(&tid[i], &attr, (void * (*)(void *))poolSlave,(void *)masterSocket);
          }
-         //pthread_join(tid[0], NULL);
+         pthread_join(tid[0], NULL);
             
       } else {
          return -1;
