@@ -21,9 +21,22 @@ const char * contentType(char * str);
 const char * realm = "CS252-DANREALM";
 int QueueLength = 5;
 
+extern "C" void zombiehandle(int sig) {
+  //if (sig == SIGCHLD) {
+    waitpid(-1, NULL, WNOHANG);
+}
 
 int main(int argc, char** argv)
 {
+   struct sigaction saZom;
+   saZom.sa_handler = zombiehandle;
+   sigemptyset(&saZom.sa_mask);
+   saZom.sa_flags = SA_RESTART;
+
+   if(sigaction(SIGCHLD, &saZom, NULL)) {
+      perror("sigaction");
+      exit(1);
+   }
    int port;
 
    if (argc == 1) {
