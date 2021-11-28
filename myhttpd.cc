@@ -135,7 +135,7 @@ int main(int argc, char** argv)
             (void *(*)(void *))poolSlave,
             (void *)&masterSocket);
          }
-         pthread_join(tid[0], NULL);
+         //pthread_join(tid[0], NULL);
             
       } else {
          return -1;
