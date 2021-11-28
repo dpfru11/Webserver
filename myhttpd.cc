@@ -316,6 +316,7 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    } else {
       follow200(socket, contType, fd);
    }
+   printf("made it out here\n");
    //close(fd);
 }
 
