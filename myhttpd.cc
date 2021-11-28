@@ -282,7 +282,7 @@ void processRequest(int socket) {
    expandFilePath(newPath, cwdCopy, socket);
    
    delete newPath;
-   delete filepath;
+   filepath = NULL;
    close( socket );
 }
 
