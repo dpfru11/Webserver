@@ -57,6 +57,7 @@ int main(int argc, char** argv)
       } else if (strcmp(argv[1], "-p")) {
          method = 'p';
       } else if (strcmp(argv[1], "-t")) {
+         printf("tist\n");
          method = 't';
       } else {
          perror("Usage: myhttpd <-t/-f/-p> <port>");
