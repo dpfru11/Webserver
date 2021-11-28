@@ -126,7 +126,7 @@ int main(int argc, char** argv)
             pthread_attr_init(&attr);
             pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
             pthread_create(&tid, &attr, (void *(*)(void *))processRequestThread, (void *)&slaveSocket);
-            
+            close(sock);
          }
          
 
@@ -381,7 +381,6 @@ const char * contentType(char * str) {
 void processRequestThread(int * socket) {
    int sock = socket[0];
    processRequest(sock);
-   close(sock);
 }
 
 void poolSlave(int socket){
