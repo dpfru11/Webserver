@@ -49,7 +49,7 @@ int main(int argc, char** argv)
       port = atoi( argv[1] );
    } else if (argc == 3){
       port = atoi(argv[2]);
-      switch(argv[2]) {
+      switch(argv[1]) {
          case "-f":
             method = 'f';
             break;
@@ -61,7 +61,7 @@ int main(int argc, char** argv)
             break;
          default:
             perror("Unidentified tag");
-            return;
+            return -1;
       }
    }
    
