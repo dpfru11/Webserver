@@ -57,8 +57,14 @@ int main(int argc, char** argv)
          method = 't';
       } else {
          perror("Usage: myhttpd <-t/-f/-p> <port>");
-         reutrn -1;
+         return -1;
       }
+      if (method == 'f') {
+         while(1) {
+            int slaveSocket = 
+         }
+      }
+      return 0;
    }
    
    struct sockaddr_in serverIPAddress; 
@@ -94,12 +100,53 @@ int main(int argc, char** argv)
       exit(1);
    }
 
-   //process their requests
+   //if a concurrency is requested, use preferred method for user processing
+   if (argc == 3) {
+      if (method == 'f') {
+         struct sockaddr_in clientIPAddress;
+         int alen = sizeof( clientIPAddress );
+         int slaveSocket = accept( masterSocket, (struct sockaddr *)&clientIPAddress,
+            (socklen_t*)&alen);
+         int pid = fork();
+         if (pid == 0) {
+            processRequest(slaveSocket);
+            close(slaveSocket);
+            exit(1)
+         }
+         close(slaveSocket);
+      } else if (method == 't') {
+         struct sockaddr_in clientIPAddress;
+         int alen = sizeof( clientIPAddress );
+         int slaveSocket = accept( masterSocket, (struct sockaddr *)&clientIPAddress,
+            (socklen_t*)&alen);
+
+         pthread_t tid;
+			pthread_attr_t attr;
+			pthread_attr_init(&attr);
+         pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
+
+         pthread_create(&tid, &attr, (void * (*)(void*))processRequestThread,
+            (void *)slaveSocket);
+      } else if (method == 'p') {
+         pthread_t tid[5];
+         for(int i=0; i< 0;i++){
+            pthread_create(&tid, &attr,
+            (void *(*)(void *))poolSlave,
+            (void *)masterSocket);
+         }
+         pthread_join(tid[0], NULL);
+            
+      } else {
+         return -1
+      }
+   }
+
+   //simple iterative server processing
    while(1) {
       struct sockaddr_in clientIPAddress;
       int alen = sizeof( clientIPAddress );
       int slaveSocket = accept( masterSocket, (struct sockaddr *)&clientIPAddress,
-      (socklen_t*)&alen);
+         (socklen_t*)&alen);
       //printf("kajhgjagl");
       processRequest(slaveSocket);
       close(slaveSocket);
@@ -231,7 +278,9 @@ void processRequest(int socket) {
    char * newPath = (char *) malloc((maxHead)*sizeof(char));
    filepath = realpath(filepath, newPath);
    expandFilePath(newPath, cwdCopy, socket);
-   printf("closed\n");
+   
+   delete newPath;
+   delete filepath;
    close( socket );
 }
 
@@ -286,6 +335,7 @@ void sendErr(int errno, int socket, const char * conttype) {
    }
 }
 
+//send found file/directory response
 void follow200(int socket, const char * conttype, int fd) {
    /*
       HTTP/1.1 <sp> 200 <sp> Document <sp> follows <crlf> 
@@ -307,6 +357,7 @@ void follow200(int socket, const char * conttype, int fd) {
    }
 }
 
+//Define type of content
 const char * contentType(char * str) {
    if (strstr(str, ".html") != NULL || strstr(str, ".html/") != NULL) {
       return "text/html";
@@ -317,3 +368,19 @@ const char * contentType(char * str) {
    }
 }
 
+void processRequestThread(int socket) {
+   processRequest(socket);
+   close(socket);
+}
+
+void poolSlave(int socket){
+   while(1){
+      struct sockaddr_in clientIPAddress;
+      int alen = sizeof( clientIPAddress );
+      int slaveSocket = accept( masterSocket, (struct sockaddr *)&clientIPAddress,
+         (socklen_t*)&alen);
+      //check if accept worked
+      processRequest(slaveSocket);
+      close(slaveSocket);
+   }
+} 
