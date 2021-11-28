@@ -115,18 +115,19 @@ int main(int argc, char** argv)
          }
          close(slaveSocket);
       } else if (method == 't') {
-         struct sockaddr_in clientIPAddress;
-         int alen = sizeof( clientIPAddress );
-         int slaveSocket = accept( masterSocket, (struct sockaddr *)&clientIPAddress,
-            (socklen_t*)&alen);
+         while(1) {
+            struct sockaddr_in clientIPAddress;
+            int alen = sizeof( clientIPAddress );
+            int slaveSocket = accept( masterSocket, (struct sockaddr *)&clientIPAddress,
+               (socklen_t*)&alen);
 
-         pthread_t tid;
-			pthread_attr_t attr;
-			pthread_attr_init(&attr);
-         pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
-
-         //pthread_create(&tid, &attr, (void * (*)(void*))processRequestThread,(void *)slaveSocket);
-         pthread_create(&tid, &attr, (void *(*)(void *))processRequestThread, (void *)slaveSocket);
+            pthread_t tid;
+            pthread_attr_t attr;
+            pthread_attr_init(&attr);
+            pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
+            pthread_create(&tid, &attr, (void *(*)(void *))processRequestThread, (void *)slaveSocket);
+         }
+         
       } else if (method == 'p') {
 			pthread_attr_t attr;
 			pthread_attr_init(&attr);
