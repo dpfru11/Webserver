@@ -130,13 +130,14 @@ int main(int argc, char** argv)
 
          pthread_t tid[5];
          for(int i=0; i< 5;i++){
-            pthread_create(&tid[i], &attr, (void *(*)(void *))poolSlave, (void *)&masterSocket);
+            pthread_create(&tid[i], &attr, (void *(*)(void *))poolSlave,(void *)&masterSocket);
          }
          //pthread_join(tid[0], NULL);
             
       } else {
          return -1;
       }
+      return 0;
    }
 
    //simple iterative server processing
