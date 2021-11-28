@@ -62,7 +62,6 @@ int main(int argc, char** argv)
          return -1;
       }
       
-      return 0;
    }
    
    struct sockaddr_in serverIPAddress; 
