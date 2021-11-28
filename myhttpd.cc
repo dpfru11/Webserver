@@ -59,11 +59,7 @@ int main(int argc, char** argv)
          perror("Usage: myhttpd <-t/-f/-p> <port>");
          return -1;
       }
-      if (method == 'f') {
-         while(1) {
-            int slaveSocket = 
-         }
-      }
+      
       return 0;
    }
    
