@@ -23,27 +23,46 @@ const char * realm = "CS252-DANREALM";
 int QueueLength = 5;
 
 extern "C" void zombiehandle(int sig) {
-  //if (sig == SIGCHLD) {
     waitpid(-1, NULL, WNOHANG);
 }
 
 int main(int argc, char** argv)
 {
+   //Let's hunt some zombies >:)
    struct sigaction saZom;
    saZom.sa_handler = zombiehandle;
    sigemptyset(&saZom.sa_mask);
    saZom.sa_flags = SA_RESTART;
-
+   
    if(sigaction(SIGCHLD, &saZom, NULL)) {
       perror("sigaction");
       exit(1);
    }
+
+   //Handle port args
    int port;
+   char method;
 
    if (argc == 1) {
       port = 5565;
-   } else {
+   } else if (argc == 2){
       port = atoi( argv[1] );
+   } else if (argc == 3){
+      port = atoi(argv[2]);
+      switch(argv[2]) {
+         case "-f":
+            method = 'f';
+            break;
+         case "-p":
+            method = 'p';
+            break;
+         case "-t":
+            method = 't';
+            break;
+         default:
+            perror("Unidentified tag");
+            return;
+      }
    }
    
    struct sockaddr_in serverIPAddress; 
@@ -72,8 +91,14 @@ int main(int argc, char** argv)
       exit(1);
    }
 
+   //"listen" for new client connections
    error = listen( masterSocket, QueueLength);
+   if (error < 0) {
+      perror("listen error");
+      exit(1);
+   }
 
+   //process their requests
    while(1) {
       struct sockaddr_in clientIPAddress;
       int alen = sizeof( clientIPAddress );
@@ -97,11 +122,12 @@ void processRequest(int socket) {
    // Current character 
    unsigned char newChar;
 
-  // Last character
+  // Last character and 
    unsigned char lastChar = 0;
    unsigned char lastlastChar = 0;
    unsigned char lastlastlastChar = 0;
-   //printf("made it");
+
+   //get the entire first line until the first <crlf>
    while(n = read(socket, &newChar, sizeof(newChar))) {
        
       length++;
@@ -114,6 +140,8 @@ void processRequest(int socket) {
          str[length-1] = newChar;
       } 
    }
+
+   //Read header data
    length = 0;
    while(n = read(socket, &newChar, sizeof(newChar))) {
        
@@ -154,6 +182,7 @@ void processRequest(int socket) {
       return;
    }
    printf("madeitoaihgia\n");
+
    //obtain docpath
    bool foundDPath = false;
    int dPathSize = 0;
