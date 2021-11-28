@@ -381,7 +381,7 @@ const char * contentType(char * str) {
 void processRequestThread(int * socket) {
    int sock = socket[0];
    processRequest(sock);
-   close(socket);
+   close(sock);
 }
 
 void poolSlave(int socket){
