@@ -109,9 +109,7 @@ int main(int argc, char** argv)
             processRequest(slaveSocket);
             close(slaveSocket);
             exit(1);
-         } else {
-            waitpid(pid, NULL, 0);
-         }
+         } 
          close(slaveSocket);
       } else if (method == 't') {
          struct sockaddr_in clientIPAddress;
