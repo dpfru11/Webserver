@@ -294,8 +294,8 @@ void processRequest(int socket) {
    filepath = realpath(filepath, newPath);
    expandFilePath(newPath, cwdCopy, socket);
    delete cwd;
-   //delete str;
-   //delete head;
+   str = NULL;
+   delete head;
    //delete docpath;
    delete newPath;
    filepath = NULL;
