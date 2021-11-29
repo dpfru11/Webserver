@@ -283,12 +283,10 @@ void processRequest(int socket) {
    char * newPath = (char *) malloc((maxHead)*sizeof(char));
    filepath = realpath(filepath, newPath);
    expandFilePath(newPath, cwdCopy, socket);
-   for(int i = 0; i < str.length; i++) {
-      if (str[i] == '\0') {
-         break;
-      }
-      str[i] = '\0';
-
+   int j = 0
+   while (str[j] != '\0') {
+      str[j] != '\0';
+      j++;
    }
    delete str;
    free(cwd);
