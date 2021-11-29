@@ -282,7 +282,7 @@ void processRequest(int socket) {
    char * newPath = (char *) malloc((maxHead)*sizeof(char));
    filepath = realpath(filepath, newPath);
    expandFilePath(newPath, cwdCopy, socket);
-   
+   /*
    free(cwd);
    cwd = NULL;
    free(docpath);
@@ -292,6 +292,7 @@ void processRequest(int socket) {
    free(cwdCopy);
    cwdCopy = NULL;
    filepath = NULL;
+   */
    close( socket );
 }
 
@@ -354,7 +355,6 @@ void follow200(int socket, const char * conttype, int fd) {
       <crlf> 
       <Document Data>
    */
-  printf("conttype: %s\n", conttype);
    const char * message = "HTTP/1.1 200 Document follows\r\nServer: CS 252 lab5\r\nContent-Type: ";
    write(socket, message, strlen(message));
    write(socket, conttype, strlen(conttype));
