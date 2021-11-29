@@ -282,7 +282,7 @@ void processRequest(int socket) {
    char * newPath = (char *) malloc((maxHead)*sizeof(char));
    filepath = realpath(filepath, newPath);
    expandFilePath(newPath, cwdCopy, socket);
-   /*
+   
    free(cwd);
    cwd = NULL;
    free(docpath);
@@ -292,7 +292,7 @@ void processRequest(int socket) {
    free(cwdCopy);
    cwdCopy = NULL;
    filepath = NULL;
-   */
+   
    close( socket );
 }
 
@@ -322,7 +322,8 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
 void sendErr(int errno, int socket, const char * conttype) {
    if (errno == 405) {
       const char * err = "\r\n405 ERROR: Invalid directory backtrack\r\n";
-      write(socket, err, strlen(err));
+      send(socket, err, strlen(err), MSG_NOSIGNAL);
+      //write();
    } else if (errno == 404) {
       const char * errtype = "\r\nHTTP/1.1 404 File not found\r\n";
       const char * server = "Server: CS 252 lab5\r\n";
@@ -331,17 +332,23 @@ void sendErr(int errno, int socket, const char * conttype) {
       const char * finalcont = content;
       const char * notFound = "File not found!\r\n\r\n";
 
-      write(socket, errtype, strlen(errtype));
+      send(socket, errtype, strlen(errtype), MSG_NOSIGNAL);
+      send(socket, server, strlen(server), MSG_NOSIGNAL);
+      send(socket, finalcont, strlen(finalcont), MSG_NOSIGNAL);
+      send(socket, notFound, strlen(notFound), MSG_NOSIGNAL);
+     /* write(socket, errtype, strlen(errtype));
       write(socket, server, strlen(server));
       write(socket, finalcont, strlen(finalcont));
-      write(socket, notFound, strlen(notFound));
+      write(socket, notFound, strlen(notFound));*/
       delete content;
       content = NULL;
    } else if (errno == 401) {
       const char * errtype = "\r\nHTTP/1.1 401 Unauthorized\r\n";
       const char * auth = "WWW-Authenticate: Basic realm=CS252-DANREALM\r\n";
-      write(socket, errtype, strlen(errtype));
-      write(socket, auth, strlen(auth));
+      send(socket, errtype, strlen(errtype), MSG_NOSIGNAL);
+      send(socket, auth, strlen(auth), MSG_NOSIGNAL);
+      //write(socket, errtype, strlen(errtype));
+      //write(socket, auth, strlen(auth));
    }
 }
 
@@ -356,13 +363,17 @@ void follow200(int socket, const char * conttype, int fd) {
       <Document Data>
    */
    const char * message = "HTTP/1.1 200 Document follows\r\nServer: CS 252 lab5\r\nContent-Type: ";
-   write(socket, message, strlen(message));
+   send(socket, message, strlen(message), MSG_NOSIGNAL);
+   send(socket, conttype, strlen(conttype), MSG_NOSIGNAL);
+   send(socket, "\r\n\r\n", 4, MSG_NOSIGNAL)
+  /* write(socket, message, strlen(message));
    write(socket, conttype, strlen(conttype));
-   write(socket, "\r\n\r\n", 4);
+   write(socket, "\r\n\r\n", 4);*/
    int n;
    char c;
    while(n = read(fd, &c, 1) > 0) {
-      write(socket, &c, 1);
+      send(socket, &c, 1, MSG_NOSIGNAL);
+      //write(socket, &c, 1);
    }
 }
 
