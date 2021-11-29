@@ -197,7 +197,6 @@ void processRequest(int socket) {
       if(newChar == '\n' && lastChar == '\r') {
          break;
       } else {
-         printf("%c", lastChar);
          lastChar = newChar;
          str[length-1] = newChar;
       } 
