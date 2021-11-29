@@ -291,7 +291,6 @@ void processRequest(int socket) {
    newPath = NULL;
    free(cwdCopy);
    cwdCopy = NULL;
-   delete head;
    filepath = NULL;
    close( socket );
 }
