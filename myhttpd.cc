@@ -172,7 +172,7 @@ void processRequest(int socket) {
    const int maxHead = 1024;
    char str[ maxHead * 5 ];
    char head[ maxHead * 5 ];
-   char * docpath = (char*)malloc(maxHead * 10);
+   char * docpath = (char*)malloc(maxHead * 5);
    int length = 0;
   
    int n;
@@ -244,7 +244,7 @@ void processRequest(int socket) {
    //obtain docpath
    bool foundDPath = false;
    int dPathSize = 0;
-   for (int i = 0; i < maxHead * 10; i++) {
+   for (int i = 0; i < maxHead * 5; i++) {
       if (str[i] == ' ' && foundDPath == false) {
          foundDPath = true;
          i;
@@ -259,6 +259,7 @@ void processRequest(int socket) {
          docpath[dPathSize] = str[i];
          dPathSize++;
       }
+      
    }
 
    char *cwd = (char *)malloc(maxHead * 5);
