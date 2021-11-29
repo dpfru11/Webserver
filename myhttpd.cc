@@ -101,19 +101,24 @@ int main(int argc, char** argv)
    //if a concurrency is requested, use preferred method for user processing
    if (argc == 3) {
       if (method == 'f') {
-         struct sockaddr_in clientIPAddress;
-         int alen = sizeof( clientIPAddress );
-         int slaveSocket = accept( masterSocket, (struct sockaddr *)&clientIPAddress,
-            (socklen_t*)&alen);
-         int pid = fork();
-         if (pid == 0) {
-            processRequest(slaveSocket);
+         while (1)
+         {
+            struct sockaddr_in clientIPAddress;
+            int alen = sizeof( clientIPAddress );
+            int slaveSocket = accept( masterSocket, (struct sockaddr *)&clientIPAddress,
+               (socklen_t*)&alen);
+            int pid = fork();
+            if (pid == 0) {
+               processRequest(slaveSocket);
+               close(slaveSocket);
+               exit(1);
+            } else {
+               waitpid(pid, NULL, 0);
+            }
             close(slaveSocket);
-            exit(1);
-         } else {
-            waitpid(pid, NULL, 0);
          }
-         close(slaveSocket);
+         
+         
       } else if (method == 't') {
          while(1) {
             struct sockaddr_in clientIPAddress;
