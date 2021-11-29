@@ -124,7 +124,7 @@ int main(int argc, char** argv)
          
          
       } else if (method == 't') {
-         //while(1) {
+         while(1) {
             struct sockaddr_in clientIPAddress;
             int alen = sizeof( clientIPAddress );
             int slaveSocket = accept( masterSocket, (struct sockaddr *)&clientIPAddress,
@@ -135,7 +135,7 @@ int main(int argc, char** argv)
             pthread_attr_init(&attr);
             pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
             pthread_create(&tid, &attr, (void *(*)(void *))processRequestThread, (void *)slaveSocket);
-         //}
+         }
       } else if (method == 'p') {
 			pthread_attr_t attr;
 			pthread_attr_init(&attr);
