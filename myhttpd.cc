@@ -160,7 +160,6 @@ int main(int argc, char** argv)
          int alen = sizeof( clientIPAddress );
          int slaveSocket = accept( masterSocket, (struct sockaddr *)&clientIPAddress,
             (socklen_t*)&alen);
-         //printf("kajhgjagl");
          processRequest(slaveSocket);
          close(slaveSocket);
       }
@@ -190,7 +189,6 @@ void processRequest(int socket) {
        
       length++;
       if(newChar == '\n' && lastChar == '\r') {
-         //printf("made it");
          break;
       } else {
          printf("%c", lastChar);
@@ -205,7 +203,6 @@ void processRequest(int socket) {
        
       length++;
       if(newChar == '\n' && lastChar == '\r' && lastlastChar == '\n' && lastlastlastChar=='\r') {
-         //printf("made it\n");
          break;
       } else {
          
@@ -216,8 +213,6 @@ void processRequest(int socket) {
       } 
    }
 
-   
-   
    char * token;
 
    //Check for authorization
@@ -227,7 +222,6 @@ void processRequest(int socket) {
       
       //printf("token: %s\n", token);
       if (strcmp(token, "Authorization: Basic ZGFuaWVsc29uOmZlbmNl") == 0) {
-         printf("madeitoaihgia\n");
          authorized = true;
          break;
       }
@@ -235,11 +229,9 @@ void processRequest(int socket) {
    }
 
    if (authorized == false) {
-      printf("AYAYAYAYAYA\n");
       sendErr(401, socket, NULL);
       return;
    }
-   printf("madeitoaihgia\n");
 
    //obtain docpath
    bool foundDPath = false;
@@ -266,19 +258,10 @@ void processRequest(int socket) {
 	cwd = getcwd(cwd, 256);
 	char *filepath = (char *)malloc(maxHead * 5);
 	strcpy(filepath, cwd);
-   //printf("ya\n");
-   //char* h = strstr(docpath, "/icons");
-   printf("hmmm\n");
-   printf("cwdddd:%s\n", cwd);
    char * cwdCopy = strdup(cwd);
-   //printf("%s\n", docpath);
+ 
    if (dPathSize == 1 && strcmp(docpath, "/") == 0) {
-      printf("in here\n");
       filepath = strcat(cwd, "/http-root-dir/htdocs/index.html");
-      printf("in here%s\n", filepath);
-      if (filepath == NULL) {
-         printf("oops\n");
-      }
    } else if (strstr(docpath, "/icons") != NULL) {
       filepath = strcat(cwd, "/http-root-dir/");
       filepath = strcat(filepath, docpath);
@@ -289,7 +272,7 @@ void processRequest(int socket) {
       filepath = strcat(cwd, "/http-root-dir/htdocs");
       filepath = strcat(filepath, docpath);
    }
-   printf("missed?\n");
+
    //file expansion
    char * newPath = (char *) malloc((maxHead)*sizeof(char));
    filepath = realpath(filepath, newPath);
@@ -304,19 +287,16 @@ void processRequest(int socket) {
 
 void expandFilePath(char * fpath, char * cwd, int socket) {
    
-   printf("fpath:%s\n", fpath);
    if (strlen(fpath) < (strlen(cwd) + strlen("/http-root-dir"))) {
       
       sendErr(405, socket, NULL);
       return;
    }
-   printf("out here?\n");
    //Determine content type
    const char * contType = contentType(fpath);
 
    //Attempt to open
    int fd = open(fpath, O_RDONLY);
-   printf("fd:%d\n", fd);
    
    if (fd < 0) {
       sendErr(404, socket, contType);
