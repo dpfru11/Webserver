@@ -278,9 +278,13 @@ void processRequest(int socket) {
    filepath = realpath(filepath, newPath);
    expandFilePath(newPath, cwdCopy, socket);
    delete cwd;
+   cwd = NULL;
    delete docpath;
+   docpath = NULL;
    delete newPath;
+   newPath = NULL;
    delete cwdCopy;
+   cwdCopy = NULL;
    filepath = NULL;
    close( socket );
 }
@@ -325,6 +329,7 @@ void sendErr(int errno, int socket, const char * conttype) {
       write(socket, finalcont, strlen(finalcont));
       write(socket, notFound, strlen(notFound));
       delete content;
+      content = NULL;
    } else if (errno == 401) {
       const char * errtype = "\r\nHTTP/1.1 401 Unauthorized\r\n";
       const char * auth = "WWW-Authenticate: Basic realm=CS252-DANREALM\r\n";
