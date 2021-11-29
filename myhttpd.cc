@@ -23,6 +23,7 @@ const char * pass = "ZGFuaWVsc29uOmZlbmNl";
 const char * contentType(char * str);
 const char * realm = "CS252-DANREALM";
 int QueueLength = 5;
+pthread_mutex_t mutex;
 
 extern "C" void zombiehandle(int sig) {
     waitpid(-1, NULL, WNOHANG);
@@ -46,6 +47,7 @@ int main(int argc, char** argv)
    int port;
    char method;
 
+   pthread_mutex_init(&mutex, NULL);
    if (argc == 1) {
       port = 5565;
    } else if (argc == 2){
@@ -125,6 +127,7 @@ int main(int argc, char** argv)
          
       } else if (method == 't') {
          while(1) {
+            pthread_mutex_lock(&mutex)
             struct sockaddr_in clientIPAddress;
             int alen = sizeof( clientIPAddress );
             int slaveSocket = accept( masterSocket, (struct sockaddr *)&clientIPAddress,
@@ -135,9 +138,11 @@ int main(int argc, char** argv)
             pthread_attr_init(&attr);
             pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
             pthread_create(&tid, &attr, (void *(*)(void *))processRequestThread, (void *)slaveSocket);
+            pthread_mutex_unlock(&mutex)
          }
       } else if (method == 'p') {
-			pthread_attr_t attr;
+			pthread_mutex_lock(&mutex)
+         pthread_attr_t attr;
 			pthread_attr_init(&attr);
          pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
 
@@ -146,6 +151,7 @@ int main(int argc, char** argv)
             pthread_create(&tid[i], &attr, (void *(*)(void *))poolSlave, (void *)masterSocket);
          }
          pthread_join(tid[0], NULL);
+         pthread_mutex_lock(&mutex)
          
       } else {
          return -1;
@@ -379,10 +385,12 @@ void processRequestThread(int socket) {
 
 void poolSlave(int socket){
    while(1){
+      pthread_mutex_lock(&mutex);
       struct sockaddr_in clientIPAddress;
       int alen = sizeof( clientIPAddress );
       int slaveSocket = accept( socket, (struct sockaddr *)&clientIPAddress,
          (socklen_t*)&alen);
+      pthread_mutex_unlock(&mutex);
       //check if accept worked
       if (slaveSocket < 0) {
          perror("accept error");
