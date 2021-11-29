@@ -293,7 +293,7 @@ void processRequest(int socket) {
    char * newPath = (char *) malloc((maxHead)*sizeof(char));
    filepath = realpath(filepath, newPath);
    expandFilePath(newPath, cwdCopy, socket);
-   delete cwd;
+   cwd = NULL;
    delete str;
    delete head;
    delete docpath;
