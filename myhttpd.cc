@@ -108,6 +108,10 @@ int main(int argc, char** argv)
             int slaveSocket = accept( masterSocket, (struct sockaddr *)&clientIPAddress,
                (socklen_t*)&alen);
             int pid = fork();
+            if (pid < 0) {
+               perror("fork");
+               exit(1);
+            }
             if (pid == 0) {
                processRequest(slaveSocket);
                close(slaveSocket);
@@ -139,11 +143,9 @@ int main(int argc, char** argv)
 
          pthread_t tid[5];
          for(int i=0; i < 5;i++){
-           //pthread_create(&tid[i], &attr, (void * (*)(void *))poolSlave,(void *)masterSocket);
             pthread_create(&tid[i], &attr, (void *(*)(void *))poolSlave, (void *)masterSocket);
          }
          pthread_join(tid[0], NULL);
-        // pthread_join(tid[0], NULL);
          
       } else {
          return -1;
@@ -291,7 +293,10 @@ void processRequest(int socket) {
    char * newPath = (char *) malloc((maxHead)*sizeof(char));
    filepath = realpath(filepath, newPath);
    expandFilePath(newPath, cwdCopy, socket);
-   
+   delete cwd;
+   delete str;
+   delete head;
+   delete docpath;
    delete newPath;
    filepath = NULL;
    close( socket );
