@@ -296,7 +296,7 @@ void processRequest(int socket) {
    delete cwd;
    delete str;
    //delete head;
-   delete docpath;
+   //delete docpath;
    delete newPath;
    filepath = NULL;
    close( socket );
