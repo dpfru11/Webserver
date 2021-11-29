@@ -283,13 +283,13 @@ void processRequest(int socket) {
    filepath = realpath(filepath, newPath);
    expandFilePath(newPath, cwdCopy, socket);
    
-   delete cwd;
+   delete [] cwd;
    cwd = NULL;
-   delete docpath;
+   delete [] docpath;
    docpath = NULL;
-   delete newPath;
+   delete [] newPath;
    newPath = NULL;
-   delete cwdCopy;
+   delete [] cwdCopy;
    cwdCopy = NULL;
    filepath = NULL;
    
