@@ -127,7 +127,7 @@ int main(int argc, char** argv)
          
       } else if (method == 't') {
          while(1) {
-            pthread_mutex_lock(&mutex)
+            pthread_mutex_lock(&mutex);
             struct sockaddr_in clientIPAddress;
             int alen = sizeof( clientIPAddress );
             int slaveSocket = accept( masterSocket, (struct sockaddr *)&clientIPAddress,
@@ -138,10 +138,10 @@ int main(int argc, char** argv)
             pthread_attr_init(&attr);
             pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
             pthread_create(&tid, &attr, (void *(*)(void *))processRequestThread, (void *)slaveSocket);
-            pthread_mutex_unlock(&mutex)
+            pthread_mutex_unlock(&mutex);
          }
       } else if (method == 'p') {
-			pthread_mutex_lock(&mutex)
+			pthread_mutex_lock(&mutex);
          pthread_attr_t attr;
 			pthread_attr_init(&attr);
          pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
@@ -151,7 +151,7 @@ int main(int argc, char** argv)
             pthread_create(&tid[i], &attr, (void *(*)(void *))poolSlave, (void *)masterSocket);
          }
          pthread_join(tid[0], NULL);
-         pthread_mutex_lock(&mutex)
+         pthread_mutex_unlock(&mutex);
          
       } else {
          return -1;
