@@ -365,7 +365,7 @@ void follow200(int socket, const char * conttype, int fd) {
    const char * message = "HTTP/1.1 200 Document follows\r\nServer: CS 252 lab5\r\nContent-Type: ";
    send(socket, message, strlen(message), MSG_NOSIGNAL);
    send(socket, conttype, strlen(conttype), MSG_NOSIGNAL);
-   send(socket, "\r\n\r\n", 4, MSG_NOSIGNAL)
+   send(socket, "\r\n\r\n", 4, MSG_NOSIGNAL);
   /* write(socket, message, strlen(message));
    write(socket, conttype, strlen(conttype));
    write(socket, "\r\n\r\n", 4);*/
