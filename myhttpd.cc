@@ -284,10 +284,10 @@ void processRequest(int socket) {
    filepath = realpath(filepath, newPath);
    expandFilePath(newPath, cwdCopy, socket);
    for(int i = 0; i < str.length; i++) {
-      if (str[i] == "\0") {
+      if (str[i] == '\0') {
          break;
       }
-      str[i] = "\0";
+      str[i] = '\0';
 
    }
    delete str;
