@@ -272,7 +272,7 @@ void processRequest(int socket) {
       filepath = strcat(cwd, "/http-root-dir/");
       filepath = strcat(filepath, docpath);
    } else if (strstr(docpath, ".") == NULL) {
-      filepath = strcat(cwd, docpath);
+      filepath = strdup(docpath);
       printf("%s\n", filepath);
    } else {
       filepath = strcat(cwd, "/http-root-dir/htdocs");
