@@ -223,7 +223,7 @@ void processRequest(int socket) {
    token = strtok(head, "\r\n");
    while (token)  {
       
-      //printf("token: %s\n", token);
+      printf("token: %s\n", token);
       if (strcmp(token, "Authorization: Basic ZGFuaWVsc29uOmZlbmNl") == 0) {
          authorized = true;
          break;
@@ -323,7 +323,6 @@ void sendErr(int errno, int socket, const char * conttype) {
    if (errno == 405) {
       const char * err = "\r\n405 ERROR: Invalid directory backtrack\r\n";
       send(socket, err, strlen(err), MSG_NOSIGNAL);
-      //write();
    } else if (errno == 404) {
       const char * errtype = "\r\nHTTP/1.1 404 File not found\r\n";
       const char * server = "Server: CS 252 lab5\r\n";
@@ -336,10 +335,7 @@ void sendErr(int errno, int socket, const char * conttype) {
       send(socket, server, strlen(server), MSG_NOSIGNAL);
       send(socket, finalcont, strlen(finalcont), MSG_NOSIGNAL);
       send(socket, notFound, strlen(notFound), MSG_NOSIGNAL);
-     /* write(socket, errtype, strlen(errtype));
-      write(socket, server, strlen(server));
-      write(socket, finalcont, strlen(finalcont));
-      write(socket, notFound, strlen(notFound));*/
+  
       delete content;
       content = NULL;
    } else if (errno == 401) {
@@ -347,8 +343,6 @@ void sendErr(int errno, int socket, const char * conttype) {
       const char * auth = "WWW-Authenticate: Basic realm=CS252-DANREALM\r\n";
       send(socket, errtype, strlen(errtype), MSG_NOSIGNAL);
       send(socket, auth, strlen(auth), MSG_NOSIGNAL);
-      //write(socket, errtype, strlen(errtype));
-      //write(socket, auth, strlen(auth));
    }
 }
 
