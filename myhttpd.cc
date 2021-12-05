@@ -363,7 +363,7 @@ void processDir(int socket, DIR * dirp, char * fpath) {
    char * O = '';
 
    //Look for the modifiers in the path
-   char * possibleChoices[] = {"?C=M;O=A", "?C=M;O=D", "?C=N;O=A", "?C=N;O=D", "?C=S;O=A", "?C=S;O=D", "?C=D;O=A", "?C=D;O=D"}
+   char * possibleChoices[] = {"?C=M;O=A", "?C=M;O=D", "?C=N;O=A", "?C=N;O=D", "?C=S;O=A", "?C=S;O=D", "?C=D;O=A", "?C=D;O=D"};
    for (int i = 0; i < possibleChoices.length; i++) {
       if (strncmp(fpath, possibleChoices[i]) == 0) {
          C = possibleChoices[i][3];
