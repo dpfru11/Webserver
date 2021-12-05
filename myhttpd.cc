@@ -374,7 +374,7 @@ void processDir(int socket, DIR * dirp, char * fpath) {
    }
    std::string s = fpath;
    size_t n = std::count(s.begin(), s.end(), '/');
-   for(size_t i = 0; i < n; i++) {
+   for(int i = 0; i < n; i++) {
 
    }
 
