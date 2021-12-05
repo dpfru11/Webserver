@@ -358,7 +358,7 @@ void sendErr(int errno, int socket, const char * conttype) {
 }
 
 void processDir(int socket, DIR * dirp, char * fpath) {
-   return
+   return;
 }
 
 //send found file/directory response
