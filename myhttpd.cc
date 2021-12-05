@@ -8,12 +8,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <dirent.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/wait.h>
 #include <pthread.h>
 
 void processRequestThread(int socket);
+void processDir(int socket, DIR * dir, char * fpath);
 void poolSlave(int socket);
 void processRequest(int socket);
 void expandFilePath(char * fpath, char * cwd, int socket);
@@ -308,7 +310,7 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
 
    DIR * dirp = opendir(fpath);
    if (readdir(dirp) != NULL) {
-      processDir(socket, dirp, fpath, )
+      processDir(socket, dirp, fpath);
    }
 
    //Determine content type
@@ -353,6 +355,10 @@ void sendErr(int errno, int socket, const char * conttype) {
       send(socket, errtype, strlen(errtype), MSG_NOSIGNAL);
       send(socket, auth, strlen(auth), MSG_NOSIGNAL);
    }
+}
+
+void processDir(int socket, DIR * dirp, char * fpath) {
+   return
 }
 
 //send found file/directory response
