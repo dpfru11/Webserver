@@ -309,9 +309,9 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    }
 
    DIR * dirp = opendir(fpath);
-   if (readdir(dirp) != NULL) {
+   /*if (readdir(dirp) != NULL) {
       processDir(socket, dirp, fpath);
-   }
+   }*/
 
    //Determine content type
    const char * contType = contentType(fpath);
@@ -357,9 +357,9 @@ void sendErr(int errno, int socket, const char * conttype) {
    }
 }
 
-void processDir(int socket, DIR * dirp, char * fpath) {
+/*void processDir(int socket, DIR * dirp, char * fpath) {
    return;
-}
+}*/
 
 //send found file/directory response
 void follow200(int socket, const char * conttype, int fd) {
