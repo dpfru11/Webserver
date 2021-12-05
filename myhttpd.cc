@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <algorithm>
 #include <dirent.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -378,7 +379,7 @@ void processDir(int socket, DIR * dirp, char * fpath) {
 
    }
 
-   const char * index = "Index of ";
+   char * index = "Index of ";
    const char * indexPath = strcat(index, fpath);
    char * headIndex =(char*) malloc(500);
    sprintf(headIndex, "<html><head><title>%s</title></head><body><h1>%s</h1>", fpath, fpath);
