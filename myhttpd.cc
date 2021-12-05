@@ -272,7 +272,7 @@ void processRequest(int socket) {
       filepath = strcat(cwd, "/http-root-dir/");
       filepath = strcat(filepath, docpath);
    } else if (strstr(docpath, ".") == NULL) {
-      filepath = strdup(docpath);
+      filepath = strcat(cwd, docpath);
       printf("%s\n", filepath);
    } else {
       filepath = strcat(cwd, "/http-root-dir/htdocs");
@@ -305,6 +305,11 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
       sendErr(405, socket, NULL);
       return;
    }
+   if (strstr(fpath, ".") == NULL) {
+      chdir(fpath);
+      return;
+   }
+
    //Determine content type
    const char * contType = contentType(fpath);
 
