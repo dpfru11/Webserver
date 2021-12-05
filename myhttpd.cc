@@ -305,9 +305,10 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
       sendErr(405, socket, NULL);
       return;
    }
-   if (strstr(fpath, ".") == NULL) {
-      chdir(fpath);
-      return;
+
+   DIR * dirp = opendir(fpath);
+   if (readdir(dirp) != NULL) {
+      processDir(socket, dirp, fpath, )
    }
 
    //Determine content type
