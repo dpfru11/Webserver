@@ -310,9 +310,9 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    }
 
    DIR * dirp = opendir(fpath);
-   /*if (readdir(dirp) != NULL) {
+   if (readdir(dirp) != NULL) {
       processDir(socket, dirp, fpath);
-   }*/
+   }
 
    //Determine content type
    const char * contType = contentType(fpath);
@@ -358,9 +358,22 @@ void sendErr(int errno, int socket, const char * conttype) {
    }
 }
 
-/*void processDir(int socket, DIR * dirp, char * fpath) {
+void processDir(int socket, DIR * dirp, char * fpath) {
+   char * C = '';
+   char * O = '';
+
+   //Look for the modifiers in the path
+   char * possibleChoices[] = {"?C=M;O=A", "?C=M;O=D", "?C=N;O=A", "?C=N;O=D", "?C=S;O=A", "?C=S;O=D", "?C=D;O=A", "?C=D;O=D"}
+   for (int i = 0; i < possibleChoices.length; i++) {
+      if (strncmp(fpath, possibleChoices[i]) == 0) {
+         C = possibleChoices[i][3];
+         O = possibleChoices[i][7];
+      }
+   }
+   
+
    return;
-}*/
+}
 
 //send found file/directory response
 void follow200(int socket, const char * conttype, int fd) {
