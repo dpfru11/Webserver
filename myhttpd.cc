@@ -416,7 +416,7 @@ void processDir(int socket, DIR * dirp, char * fpath, char * docpath) {
    int count = 0;
    int lastSlashInd = 0;
    for (int i = 0; i < strlen(fpath); i++) {
-      if (fpath[i] == '/') {
+      if (docpath[i] == '/') {
          count++;
          lastSlashInd = i;
       }
@@ -456,7 +456,7 @@ void processDir(int socket, DIR * dirp, char * fpath, char * docpath) {
 		strcat(path, d->d_name);
 		if (d->d_type == DT_DIR) {
          sprintf(code, "<tr><td valign=\"top\"><img src=\"/icons/telnet.gif\""
-						" alt=\"[DIR]\"></td><td><a href=\"%s\">", );
+						" alt=\"[DIR]\"></td><td><a href=\"%s\">", fpathDup);
       } else if (strstr(path, ".gif") != NULL) {
          sprintf(code, "<tr><td valign=\"top\"><img src=\"/icons/red_ball.gif\""
 						" alt=\"[   ]\"></td><td><a href=\"%s\">", path);
