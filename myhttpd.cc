@@ -286,6 +286,7 @@ void processRequest(int socket) {
    //file expansion
    char * newPath = (char *) malloc((maxHead)*sizeof(char));
    filepath = realpath(filepath, newPath);
+   //printf("")
    printf("oh? youre approaching me?\n");
    if (strstr(filepath, ".") == NULL) {
       printf("di\n");
@@ -297,7 +298,7 @@ void processRequest(int socket) {
          return;
       }
    }
-   //printf("%s\n", newPath);
+   printf("%s\n", newPath);
    expandFilePath(newPath, docpath, socket);
    
    delete[] cwd;
