@@ -546,8 +546,8 @@ void processCGI(int socket, char * realpath, char * args) {
    int pid = fork();
    if (pid == 0) {
       if (args) {
-         setenv("REQUEST_METHOD", "GET");
-         setenv("QUERY_STRING", args);
+         setenv("REQUEST_METHOD", "GET", 1);
+         setenv("QUERY_STRING", args, 1);
       }
 
       dup2(socket, 1);
