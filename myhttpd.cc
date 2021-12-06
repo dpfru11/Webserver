@@ -373,7 +373,7 @@ void processDir(int socket, DIR * dirp, char * fpath) {
       }
    }
    int count = 0;
-   int lastSlashInd = 0
+   int lastSlashInd = 0;
    for (int i = 0; i < strlen(fpath); i++) {
       if (fpath[i] == '/') {
          count++;
