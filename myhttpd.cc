@@ -285,11 +285,11 @@ void processRequest(int socket) {
 
    //file expansion
    char * newPath = (char *) malloc((maxHead)*sizeof(char));
-   filepath = realpath(filepath, newPath);
+   realpath(filepath, newPath);
    //printf("")
    printf("oh? youre approaching me?\n");
    printf("%sldhjnn\n", filepath);
-   DIR * dirp = opendir(filepath);
+   DIR * dirp = opendir(newPath);
    printf("oyoyoy\n");
    if (dirp != NULL) {
       printf("in here?");
