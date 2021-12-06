@@ -545,6 +545,10 @@ void processCGI(int socket, char * realpath, char * args) {
    send(socket, message, strlen(message), MSG_NOSIGNAL);
 
    int pid = fork();
+   if (pid < 0) {
+      perror("fork");
+      exit(1);
+   }
    if (pid == 0) {
       if (args) {
          setenv("REQUEST_METHOD", "GET", 1);
@@ -555,6 +559,8 @@ void processCGI(int socket, char * realpath, char * args) {
       close(socket);
 
       execl(realpath, args, 0, 0);
+   } else {
+      waitpid(pid, NULL, 0);
    }
 
    
