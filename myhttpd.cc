@@ -293,7 +293,7 @@ void processRequest(int socket) {
       printf("oyoyoy\n");
       if (dirp != NULL) {
          printf("in here?");
-         processDir(socket, dirp, fpath);
+         processDir(socket, dirp, filepath);
          return;
       }
    }
