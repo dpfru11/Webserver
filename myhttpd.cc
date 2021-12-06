@@ -311,13 +311,16 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    }
    struct dirent * dir;
    printf("path: %s\n", fpath);
-   DIR * dirp = opendir(fpath);
-   printf("oyoyoy");
-   if ((dir = readdir(dirp)) != NULL) {
-      printf("in here?");
-      processDir(socket, dirp, fpath);
-      return;
+   if (strstr(fpath, ".") == NULL) {
+      DIR * dirp = opendir(fpath);
+      printf("oyoyoy");
+      if ((dir = readdir(dirp)) != NULL) {
+         printf("in here?");
+         processDir(socket, dirp, fpath);
+         return;
+      }
    }
+   
 
    //Determine content type
    const char * contType = contentType(fpath);
