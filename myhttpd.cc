@@ -398,10 +398,11 @@ void processDir(int socket, DIR * dirp, char * fpath) {
    printf("YEEEEE\n");
    const char * message = "HTTP/1.1 200 Document follows\r\nServer: CS 252 lab5\r\nContent-Type: text/html\r\n\r\n";
    send(socket, message ,strlen(message),MSG_NOSIGNAL);
-   
+
    char * index = "Index of ";
    const char * indexPath = strcat(index, fpath);
    char * headIndex =(char*) malloc(500);
+   printf("ope");
    sprintf(headIndex, "<html><head><title>%s</title></head><body><h1>%s</h1>", indexPath, indexPath);
    const char * body1 = "<table><tr><th valign=\"top\"><img src=\"/icons/blank.gif\" alt=\"[ICO]\"></th><th>"
                               "<a href=\"?C=N;O=D\">Name</a></th><th><a href=\"?C=M;O=A\">Last modified</a></th><th><a href=\"?C=S;O=A\">Size</a></th><th><a href=\"?C=D;O=A\">Description</a></th></tr><tr><th colspan=\"5\"><hr></th></tr>";
