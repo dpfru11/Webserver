@@ -288,6 +288,7 @@ void processRequest(int socket) {
    filepath = realpath(filepath, newPath);
    //printf("")
    printf("oh? youre approaching me?\n");
+   printf("%s\n", newPath);
    if (strstr(filepath, ".") == NULL) {
       printf("di\n");
       DIR * dirp = opendir(filepath);
@@ -298,7 +299,7 @@ void processRequest(int socket) {
          return;
       }
    }
-   printf("%s\n", newPath);
+   
    expandFilePath(newPath, docpath, socket);
    
    delete[] cwd;
