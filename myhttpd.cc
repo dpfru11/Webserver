@@ -14,7 +14,6 @@
 #include <sys/wait.h>
 #include <ctime>
 #include <pthread.h>
-#include <>
 
 void processRequestThread(int socket);
 void processDir(int socket, DIR * dir, char * fpath);
@@ -417,7 +416,7 @@ void processDir(int socket, DIR * dirp, char * fpath) {
    sprintf(bodyp, "<tr><td valign=\"top\"><img src=\"/icons/back.gif\" alt=\"[PARENTDIR]\"></td><td><a href=\"%s\">Parent Directory</a></td><td>&nbsp;</td><td align=\"right\">  - </td><td>&nbsp;</td></tr>", fpathDup);
    int nentries = 0;
    struct dirent * d;
-   const char * tableEnt = ""
+   //const char * tableEnt = "";
    while ((d = readdir(dirp)) != NULL) {
 		//struct FileStats *f = (struct FileStats*)malloc(sizeof(struct FileStats));
 		
