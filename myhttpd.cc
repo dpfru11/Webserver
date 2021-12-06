@@ -310,7 +310,7 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
       return;
    }
    struct dirent * dir;
-   printf("here\n");
+   printf("path: %s\n", fpath);
    DIR * dirp = opendir(fpath);
    printf("oyoyoy");
    if ((dir = readdir(dirp)) != NULL) {
