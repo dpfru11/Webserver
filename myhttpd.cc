@@ -286,7 +286,7 @@ void processRequest(int socket) {
    //file expansion
    char * newPath = (char *) malloc((maxHead)*sizeof(char));
    filepath = realpath(filepath, newPath);
-
+   printf("oh? youre approaching me?\n");
    if (strstr(filepath, ".") == NULL) {
       printf("di\n");
       DIR * dirp = opendir(filepath);
