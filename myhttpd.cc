@@ -16,9 +16,10 @@
 #include <pthread.h>
 
 void processRequestThread(int socket);
-void processDir(int socket, DIR * dir, char * fpath);
+void processDir(int socket, DIR * dir, char * fpath, char * docpath);
 void poolSlave(int socket);
 void processRequest(int socket);
+void processCGI(int socket, char * realpath, char * args);
 void expandFilePath(char * fpath, char * cwd, int socket);
 void sendErr(int errno, int socket, const char * conttype);
 void follow200(int socket, const char * conttype, int fd);
@@ -264,9 +265,10 @@ void processRequest(int socket) {
    char *cwd = (char *)malloc(maxHead * 5);
 	cwd = getcwd(cwd, 256);
 	char *filepath = (char *)malloc(maxHead * 5);
-	strcpy(filepath, cwd);
+	//strcpy(filepath, cwd);
    printf("cwd early: %s\n", cwd);
    char * cwdCopy = strdup(cwd);
+   int isCGI = 0;
  
    if (dPathSize == 1 && strcmp(docpath, "/") == 0) {
       filepath = strcat(cwd, "/http-root-dir/htdocs/index.html");
@@ -277,10 +279,32 @@ void processRequest(int socket) {
       filepath = strcat(cwd, "/http-root-dir");
       filepath = strcat(filepath, docpath);
    } else if (strstr("/cgi-bin") != NULL) {
-      filepath = strcat(cwd, "/http-root-dir")
+      filepath = strcat(cwd, "/http-root-dir");
+      filepath = strcat(filepath, docpath);
+      int isCGI = 1;
    } else {
       filepath = strcat(cwd, "/http-root-dir/htdocs");
       filepath = strcat(filepath, docpath);
+   }
+
+   if (isCGI == 1) {
+      char * args;
+      int conArgs = 0;
+      int index = 0;
+      for (int i = 0; i < strlen(docpath); i++) {
+         if (docpath[i] == '?') {
+            args = malloc(strlen(docpath));
+            conArgs = 1;
+            continue;
+         }
+         if (conArgs == 1) {
+            args[index] = docpath[i];
+            index++;
+         }
+      }
+      processCGI(socket, filepath, docpath, args);
+      return;
+
    }
 
    //file expansion
@@ -294,7 +318,7 @@ void processRequest(int socket) {
    }
    if (dirp != NULL) {
       printf("in here?");
-      processDir(socket, dirp, newPath);
+      processDir(socket, dirp, newPath, docpath);
       return;
    }
 
@@ -334,7 +358,6 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    const char * contType = contentType(fpath);
 
    //Attempt to open
-   //printf("opening")
    int fd = open(fpath, O_RDONLY);
    
    if (fd < 0) {
@@ -375,7 +398,7 @@ void sendErr(int errno, int socket, const char * conttype) {
    }
 }
 
-void processDir(int socket, DIR * dirp, char * fpath) {
+void processDir(int socket, DIR * dirp, char * fpath, char * docpath) {
    char C = '\0';
    char O = '\0';
    printf("MODIFIERS\n");
@@ -398,7 +421,7 @@ void processDir(int socket, DIR * dirp, char * fpath) {
          lastSlashInd = i;
       }
    }
-   char * fpathDup = strdup(fpath);
+   char * fpathDup = strdup(docpath);
    fpathDup[lastSlashInd + 1] = '\0';
    printf("parent: %s\n", fpathDup);
    const char * message = "HTTP/1.1 200 Document follows\r\nServer: CS 252 lab5\r\nContent-Type: text/html\r\n\r\n";
@@ -407,7 +430,7 @@ void processDir(int socket, DIR * dirp, char * fpath) {
    char * index = "Index of ";
    
    char * indexPath = (char *) malloc(200);
-   sprintf(indexPath, "%s%s", index, fpath);
+   sprintf(indexPath, "%s%s", index, docpath);
 
    char * headIndex =(char*) malloc(500);
    printf("ope");
@@ -426,29 +449,29 @@ void processDir(int socket, DIR * dirp, char * fpath) {
 		
       char* code = (char*) malloc(2000);
 		char *path = (char *)malloc(500);
-		strcpy(path, fpath);
+		strcpy(path, docpath);
       if (path[strlen(path) - 1] != '/') {
 			strcat(path, "/");
 		}
 		strcat(path, d->d_name);
 		if (d->d_type == DT_DIR) {
          sprintf(code, "<tr><td valign=\"top\"><img src=\"/icons/telnet.gif\""
-						" alt=\"[DIR]\"></td><td><a href=\"%s\">", path);
+						" alt=\"[DIR]\"></td><td><a href=\"%s\">", docpath);
       } else if (strstr(path, ".gif") != NULL) {
          sprintf(code, "<tr><td valign=\"top\"><img src=\"/icons/red_ball.gif\""
-						" alt=\"[   ]\"></td><td><a href=\"%s\">", path);
+						" alt=\"[   ]\"></td><td><a href=\"%s\">", docpath);
       } else if (strstr(path, ".html") != NULL) {
          sprintf(code, "<tr><td valign=\"top\"><img src=\"/icons/text.gif\""
-						" alt=\"[   ]\"></td><td><a href=\"%s\">", path);
+						" alt=\"[   ]\"></td><td><a href=\"%s\">", docpath);
       } else if (strstr(path, ".svg") != NULL) {
          sprintf(code, "<tr><td valign=\"top\"><img src=\"/icons/image.gif\""
-						" alt=\"[   ]\"></td><td><a href=\"%s\">", path);
+						" alt=\"[   ]\"></td><td><a href=\"%s\">", docpath);
       } else if (strstr(path, ".xbm") != NULL) {
          sprintf(code, "<tr><td valign=\"top\"><img src=\"/icons/binary.gif\""
-						" alt=\"[   ]\"></td><td><a href=\"%s\">", path);
+						" alt=\"[   ]\"></td><td><a href=\"%s\">", docpath);
       } else {
          sprintf(code, "<tr><td valign=\"top\"><img src=\"/icons/unknown.gif\""
-						" alt=\"[   ]\"></td><td><a href=\"%s\">", path);
+						" alt=\"[   ]\"></td><td><a href=\"%s\">", docpath);
       }
       send(socket, code, strlen(code), MSG_NOSIGNAL);
       send(socket, d->d_name, strlen(d->d_name), MSG_NOSIGNAL);
@@ -513,6 +536,27 @@ const char * contentType(char * str) {
    } else {
       return "text/plain";
    }
+}
+
+//Process requests for CGI bins
+void processCGI(int socket, char * realpath, char * args) {
+   const char * message = "HTTP/1.1 200 Document follows\r\nServer: CS 252 lab5\r\n";
+   send(socket, message, strlen(message), MSG_NOSIGNAL);
+
+   int pid = fork();
+   if (pid == 0) {
+      if (args) {
+         setenv("REQUEST_METHOD", "GET");
+         setenv("QUERY_STRING", args);
+      }
+
+      dup2(socket, 1);
+      close(socket);
+
+      execl(realpath)
+   }
+
+   
 }
 
 void processRequestThread(int socket) {
