@@ -553,7 +553,7 @@ void processCGI(int socket, char * realpath, char * args) {
       dup2(socket, 1);
       close(socket);
 
-      execl(realpath)
+      //execl(realpath, args, )
    }
 
    
