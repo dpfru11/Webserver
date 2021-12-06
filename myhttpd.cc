@@ -452,7 +452,7 @@ void processDir(int socket, DIR * dirp, char * fpath) {
       struct stat st;
 		stat(path, &st);
 
-      char * mOne = "</a></td><td align=\"right\">" 
+      char * mOne = "</a></td><td align=\"right\">";
       char * mTwo = ctime(&(st.st_mtime));
       char * mThree = "</td><td align=\"right\">";
       int size = st.st_size;
