@@ -299,7 +299,7 @@ void processRequest(int socket) {
 
    
    expandFilePath(newPath, docpath, socket);
-   
+   printf("here?\n");
    delete[] cwd;
    cwd = NULL;
    delete[] docpath;
