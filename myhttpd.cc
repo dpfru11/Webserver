@@ -279,6 +279,7 @@ void processRequest(int socket) {
       filepath = strcat(cwd, "/http-root-dir");
       filepath = strcat(filepath, docpath);
    } else if (strstr(docpath, "/cgi-bin") != NULL) {
+      printf("in hereyess");
       filepath = strcat(cwd, "/http-root-dir");
       filepath = strcat(filepath, docpath);
       int isCGI = 1;
