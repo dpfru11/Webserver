@@ -421,7 +421,7 @@ void processDir(int socket, DIR * dirp, char * fpath) {
       char* code = (char*) malloc(2000);
 		char *path = (char *)malloc(500);
 		strcat(path, fpath);
-      if (path[strlen(path) - 1] != '/')) {
+      if (path[strlen(path) - 1] != '/') {
 			strcat(path, "/");
 		}
 		strcat(path, d->d_name);
