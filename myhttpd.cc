@@ -309,6 +309,7 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
       sendErr(405, socket, NULL);
       return;
    }
+   printf("yeah");
    struct dirent * dir;
    printf("path: %s\n", fpath);
    if (strstr(fpath, ".") == NULL) {
