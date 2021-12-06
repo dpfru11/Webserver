@@ -467,7 +467,7 @@ void processDir(int socket, DIR * dirp, char * fpath) {
 		nentries++;
 	}
 
-   const char * finalMess1 = "<tr><th colspan="5"><hr></th></tr></table></body></html>"
+   const char * finalMess1 = "<tr><th colspan=\"5\"><hr></th></tr></table></body></html>";
    send(socket, finalMess1, strlen(finalMess1), MSG_NOSIGNAL);
 
    return;
