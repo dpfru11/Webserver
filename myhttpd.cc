@@ -264,7 +264,7 @@ void processRequest(int socket) {
 	cwd = getcwd(cwd, 256);
 	char *filepath = (char *)malloc(maxHead * 5);
 	strcpy(filepath, cwd);
-   printf("filepath: %s\n", filepath);
+   printf("cwd: %s\n", cwd);
    char * cwdCopy = strdup(cwd);
  
    if (dPathSize == 1 && strcmp(docpath, "/") == 0) {
