@@ -492,7 +492,7 @@ void processDir(int socket, DIR * dirp, char * fpath, char * docpath) {
       send(socket, mFour, strlen(mFour), MSG_NOSIGNAL);
 
 		nentries++;
-      free(headIndex);
+      //free(headIndex);
       free(fpathDup);
 	}
 
