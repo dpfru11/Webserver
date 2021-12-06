@@ -12,7 +12,9 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/wait.h>
+#include <ctime>
 #include <pthread.h>
+#include <>
 
 void processRequestThread(int socket);
 void processDir(int socket, DIR * dir, char * fpath);
@@ -415,6 +417,7 @@ void processDir(int socket, DIR * dirp, char * fpath) {
    sprintf(bodyp, "<tr><td valign=\"top\"><img src=\"/icons/back.gif\" alt=\"[PARENTDIR]\"></td><td><a href=\"%s\">Parent Directory</a></td><td>&nbsp;</td><td align=\"right\">  - </td><td>&nbsp;</td></tr>", fpathDup);
    int nentries = 0;
    struct dirent * d;
+   const char * tableEnt = ""
    while ((d = readdir(dirp)) != NULL) {
 		//struct FileStats *f = (struct FileStats*)malloc(sizeof(struct FileStats));
 		
@@ -426,15 +429,46 @@ void processDir(int socket, DIR * dirp, char * fpath) {
 		}
 		strcat(path, d->d_name);
 		if (d->d_type == DT_DIR) {
+         sprintf(code, "<tr><td valign=\"top\"><img src=\"/icons/telnet.gif\""
+						" alt=\"[DIR]\"></td><td><a href=\"%s\">", fpath);
+      } else if (strstr(path, ".gif") != NULL) {
+         sprintf(code, "<tr><td valign=\"top\"><img src=\"/icons/red_ball.gif\""
+						" alt=\"[   ]\"></td><td><a href=\"%s\">", fpath);
+      } else if (strstr(path, ".html") != NULL) {
+         sprintf(code, "<tr><td valign=\"top\"><img src=\"/icons/text.gif\""
+						" alt=\"[   ]\"></td><td><a href=\"%s\">", fpath);
+      } else if (strstr(path, ".svg") != NULL) {
+         sprintf(code, "<tr><td valign=\"top\"><img src=\"/icons/image.gif\""
+						" alt=\"[   ]\"></td><td><a href=\"%s\">", fpath);
+      } else if (strstr(path, ".xbm") != NULL) {
          sprintf(code, "<tr><td valign=\"top\"><img src=\"/icons/binary.gif\""
-						" alt=\"[DIR]\"></td><td><a href=\"%s\"", fpath);
-      } else if (strstr(d->d_name, ".gif") != NULL) {
-         code = "<tr><td valign=\"top\"><img src=\"/icons/image.gif\""
-						" alt=\"[   ]\"></td><td><a href=\"";
+						" alt=\"[   ]\"></td><td><a href=\"%s\">", fpath);
+      } else {
+         sprintf(code, "<tr><td valign=\"top\"><img src=\"/icons/unknown.gif\""
+						" alt=\"[   ]\"></td><td><a href=\"%s\">", fpath);
       }
+      send(socket, code, strlen(code), MSG_NOSIGNAL);
+      send(socket, d->d_name, strlen(d->d_name), MSG_NOSIGNAL);
+      
+      struct stat st;
+		stat(path, &st);
+
+      char * mOne = "</a></td><td align=\"right\">" 
+      char * mTwo = ctime(&(st.st_mtime));
+      char * mThree = "</td><td align=\"right\">";
+      int size = st.st_size;
+      char * mFour =(char*) malloc(150); 
+      sprintf(mFour, "%d</td><td>&nbsp;</td></tr>\n", size);
+      
+      send(socket, mOne, strlen(mOne), MSG_NOSIGNAL);
+      send(socket, mTwo, strlen(mTwo), MSG_NOSIGNAL);
+      send(socket, mThree, strlen(mThree), MSG_NOSIGNAL);
+      send(socket, mFour, strlen(mFour), MSG_NOSIGNAL);
 
 		nentries++;
 	}
+
+
    const char * body2 = "<tr><td valign=\"top\"><img src=\"/icons/unknown.gif\" alt=\"[   ]\"></td><td>"
                                     "<a href=\"Makefile\">Makefile</a></td><td align=\"right\">2014-11-10 17:53  </td><td align=\"right\">374 </td><td>&nbsp;</td></tr><tr><td valign=\"top\"><img src=\"/icons/unknown.gif\" alt=\"[   ]\"></td><td><a href=\"daytime-server\">"
                                     "daytime-server</a></td><td align=\"right\">2014-11-10 17:53  </td><td align=\"right\"> 13K</td><td>&nbsp;</td></tr><tr><td valign=\"top\"><img src=\"/icons/text.gif\" alt=\"[TXT]\"></td><td><a href=\"daytime-server.cc\">daytime-server.cc</a></td>"
