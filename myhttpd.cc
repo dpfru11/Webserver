@@ -397,7 +397,7 @@ void processDir(int socket, DIR * dirp, char * fpath) {
       }
    }
    char * fpathDup = strdup(fpath);
-   fpathDup[lastSlashInd] = '\0';
+   fpathDup[lastSlashInd + 1] = '\0';
    printf("parent: %s\n", fpathDup);
    const char * message = "HTTP/1.1 200 Document follows\r\nServer: CS 252 lab5\r\nContent-Type: text/html\r\n\r\n";
    send(socket, message ,strlen(message),MSG_NOSIGNAL);
