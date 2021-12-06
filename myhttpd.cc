@@ -379,6 +379,7 @@ void processDir(int socket, DIR * dirp, char * fpath) {
    //Look for the modifiers in the path
    const char * possibleChoices[] = {"?C=M;O=A", "?C=M;O=D", "?C=N;O=A", "?C=N;O=D", "?C=S;O=A", "?C=S;O=D", "?C=D;O=A", "?C=D;O=D"};
    for (int i = 0; i < sizeof(possibleChoices); i++) {
+      printf("it");
       if (strncmp(fpath, possibleChoices[i], strlen(fpath)) == 0) {
          C = possibleChoices[i][3];
          O = possibleChoices[i][7];
