@@ -286,8 +286,9 @@ void processRequest(int socket) {
       filepath = strcat(cwd, "/http-root-dir/htdocs");
       filepath = strcat(filepath, docpath);
    }
-   printf("hereyes\n");
+   
    if (isCGI == 1) {
+      printf("hereyes\n");
       char * args;
       int conArgs = 0;
       int index = 0;
