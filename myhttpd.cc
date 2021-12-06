@@ -313,6 +313,7 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    printf("here\n");
    DIR * dirp = opendir(fpath);
    if ((dir = readdir(dirp)) != NULL) {
+      printf("in here?");
       processDir(socket, dirp, fpath);
       return;
    }
