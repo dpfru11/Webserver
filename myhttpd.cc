@@ -377,7 +377,7 @@ void sendErr(int errno, int socket, const char * conttype) {
 void processDir(int socket, DIR * dirp, char * fpath) {
    char C = '\0';
    char O = '\0';
-
+   printf("MODIFIERS\n");
    //Look for the modifiers in the path
    const char * possibleChoices[] = {"?C=M;O=A", "?C=M;O=D", "?C=N;O=A", "?C=N;O=D", "?C=S;O=A", "?C=S;O=D", "?C=D;O=A", "?C=D;O=D"};
    for (int i = 0; i < sizeof(possibleChoices); i++) {
