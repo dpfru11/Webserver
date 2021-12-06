@@ -430,7 +430,7 @@ void processDir(int socket, DIR * dirp, char * fpath, char * docpath) {
    char * index = "Index of ";
    
    char * indexPath = (char *) malloc(200);
-   sprintf(indexPath, "%s%s", index, docpath);
+   sprintf(indexPath, "%s%s", index, fpath);
 
    char * headIndex =(char*) malloc(500);
    printf("ope");
@@ -456,22 +456,22 @@ void processDir(int socket, DIR * dirp, char * fpath, char * docpath) {
 		strcat(path, d->d_name);
 		if (d->d_type == DT_DIR) {
          sprintf(code, "<tr><td valign=\"top\"><img src=\"/icons/telnet.gif\""
-						" alt=\"[DIR]\"></td><td><a href=\"%s\">", docpath);
+						" alt=\"[DIR]\"></td><td><a href=\"%s\">", );
       } else if (strstr(path, ".gif") != NULL) {
          sprintf(code, "<tr><td valign=\"top\"><img src=\"/icons/red_ball.gif\""
-						" alt=\"[   ]\"></td><td><a href=\"%s\">", docpath);
+						" alt=\"[   ]\"></td><td><a href=\"%s\">", path);
       } else if (strstr(path, ".html") != NULL) {
          sprintf(code, "<tr><td valign=\"top\"><img src=\"/icons/text.gif\""
-						" alt=\"[   ]\"></td><td><a href=\"%s\">", docpath);
+						" alt=\"[   ]\"></td><td><a href=\"%s\">", path);
       } else if (strstr(path, ".svg") != NULL) {
          sprintf(code, "<tr><td valign=\"top\"><img src=\"/icons/image.gif\""
-						" alt=\"[   ]\"></td><td><a href=\"%s\">", docpath);
+						" alt=\"[   ]\"></td><td><a href=\"%s\">", path);
       } else if (strstr(path, ".xbm") != NULL) {
          sprintf(code, "<tr><td valign=\"top\"><img src=\"/icons/binary.gif\""
-						" alt=\"[   ]\"></td><td><a href=\"%s\">", docpath);
+						" alt=\"[   ]\"></td><td><a href=\"%s\">", path);
       } else {
          sprintf(code, "<tr><td valign=\"top\"><img src=\"/icons/unknown.gif\""
-						" alt=\"[   ]\"></td><td><a href=\"%s\">", docpath);
+						" alt=\"[   ]\"></td><td><a href=\"%s\">", path);
       }
       send(socket, code, strlen(code), MSG_NOSIGNAL);
       send(socket, d->d_name, strlen(d->d_name), MSG_NOSIGNAL);
