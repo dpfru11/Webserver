@@ -493,7 +493,7 @@ void processDir(int socket, DIR * dirp, char * fpath, char * docpath) {
 
 		nentries++;
       //free(headIndex);
-      free(fpathDup);
+      //free(fpathDup);
 	}
 
    const char * finalMess1 = "<tr><th colspan=\"5\"><hr></th></tr></table></body></html>";
