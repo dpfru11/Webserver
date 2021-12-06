@@ -316,6 +316,7 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    printf("path: %s\n", fpath);
    if (strstr(fpath, ".") == NULL) {
       printf("di\n");
+      strcat(fpath, "/");
       DIR * dirp = opendir(fpath);
       printf("oyoyoy");
       if ((dir = readdir(dirp)) != NULL) {
