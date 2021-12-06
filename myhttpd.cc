@@ -400,8 +400,8 @@ void processDir(int socket, DIR * dirp, char * fpath) {
    send(socket, message ,strlen(message),MSG_NOSIGNAL);
 
    char * index = "Index of ";
-   printf("here\n");
-   char * indexPath = strcat(index, fpath);
+   send(socket, index, strlen(index), MSG_NOSIGNAL);
+   send(socket, fpath, strlen(fpath), MSG_NOSIGNAL);
    char * headIndex =(char*) malloc(500);
    printf("ope");
    sprintf(headIndex, "<html><head><title>%s</title></head><body><h1>%s</h1>", indexPath, indexPath);
