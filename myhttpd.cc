@@ -288,7 +288,7 @@ void processRequest(int socket) {
    filepath = realpath(filepath, newPath);
    //printf("")
    printf("oh? youre approaching me?\n");
-   printf("%s\n", filepath);
+   printf("%sldhjnn\n", filepath);
    DIR * dirp = opendir(filepath);
    printf("oyoyoy\n");
    if (dirp != NULL) {
