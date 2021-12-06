@@ -469,6 +469,8 @@ void processDir(int socket, DIR * dirp, char * fpath) {
       send(socket, mFour, strlen(mFour), MSG_NOSIGNAL);
 
 		nentries++;
+      free(headIndex);
+      free(fpathDup);
 	}
 
    const char * finalMess1 = "<tr><th colspan=\"5\"><hr></th></tr></table></body></html>";
