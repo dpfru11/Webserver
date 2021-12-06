@@ -304,6 +304,7 @@ void processRequest(int socket) {
 
 void expandFilePath(char * fpath, char * cwd, int socket) {
    printf("path: %s\n", fpath);
+   printf("cwd: %s", cwd);
    if (strlen(fpath) < (strlen(cwd) + strlen("/http-root-dir"))) {
       printf("uh\n");
       sendErr(405, socket, NULL);
