@@ -403,17 +403,20 @@ void processDir(int socket, DIR * dirp, char * fpath) {
    send(socket, message ,strlen(message),MSG_NOSIGNAL);
 
    char * index = "Index of ";
-   //send(socket, index, strlen(index), MSG_NOSIGNAL);
    
    char * indexPath = (char *) malloc(200);
    sprintf(indexPath, "%s%s", index, fpath);
+
    char * headIndex =(char*) malloc(500);
    printf("ope");
    sprintf(headIndex, "<html><head><title>%s</title></head><body><h1>%s</h1>", indexPath, indexPath);
+   send(socket, headIndex, strlen(headIndex), MSG_NOSIGNAL);
    const char * body1 = "<table><tr><th valign=\"top\"><img src=\"/icons/blank.gif\" alt=\"[ICO]\"></th><th>"
                               "<a href=\"?C=N;O=D\">Name</a></th><th><a href=\"?C=M;O=A\">Last modified</a></th><th><a href=\"?C=S;O=A\">Size</a></th><th><a href=\"?C=D;O=A\">Description</a></th></tr><tr><th colspan=\"5\"><hr></th></tr>";
+   send(socket, body1, strlen(body1), MSG_NOSIGNAL);
    char * bodyp =(char *) malloc(500);
    sprintf(bodyp, "<tr><td valign=\"top\"><img src=\"/icons/back.gif\" alt=\"[PARENTDIR]\"></td><td><a href=\"%s\">Parent Directory</a></td><td>&nbsp;</td><td align=\"right\">  - </td><td>&nbsp;</td></tr>", fpathDup);
+   send(socket, bodyp, strlen(bodyp), MSG_NOSIGNAL);
    int nentries = 0;
    struct dirent * d;
    //const char * tableEnt = "";
