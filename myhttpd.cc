@@ -305,7 +305,7 @@ void processRequest(int socket) {
 void expandFilePath(char * fpath, char * cwd, int socket) {
    printf("herelsmg\n");
    if (strlen(fpath) < (strlen(cwd) + strlen("/http-root-dir"))) {
-      
+      printf("uh");
       sendErr(405, socket, NULL);
       return;
    }
