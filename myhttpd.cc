@@ -286,6 +286,17 @@ void processRequest(int socket) {
    //file expansion
    char * newPath = (char *) malloc((maxHead)*sizeof(char));
    filepath = realpath(filepath, newPath);
+
+   if (strstr(filepath, ".") == NULL) {
+      printf("di\n");
+      DIR * dirp = opendir(filepath);
+      printf("oyoyoy\n");
+      if (dirp != NULL) {
+         printf("in here?");
+         processDir(socket, dirp, fpath);
+         return;
+      }
+   }
    //printf("%s\n", newPath);
    expandFilePath(newPath, docpath, socket);
    
@@ -314,22 +325,14 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    printf("yeah\n");
    struct dirent * dir;
    printf("path: %s\n", fpath);
-   if (strstr(fpath, ".") == NULL) {
-      printf("di\n");
-      DIR * dirp = opendir(fpath);
-      printf("oyoyoy\n");
-      if (dirp != NULL) {
-         printf("in here?");
-         processDir(socket, dirp, fpath);
-         return;
-      }
-   }
+   
    
 
    //Determine content type
    const char * contType = contentType(fpath);
 
    //Attempt to open
+   //printf("opening")
    int fd = open(fpath, O_RDONLY);
    
    if (fd < 0) {
