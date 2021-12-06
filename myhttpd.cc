@@ -309,7 +309,7 @@ void processRequest(int socket) {
    newPath = NULL;
    delete[] cwdCopy;
    cwdCopy = NULL;
-   delete[] filepath;
+   delete[] newPath;
    filepath = NULL;
    
    close( socket );
