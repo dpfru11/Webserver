@@ -289,16 +289,14 @@ void processRequest(int socket) {
    //printf("")
    printf("oh? youre approaching me?\n");
    printf("%s\n", newPath);
-   if (strstr(filepath, ".") == NULL) {
-      printf("di\n");
-      DIR * dirp = opendir(filepath);
-      printf("oyoyoy\n");
-      if (dirp != NULL) {
-         printf("in here?");
-         processDir(socket, dirp, filepath);
-         return;
-      }
+   DIR * dirp = opendir(filepath);
+   printf("oyoyoy\n");
+   if (dirp != NULL) {
+      printf("in here?");
+      processDir(socket, dirp, filepath);
+      return;
    }
+
    
    expandFilePath(newPath, docpath, socket);
    
