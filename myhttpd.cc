@@ -282,7 +282,7 @@ void processRequest(int socket) {
       printf("in hereyess");
       filepath = strcat(cwd, "/http-root-dir");
       filepath = strcat(filepath, docpath);
-      int isCGI = 1;
+      isCGI = 1;
    } else {
       filepath = strcat(cwd, "/http-root-dir/htdocs");
       filepath = strcat(filepath, docpath);
