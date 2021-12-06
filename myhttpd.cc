@@ -467,26 +467,8 @@ void processDir(int socket, DIR * dirp, char * fpath) {
 		nentries++;
 	}
 
-
-   const char * body2 = "<tr><td valign=\"top\"><img src=\"/icons/unknown.gif\" alt=\"[   ]\"></td><td>"
-                                    "<a href=\"Makefile\">Makefile</a></td><td align=\"right\">2014-11-10 17:53  </td><td align=\"right\">374 </td><td>&nbsp;</td></tr><tr><td valign=\"top\"><img src=\"/icons/unknown.gif\" alt=\"[   ]\"></td><td><a href=\"daytime-server\">"
-                                    "daytime-server</a></td><td align=\"right\">2014-11-10 17:53  </td><td align=\"right\"> 13K</td><td>&nbsp;</td></tr><tr><td valign=\"top\"><img src=\"/icons/text.gif\" alt=\"[TXT]\"></td><td><a href=\"daytime-server.cc\">daytime-server.cc</a></td>"
-                                    "<td align=\"right\">2014-11-10 17:53  </td><td align=\"right\">4.9K</td><td>&nbsp;</td></tr><tr><td valign=\"top\"><img src=\"/icons/unknown.gif\" alt=\"[   ]\"></td><td><a href=\"daytime-server.o\">daytime-server.o</a></td><td align=\"right\">2014-11-10 17:53  "
-                                    "</td><td align=\"right\">5.8K</td><td>&nbsp;</td></tr><tr><td valign=\"top\"><img src=\"/icons/text.gif\" alt=\"[TXT]\"></td><td><a href=\"hello.cc\">hello.cc</a></td><td align=\"right\">2014-11-10 17:53  </td><td align=\"right\">333 </td><td>&nbsp;</td></tr><tr>"
-                                    "<td valign=\"top\"><img src=\"/icons/unknown.gif\" alt=\"[   ]\"></td><td><a href=\"hello.o\">hello.o</a></td><td align=\"right\">2014-11-10 17:53  </td><td align=\"right\">2.0K</td><td>&nbsp;</td></tr><tr><td valign=\"top\"><img src=\"/icons/unknown.gif\" "
-                                    "alt=\"[   ]\"></td><td><a href=\"hello.so\">hello.so</a></td><td align=\"right\">2014-11-10 17:53  </td><td align=\"right\">5.9K</td><td>&nbsp;</td></tr><tr><td valign=\"top\"><img src=\"/icons/folder.gif\" alt=\"[DIR]\"></td><td><a href=\"http-root-dir/\">http-root-dir/</a></td><td align=\"right\">2014-11-10 17:53"
-                                    "  </td><td align=\"right\">  - </td><td>&nbsp;</td></tr><tr><td valign=\"top\"><img src=\"/icons/tar.gif\" alt=\"[   ]\"></td><td><a href=\"lab5-src.tar\">lab5-src.tar</a></td><td align=\"right\">2014-11-10 17:53  </td><td align=\"right\"> 11M</td><td>&nbsp;</td></tr><tr><td valign=\"top\">"
-                                    "<img src=\"/icons/folder.gif\" alt=\"[DIR]\"></td><td><a href=\"lab5-src/\">lab5-src/</a></td><td align=\"right\">2014-01-13 22:18  </td><td align=\"right\">  - </td><td>&nbsp;</td></tr><tr><td valign=\"top\"><img src=\"/icons/unknown.gif\" alt=\"[   ]\"></td><td><a href=\"use-dlopen\">use-dlopen</a></td>"
-                                    "<td align=\"right\">2014-11-10 17:53  </td><td align=\"right\">8.1K</td><td>&nbsp;</td></tr><tr><td valign=\"top\"><img src=\"/icons/text.gif\" alt=\"[TXT]\"></td><td><a href=\"use-dlopen.cc\">use-dlopen.cc</a></td><td align=\"right\">2014-11-10 17:53  </td><td align=\"right\">690 </td><td>&nbsp;</td></tr><tr>"
-                                    "<td valign=\"top\"><img src=\"/icons/unknown.gif\" alt=\"[   ]\"></td><td><a href=\"use-dlopen.o\">use-dlopen.o</a></td><td align=\"right\">2014-11-10 17:53  </td><td align=\"right\">2.2K</td><td>&nbsp;</td></tr>";
-   const char * closeHTML = "<tr><th colspan=\"5\"><hr></th></tr></table></body></html>";
-   
-   
-   send(socket, headIndex ,strlen(headIndex),MSG_NOSIGNAL);
-   send(socket, body1 ,strlen(body1),MSG_NOSIGNAL);
-   send(socket, bodyp ,strlen(bodyp),MSG_NOSIGNAL);
-   send(socket, body2 ,strlen(body2),MSG_NOSIGNAL);
-   send(socket, closeHTML ,strlen(closeHTML),MSG_NOSIGNAL);
+   const char * finalMess1 = "<tr><th colspan="5"><hr></th></tr></table></body></html>"
+   send(socket, finalMess1, strlen(finalMess1), MSG_NOSIGNAL);
 
    return;
 }
