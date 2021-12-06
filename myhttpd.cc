@@ -385,6 +385,8 @@ void processDir(int socket, DIR * dirp, char * fpath) {
          O = possibleChoices[i][7];
       }
    }*/
+   
+   //Get Parent Dir
    int count = 0;
    int lastSlashInd = 0;
    for (int i = 0; i < strlen(fpath); i++) {
@@ -411,6 +413,28 @@ void processDir(int socket, DIR * dirp, char * fpath) {
                               "<a href=\"?C=N;O=D\">Name</a></th><th><a href=\"?C=M;O=A\">Last modified</a></th><th><a href=\"?C=S;O=A\">Size</a></th><th><a href=\"?C=D;O=A\">Description</a></th></tr><tr><th colspan=\"5\"><hr></th></tr>";
    char * bodyp =(char *) malloc(500);
    sprintf(bodyp, "<tr><td valign=\"top\"><img src=\"/icons/back.gif\" alt=\"[PARENTDIR]\"></td><td><a href=\"%s\">Parent Directory</a></td><td>&nbsp;</td><td align=\"right\">  - </td><td>&nbsp;</td></tr>", fpathDup);
+   int nentries = 0;
+   struct dirent * d;
+   while ((d = readdir(dirp)) != NULL) {
+		//struct FileStats *f = (struct FileStats*)malloc(sizeof(struct FileStats));
+		
+      char* code = (char*) malloc(2000);
+		char *path = (char *)malloc(500);
+		strcat(path, fpath);
+      if (path[strlen(path) - 1] != '/')) {
+			strcat(path, "/");
+		}
+		strcat(path, d->d_name);
+		if (d->d_type == DT_DIR) {
+         sprintf(code, "<tr><td valign=\"top\"><img src=\"/icons/binary.gif\""
+						" alt=\"[DIR]\"></td><td><a href=\"%s\"", fpath);
+      } else if (strstr(d->d_name, ".gif") != NULL) {
+         code = "<tr><td valign=\"top\"><img src=\"/icons/image.gif\""
+						" alt=\"[   ]\"></td><td><a href=\"";
+      }
+
+		nentries++;
+	}
    const char * body2 = "<tr><td valign=\"top\"><img src=\"/icons/unknown.gif\" alt=\"[   ]\"></td><td>"
                                     "<a href=\"Makefile\">Makefile</a></td><td align=\"right\">2014-11-10 17:53  </td><td align=\"right\">374 </td><td>&nbsp;</td></tr><tr><td valign=\"top\"><img src=\"/icons/unknown.gif\" alt=\"[   ]\"></td><td><a href=\"daytime-server\">"
                                     "daytime-server</a></td><td align=\"right\">2014-11-10 17:53  </td><td align=\"right\"> 13K</td><td>&nbsp;</td></tr><tr><td valign=\"top\"><img src=\"/icons/text.gif\" alt=\"[TXT]\"></td><td><a href=\"daytime-server.cc\">daytime-server.cc</a></td>"
