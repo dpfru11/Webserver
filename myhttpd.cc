@@ -299,9 +299,10 @@ void processRequest(int socket) {
 
    
    expandFilePath(newPath, docpath, socket);
-   printf("here?\n");
+   
    delete[] cwd;
    cwd = NULL;
+   printf("here?\n");
    delete[] docpath;
    docpath = NULL;
    
