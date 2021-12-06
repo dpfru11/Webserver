@@ -274,8 +274,10 @@ void processRequest(int socket) {
       filepath = strcat(cwd, "/http-root-dir/");
       filepath = strcat(filepath, docpath);
    } else if (strstr(docpath, "/htdocs") != NULL) {
-      filepath = strcat(cwd, "/http-root-dir/");
+      filepath = strcat(cwd, "/http-root-dir");
       filepath = strcat(filepath, docpath);
+   } else if (strstr("/cgi-bin") != NULL) {
+      filepath = strcat(cwd, "/http-root-dir")
    } else {
       filepath = strcat(cwd, "/http-root-dir/htdocs");
       filepath = strcat(filepath, docpath);
@@ -421,7 +423,6 @@ void processDir(int socket, DIR * dirp, char * fpath) {
    struct dirent * d;
    //const char * tableEnt = "";
    while ((d = readdir(dirp)) != NULL) {
-		//struct FileStats *f = (struct FileStats*)malloc(sizeof(struct FileStats));
 		
       char* code = (char*) malloc(2000);
 		char *path = (char *)malloc(500);
