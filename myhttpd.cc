@@ -416,7 +416,7 @@ void processDir(int socket, DIR * dirp, char * fpath) {
                                     "<td valign=\"top\"><img src=\"/icons/unknown.gif\" alt=\"[   ]\"></td><td><a href=\"use-dlopen.o\">use-dlopen.o</a></td><td align=\"right\">2014-11-10 17:53  </td><td align=\"right\">2.2K</td><td>&nbsp;</td></tr>";
    const char * closeHTML = "<tr><th colspan=\"5\"><hr></th></tr></table></body></html>";
    
-   send(socket, message ,strlen(message) + 4,MSG_NOSIGNAL);
+   send(socket, message ,strlen(message),MSG_NOSIGNAL);
    send(socket, headIndex ,strlen(headIndex),MSG_NOSIGNAL);
    send(socket, body1 ,strlen(body1),MSG_NOSIGNAL);
    send(socket, bodyp ,strlen(bodyp),MSG_NOSIGNAL);
