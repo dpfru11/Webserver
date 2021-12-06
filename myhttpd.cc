@@ -383,6 +383,8 @@ void processDir(int socket, DIR * dirp, char * fpath) {
    char * fpathDup = strdup(fpath);
    fpathDup[lastSlashInd] = '\0';
 
+   const char * message = "HTTP/1.1 200 Document follows\r\nServer: CS 252 lab5\r\nContent-Type: text/html\r\n\r\n";
+
    char * index = "Index of ";
    const char * indexPath = strcat(index, fpath);
    char * headIndex =(char*) malloc(500);
@@ -404,7 +406,12 @@ void processDir(int socket, DIR * dirp, char * fpath) {
                                     "<td valign=\"top\"><img src=\"/icons/unknown.gif\" alt=\"[   ]\"></td><td><a href=\"use-dlopen.o\">use-dlopen.o</a></td><td align=\"right\">2014-11-10 17:53  </td><td align=\"right\">2.2K</td><td>&nbsp;</td></tr>";
    const char * closeHTML = "<tr><th colspan=\"5\"><hr></th></tr></table></body></html>";
    
-   //send(,MSG_NOSIGNAL)
+   send(socket, message ,strlen(message) + 4,MSG_NOSIGNAL);
+   send(socket, headIndex ,strlen(headIndex),MSG_NOSIGNAL);
+   send(socket, body1 ,strlen(body1),MSG_NOSIGNAL);
+   send(socket, bodyp ,strlen(bodyp),MSG_NOSIGNAL);
+   send(socket, body2 ,strlen(body2),MSG_NOSIGNAL);
+   send(socket, closeHTML ,strlen(closeHTML),MSG_NOSIGNAL);
 
    return;
 }
