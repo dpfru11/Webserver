@@ -402,7 +402,7 @@ void processDir(int socket, DIR * dirp, char * fpath) {
    char * index = "Index of ";
    //send(socket, index, strlen(index), MSG_NOSIGNAL);
    
-   char * indexPath = malloc(200);
+   char * indexPath = (char *) malloc(200);
    sprintf(indexPath, "%s%s", index, fpath);
    char * headIndex =(char*) malloc(500);
    printf("ope");
