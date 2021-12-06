@@ -415,13 +415,13 @@ void processDir(int socket, DIR * dirp, char * fpath, char * docpath) {
    //Get Parent Dir
    int count = 0;
    int lastSlashInd = 0;
-   for (int i = 0; i < strlen(fpath); i++) {
-      if (docpath[i] == '/') {
+   for (int i = 0; i < strlen(docpath); i++) {
+      if (docpath[i] == '/' && i != strlen(docpath) - 1) {
          count++;
          lastSlashInd = i;
       }
    }
-   char * fpathDup = strdup(docpath);
+   char * fpathDup = strdup(docpath); //Parent directory
    fpathDup[lastSlashInd + 1] = '\0';
    printf("parent: %s\n", fpathDup);
    const char * message = "HTTP/1.1 200 Document follows\r\nServer: CS 252 lab5\r\nContent-Type: text/html\r\n\r\n";
