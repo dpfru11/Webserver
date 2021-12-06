@@ -8,7 +8,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include <algorithm>
 #include <dirent.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -373,19 +372,25 @@ void processDir(int socket, DIR * dirp, char * fpath) {
          O = possibleChoices[i][7];
       }
    }
-   std::string s = fpath;
-   size_t n = std::count(s.begin(), s.end(), '/');
-   for(int i = 0; i < n; i++) {
-
+   int count = 0;
+   int lastSlashInd = 0
+   for (int i = 0; i < strlen(fpath); i++) {
+      if (fpath[i] == '/') {
+         count++;
+         lastSlashInd = i;
+      }
    }
+   char * fpathDup = strdup(fpath);
+   fpathDup[lastSlashInd] = '\0';
 
    char * index = "Index of ";
    const char * indexPath = strcat(index, fpath);
    char * headIndex =(char*) malloc(500);
-   sprintf(headIndex, "<html><head><title>%s</title></head><body><h1>%s</h1>", fpath, fpath);
+   sprintf(headIndex, "<html><head><title>%s</title></head><body><h1>%s</h1>", indexPath, indexPath);
    const char * body1 = "<table><tr><th valign=\"top\"><img src=\"/icons/blank.gif\" alt=\"[ICO]\"></th><th>"
                               "<a href=\"?C=N;O=D\">Name</a></th><th><a href=\"?C=M;O=A\">Last modified</a></th><th><a href=\"?C=S;O=A\">Size</a></th><th><a href=\"?C=D;O=A\">Description</a></th></tr><tr><th colspan=\"5\"><hr></th></tr>";
-   const char * bodyp = "";//parent directory, needs to be modified
+   const char * bodyp =(char *) malloc(500);
+   sprintf(bodyp, "<tr><td valign=\"top\"><img src=\"/icons/back.gif\" alt=\"[PARENTDIR]\"></td><td><a href=\"%s\">Parent Directory</a></td><td>&nbsp;</td><td align=\"right\">  - </td><td>&nbsp;</td></tr>", fpathDup);//parent directory, needs to be modified
    const char * body2 = "<tr><td valign=\"top\"><img src=\"/icons/unknown.gif\" alt=\"[   ]\"></td><td>"
                                     "<a href=\"Makefile\">Makefile</a></td><td align=\"right\">2014-11-10 17:53  </td><td align=\"right\">374 </td><td>&nbsp;</td></tr><tr><td valign=\"top\"><img src=\"/icons/unknown.gif\" alt=\"[   ]\"></td><td><a href=\"daytime-server\">"
                                     "daytime-server</a></td><td align=\"right\">2014-11-10 17:53  </td><td align=\"right\"> 13K</td><td>&nbsp;</td></tr><tr><td valign=\"top\"><img src=\"/icons/text.gif\" alt=\"[TXT]\"></td><td><a href=\"daytime-server.cc\">daytime-server.cc</a></td>"
