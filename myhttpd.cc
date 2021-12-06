@@ -278,7 +278,7 @@ void processRequest(int socket) {
    } else if (strstr(docpath, "/htdocs") != NULL) {
       filepath = strcat(cwd, "/http-root-dir");
       filepath = strcat(filepath, docpath);
-   } else if (strstr("/cgi-bin") != NULL) {
+   } else if (strstr(docpath, "/cgi-bin") != NULL) {
       filepath = strcat(cwd, "/http-root-dir");
       filepath = strcat(filepath, docpath);
       int isCGI = 1;
