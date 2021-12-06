@@ -318,7 +318,7 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
       printf("di\n");
       DIR * dirp = opendir(fpath);
       printf("oyoyoy\n");
-      if ((dir = readdir(dirp)) != NULL) {
+      if (dirp != NULL) {
          printf("in here?");
          processDir(socket, dirp, fpath);
          return;
