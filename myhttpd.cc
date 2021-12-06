@@ -293,7 +293,7 @@ void processRequest(int socket) {
       int index = 0;
       for (int i = 0; i < strlen(docpath); i++) {
          if (docpath[i] == '?') {
-            args = malloc(strlen(docpath));
+            args = (char *) malloc(strlen(docpath));
             conArgs = 1;
             continue;
          }
@@ -302,7 +302,7 @@ void processRequest(int socket) {
             index++;
          }
       }
-      processCGI(socket, filepath, docpath, args);
+      processCGI(socket, filepath, args);
       return;
 
    }
