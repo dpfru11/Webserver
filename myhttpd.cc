@@ -289,6 +289,9 @@ void processRequest(int socket) {
    printf("newPath: %s", newPath);
    printf("oh? youre approaching me?\n");
    DIR * dirp = opendir(newPath);
+   if (dirp == NULL) {
+      printf("empty\n");
+   }
    printf("oyoyoy\n");
    if (dirp != NULL) {
       printf("in here?");
