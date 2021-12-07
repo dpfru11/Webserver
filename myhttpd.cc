@@ -530,7 +530,7 @@ void displayLog(int socket,char * realpath) {
    printf("%s\n", realpath);
    const char * message = "HTTP/1.1 200 Document follows\r\nServer: CS 252 lab5\r\nContent-Type: text/html\r\n\r\n";
    send(socket, message, strlen(message), MSG_NOSIGNAL);
-   const char* nameHead = "<title><head>Daniel (Daniel Son's) Realm Stats</title></head>";
+   const char* nameHead = "<html><head><title>Daniel (Daniel Son's) Realm Stats</title></head>";
    const char * nameBody = "<h2>Daniel Fruland's (Daniel Son's) Realm Stats</h2>\n";
 
    send(socket, nameHead, strlen(nameBody), MSG_NOSIGNAL);
