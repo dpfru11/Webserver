@@ -545,7 +545,7 @@ void displayLog(int socket,char * realpath) {
    char * timeOpen = (char *) malloc(200);
    timer1 = clock() - timer1;
    sprintf(numReqs, "<h2>The current number of requests is: %d requests</h2>", numRequests);
-   sprintf(timeOpen, "<h2>The current time the server has been open is: %ld </h2></body></html>", timer1);
+   sprintf(timeOpen, "<h2>The current time the server has been open is: %ld milliseconds</h2></body></html>", timer1);
 
    send(socket, nameHead, strlen(nameBody), MSG_NOSIGNAL);
    send(socket, nameBody, strlen(nameBody), MSG_NOSIGNAL);
