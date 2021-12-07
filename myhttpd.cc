@@ -20,7 +20,7 @@ void processDir(int socket, DIR * dir, char * fpath, char * docpath);
 void poolSlave(int socket);
 void processLoad(int socket, char * realpath);
 void processRequest(int socket);
-void processCGI(int socket, char * realpath, char * docpath, char * args);
+void processCGI(int socket, char * realpath, char * docpath, const char * args);
 void expandFilePath(char * fpath, char * cwd, int socket);
 void sendErr(int errno, int socket, const char * conttype);
 void follow200(int socket, const char * conttype, int fd);
@@ -310,8 +310,7 @@ void processRequest(int socket) {
          }
       }
       docpath[startArgs] = '\0';
-      const char * constargs = args;
-      processCGI(socket, filepath, docpath, args);
+      processCGI(socket, filepath, docpath, (const char *)args);
       return;
 
    }
@@ -551,7 +550,7 @@ const char * contentType(char * str) {
 }
 
 //Process requests for CGI bins
-void processCGI(int socket, char * realpath, char * docpath, char * args) {
+void processCGI(int socket, char * realpath, char * docpath, const char * args) {
    const char * message = "HTTP/1.1 200 Document follows\r\nServer: CS 252 lab5\r\n";
    send(socket, message, strlen(message), MSG_NOSIGNAL);
 
