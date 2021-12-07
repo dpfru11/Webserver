@@ -585,11 +585,9 @@ void processCGI(int socket, char * realpath, char * docpath, char * args) {
 
       dup2(socket, 1);
       close(socket);
-      if (args != NULL) {
-         execl(newPath, args,0,(char*)0);
-      } else {
-         execl(newPath, NULL,0,(char*)0);
-      }
+      
+      execl(newPath, args,0,0);
+      
       exit(1);
    } else {
       waitpid(pid, NULL, 0);
