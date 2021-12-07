@@ -19,6 +19,7 @@
 #include <chrono>
 #include <iostream>
 #include <vector>
+#include <ctime>
 
 void processRequestThread(int socket);
 void processDir(int socket, DIR * dir, char * fpath, char * docpath);
@@ -34,8 +35,8 @@ const char * pass = "ZGFuaWVsc29uOmZlbmNl";
 
 const char * contentType(char * str);
 const char * realm = "CS252-DANREALM";
-auto stop = 0;
-auto start = 0;
+clock_t stop = 0;
+clock_t start = 0;
 int QueueLength = 5;
 int numRequests = 0;
 pthread_mutex_t mutex;
@@ -47,7 +48,7 @@ extern "C" void zombiehandle(int sig) {
 int main(int argc, char** argv)
 {
    //Let's hunt some zombies >:)
-   start = high_resolution_clock::now();
+   start = clock();
 
    struct sigaction saZom;
    saZom.sa_handler = zombiehandle;
@@ -546,8 +547,9 @@ void displayLog(int socket,char * realpath) {
    //</body></html>
    char * numReqs = (char*)malloc(100);
    char * timeOpen = (char *) malloc(200);
-   stop = high_resolution_clock::now();
-   auto duration = duration_cast<seconds>(stop - start);
+   stop = clock;
+   float dur = (stop - start) / CLOCKS_PER_SEC;
+   
    sprintf(numReqs, "<h2>The current number of requests is: %d requests</h2></body></html>", numRequests);
    sprintf(timeOpen, "<h2>The current number of requests is: %d requests</h2></body></html>", numRequests);
 
