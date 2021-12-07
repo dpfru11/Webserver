@@ -32,8 +32,8 @@ const char * pass = "ZGFuaWVsc29uOmZlbmNl";
 
 const char * contentType(char * str);
 const char * realm = "CS252-DANREALM";
-auto stop;
-auto start;
+auto stop = 0;
+auto start = 0;
 int QueueLength = 5;
 int numRequests = 0;
 pthread_mutex_t mutex;
