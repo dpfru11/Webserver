@@ -570,8 +570,8 @@ void processCGI(int socket, char * realpath, char * docpath, char * args) {
          setenv("QUERY_STRING", args, 1);
       }
 
-      dup2(socket, 1);
-      close(socket);
+      //dup2(socket, 1);
+      //close(socket);
 
       execl(realpath, args, 0, 0);
    } else {
