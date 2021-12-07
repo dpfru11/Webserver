@@ -291,7 +291,7 @@ void processRequest(int socket) {
    
    if (isCGI == 1) {
       printf("hereyes\n");
-      char * args = malloc(500);
+      char * args = (char*)malloc(500);
       int conArgs = 0;
       int index = 0;
       int startArgs = 0;
