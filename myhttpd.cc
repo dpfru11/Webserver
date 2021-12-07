@@ -309,7 +309,7 @@ void processRequest(int socket) {
             startArgs++;
          }
       }
-      docpath[startArgs] = '\0';
+      docpath[++startArgs] = '\0';
       processCGI(socket, filepath, docpath, args);
       return;
 
