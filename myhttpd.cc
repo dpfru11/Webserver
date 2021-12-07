@@ -45,7 +45,7 @@ int main(int argc, char** argv)
 {
    //Let's hunt some zombies >:)
    timer1 = clock();
-   timer1 = clock() - timer1;
+   
    struct sigaction saZom;
    saZom.sa_handler = zombiehandle;
    sigemptyset(&saZom.sa_mask);
@@ -543,12 +543,14 @@ void displayLog(int socket,char * realpath) {
    //</body></html>
    char * numReqs = (char*)malloc(100);
    char * timeOpen = (char *) malloc(200);
-   sprintf(numReqs, "<h2>The current number of requests is: %d requests</h2></body></html>", numRequests);
-   //sprintf(time, "<h2>The current number of requests is: %d requests</h2></body></html>", numRequests);
+   timer1 = clock() - timer1;
+   sprintf(numReqs, "<h2>The current number of requests is: %d requests</h2>", numRequests);
+   sprintf(timeOpen, "<h2>The current time the server has been open is: %ld </h2></body></html>", timer1);
 
    send(socket, nameHead, strlen(nameBody), MSG_NOSIGNAL);
    send(socket, nameBody, strlen(nameBody), MSG_NOSIGNAL);
    send(socket, numReqs, strlen(numReqs), MSG_NOSIGNAL);
+   send(socket, timeOpen, strlen(timeOpen), MSG_NOSIGNAL);
 
 
 }
