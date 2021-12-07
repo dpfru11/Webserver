@@ -35,8 +35,8 @@ const char * pass = "ZGFuaWVsc29uOmZlbmNl";
 
 const char * contentType(char * str);
 const char * realm = "CS252-DANREALM";
-clock_t stop = 0;
-clock_t start = 0;
+clock_t time = 0.0;
+
 int QueueLength = 5;
 int numRequests = 0;
 pthread_mutex_t mutex;
@@ -48,7 +48,7 @@ extern "C" void zombiehandle(int sig) {
 int main(int argc, char** argv)
 {
    //Let's hunt some zombies >:)
-   start = clock();
+   time = clock();
 
    struct sigaction saZom;
    saZom.sa_handler = zombiehandle;
@@ -547,8 +547,7 @@ void displayLog(int socket,char * realpath) {
    //</body></html>
    char * numReqs = (char*)malloc(100);
    char * timeOpen = (char *) malloc(200);
-   stop = clock;
-   float dur = (stop - start) / CLOCKS_PER_SEC;
+   float dur = (clock() - time) / CLOCKS_PER_SEC;
    
    sprintf(numReqs, "<h2>The current number of requests is: %d requests</h2></body></html>", numRequests);
    sprintf(timeOpen, "<h2>The current number of requests is: %d requests</h2></body></html>", numRequests);
