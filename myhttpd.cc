@@ -294,6 +294,7 @@ void processRequest(int socket) {
       char * args;
       int conArgs = 0;
       int index = 0;
+      int startArgs = 0;
       for (int i = 0; i < strlen(docpath); i++) {
          if (docpath[i] == '?') {
             args = (char *) malloc(strlen(docpath));
@@ -304,7 +305,11 @@ void processRequest(int socket) {
             args[index] = docpath[i];
             index++;
          }
+         if (conArgs == 0) {
+            startArgs++;
+         }
       }
+      docpath[startArgs] = '\0';
       processCGI(socket, filepath, docpath, args);
       return;
 
