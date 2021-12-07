@@ -17,6 +17,8 @@
 #include <pthread.h>
 #include <algorithm>
 #include <chrono>
+#include <iostream>
+#include <vector>
 
 void processRequestThread(int socket);
 void processDir(int socket, DIR * dir, char * fpath, char * docpath);
