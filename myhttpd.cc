@@ -534,10 +534,6 @@ void displayLog(int socket,int realpath) {
    send(socket, nameBody, strlen(nameBody), MSG_NOSIGNAL);
 
    
-   
-   sprintf("<html>\n <head>\n  <title>Statistics of MyAwesomeServer";) 
-	const char *message2b = "</title>\n </head>\n <body>\n<h1>Statistics of MyAwesomeServer</h1>\n";
-
 }
 
 //send found file/directory response
