@@ -579,7 +579,7 @@ void processCGI(int socket, char * realpath, char * docpath, char ** args) {
       dup2(socket, 1);
       close(socket);
 
-      execv(realpath, args, 0);
+      execv(realpath, args);
    } else {
       waitpid(pid, NULL, 0);
    }
