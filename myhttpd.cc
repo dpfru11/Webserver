@@ -6,6 +6,7 @@
 #include <netdb.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <time.h>
 #include <string.h>
 #include <stdio.h>
 #include <dirent.h>
@@ -30,6 +31,7 @@ const char * pass = "ZGFuaWVsc29uOmZlbmNl";
 const char * contentType(char * str);
 const char * realm = "CS252-DANREALM";
 int QueueLength = 5;
+int numRequests = 0;
 pthread_mutex_t mutex;
 
 extern "C" void zombiehandle(int sig) {
@@ -179,6 +181,7 @@ int main(int argc, char** argv)
 }
 
 void processRequest(int socket) {
+   numRequests++;
    const int maxHead = 1024;
    char str[ maxHead * 5 ];
    char head[ maxHead * 5 ];
@@ -531,10 +534,16 @@ void displayLog(int socket,char * realpath) {
    const char * message = "HTTP/1.1 200 Document follows\r\nServer: CS 252 lab5\r\nContent-Type: text/html\r\n\r\n";
    send(socket, message, strlen(message), MSG_NOSIGNAL);
    const char* nameHead = "<html><head><title>Daniel (Daniel Son's) Realm Stats</title></head>";
-   const char * nameBody = "<body><h2>Daniel Fruland's (Daniel Son's) Realm Stats</h2></body></html>\n";
+   const char * nameBody = "<body><h2>Daniel Fruland's (Daniel Son's) Realm Stats</h2><br>\n";
+   
+   //</body></html>
+   char * numReqs = (char*)malloc(100);
+   
+   sprintf(numReqs, "<h2>The current number of requests is: %d requests</h2></body></html>", numRequests);
 
    send(socket, nameHead, strlen(nameBody), MSG_NOSIGNAL);
    send(socket, nameBody, strlen(nameBody), MSG_NOSIGNAL);
+   send(socket, numReqs, strlen(numReqs), MSG_NOSIGNAL);
 
 
 }
