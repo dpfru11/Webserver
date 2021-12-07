@@ -582,7 +582,7 @@ void processCGI(int socket, char * realpath, char * docpath, char * args) {
       } else {
          execl(realpath, NULL,0,(char*)0);
       }
-      return;
+      exit(1);
    } else {
       waitpid(pid, NULL, 0);
    }
