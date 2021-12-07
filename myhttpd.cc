@@ -570,7 +570,7 @@ void processCGI(int socket, char * realpath, char * docpath, char * args) {
       exit(1);
    }
    if (pid == 0) {
-      if (args) {
+      if (args != NULL) {
          setenv("REQUEST_METHOD", "GET", 1);
          setenv("QUERY_STRING", args, 1);
       }
