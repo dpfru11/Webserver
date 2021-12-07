@@ -21,6 +21,7 @@ void poolSlave(int socket);
 void processLoad(int socket, char * realpath);
 void processRequest(int socket);
 void processCGI(int socket, char * realpath, char * docpath, char * args);
+void displayLog(int socket,char * realpath);
 void expandFilePath(char * fpath, char * cwd, int socket);
 void sendErr(int errno, int socket, const char * conttype);
 void follow200(int socket, const char * conttype, int fd);
@@ -323,6 +324,10 @@ void processRequest(int socket) {
    //file expansion
    char * newPath = (char *) malloc((maxHead)*sizeof(char));
    realpath(filepath, newPath);
+
+   if (strstr(realpath, "/stats") != NULL) {
+      displayLog(socket, realpath);
+   }
    printf("newPath: %s", newPath);
    printf("oh? youre approaching me?\n");
    DIR * dirp = opendir(newPath);
@@ -518,6 +523,23 @@ void processDir(int socket, DIR * dirp, char * fpath, char * docpath) {
    return;
 }
 
+//Send stats and logs to user
+displayLog(socket, realpath) {
+   const char * message = "HTTP/1.1 200 Document follows\r\nServer: CS 252 lab5\r\nContent-Type: text/html\r\n\r\n";
+   send(socket, message, strlen(message), MSG_NOSIGNAL);
+   const char* nameHead = "<title><head>Daniel (Daniel Son's) Realm Stats</tile></head>";
+   const char * nameBody = "<h2>Daniel Fruland's (Daniel Son's) Realm Stats</h2>\n";
+
+   send(socket, nameHead, strlen(nameBody), MSG_NOSIGNAL);
+   send(socket, nameBody, strlen(nameBody), MSG_NOSIGNAL);
+
+   
+   
+   sprintf("<html>\n <head>\n  <title>Statistics of MyAwesomeServer";) 
+	const char *message2b = "</title>\n </head>\n <body>\n<h1>Statistics of MyAwesomeServer</h1>\n";
+
+}
+
 //send found file/directory response
 void follow200(int socket, const char * conttype, int fd) {
    /*
@@ -598,7 +620,8 @@ void processCGI(int socket, char * realpath, char * docpath, char * args) {
 }
 
 void processLoad(int socket, char * realpath) {
-   //dlopen(realpath, )
+   dlopen(realpath, RTLD_LAZY);
+
 }
 
 void processRequestThread(int socket) {
