@@ -312,8 +312,8 @@ void processRequest(int socket) {
       }
       docpath[startArgs] = '\0';
       char * arg;
-      int index = 0;
-      int numArgs = 0l
+      int index1 = 0;
+      int numArgs = 0;
       printf("args: %s\n", args);
       for(int i = 0; i < strlen(docpath); i++) {
          if (args[i] == '&') {
