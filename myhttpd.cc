@@ -20,7 +20,7 @@ void processDir(int socket, DIR * dir, char * fpath, char * docpath);
 void poolSlave(int socket);
 void processLoad(int socket, char * realpath);
 void processRequest(int socket);
-void processCGI(int socket, char * realpath, char * docpath, char ** args, char * argstring);
+void processCGI(int socket, char * realpath, char * docpath, char * args);
 void expandFilePath(char * fpath, char * cwd, int socket);
 void sendErr(int errno, int socket, const char * conttype);
 void follow200(int socket, const char * conttype, int fd);
@@ -291,8 +291,7 @@ void processRequest(int socket) {
    
    if (isCGI == 1) {
       printf("hereyes\n");
-      char ** argsplit = (char**) malloc(1000);
-      char * args = (char *) malloc(1000);
+      char * args;
       int conArgs = 0;
       int index = 0;
       int startArgs = 0;
@@ -311,24 +310,7 @@ void processRequest(int socket) {
          }
       }
       docpath[startArgs] = '\0';
-      char * arg = (char *) malloc(100);
-      int index1 = 0;
-      int numArgs = 0;
-      printf("args: %s\n", args);
-      for(int i = 0; i < strlen(docpath); i++) {
-         if (args[i] == '&') {
-            arg[index] = '\0';
-            index = 0;
-            argsplit[numArgs] = arg;
-            numArgs++;
-            continue;
-         } else {
-            arg[index] = args[i];
-            index++;
-         }
-      }
-
-      processCGI(socket, filepath, docpath, argsplit, args);
+      processCGI(socket, filepath, docpath, args);
       return;
 
    }
@@ -568,7 +550,7 @@ const char * contentType(char * str) {
 }
 
 //Process requests for CGI bins
-void processCGI(int socket, char * realpath, char * docpath, char ** args, char * argstring) {
+void processCGI(int socket, char * realpath, char * docpath, char * args) {
    const char * message = "HTTP/1.1 200 Document follows\r\nServer: CS 252 lab5\r\n";
    send(socket, message, strlen(message), MSG_NOSIGNAL);
 
@@ -585,13 +567,13 @@ void processCGI(int socket, char * realpath, char * docpath, char ** args, char 
    if (pid == 0) {
       if (args) {
          setenv("REQUEST_METHOD", "GET", 1);
-         setenv("QUERY_STRING", argstring, 1);
+         setenv("QUERY_STRING", args, 1);
       }
 
       dup2(socket, 1);
       close(socket);
 
-      execv(realpath, args);
+      execl(realpath, args, 0, 0);
    } else {
       waitpid(pid, NULL, 0);
    }
