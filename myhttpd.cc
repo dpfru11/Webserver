@@ -311,7 +311,7 @@ void processRequest(int socket) {
          }
       }
       docpath[startArgs] = '\0';
-      char * arg = (void *) malloc(100);
+      char * arg = (char *) malloc(100);
       int index1 = 0;
       int numArgs = 0;
       printf("args: %s\n", args);
