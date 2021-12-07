@@ -620,7 +620,7 @@ void processCGI(int socket, char * realpath, char * docpath, char * args) {
 }
 
 void processLoad(int socket, char * realpath) {
-   dlopen(realpath, RTLD_LAZY);
+   //dlopen(realpath, RTLD_NOW);
 
 }
 
