@@ -328,6 +328,7 @@ void processRequest(int socket) {
    if (strstr(newPath, "/stats") != NULL) {
       printf("display\n");
       displayLog(socket, newPath);
+      return;
    }
    printf("newPath: %s", newPath);
    printf("oh? youre approaching me?\n");
