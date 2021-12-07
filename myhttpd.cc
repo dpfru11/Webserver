@@ -17,9 +17,6 @@
 #include <pthread.h>
 #include <algorithm>
 #include <chrono>
-#include <iostream>
-#include <vector>
-#include <ctime>
 
 void processRequestThread(int socket);
 void processDir(int socket, DIR * dir, char * fpath, char * docpath);
@@ -35,8 +32,6 @@ const char * pass = "ZGFuaWVsc29uOmZlbmNl";
 
 const char * contentType(char * str);
 const char * realm = "CS252-DANREALM";
-clock_t timer1 = 0.0;
-
 int QueueLength = 5;
 int numRequests = 0;
 pthread_mutex_t mutex;
@@ -48,7 +43,7 @@ extern "C" void zombiehandle(int sig) {
 int main(int argc, char** argv)
 {
    //Let's hunt some zombies >:)
-   timer1 = clock();
+   auto start = high_resolution_clock::now();
 
    struct sigaction saZom;
    saZom.sa_handler = zombiehandle;
@@ -250,7 +245,7 @@ void processRequest(int socket) {
    }
 
    if (authorized == false) {
-      sendErr((int)401, socket, NULL);
+      sendErr(401, socket, NULL);
       return;
    }
 
@@ -376,7 +371,7 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    printf("cwd: %s", cwd);
    if (strlen(fpath) < (strlen(cwd) + strlen("/http-root-dir"))) {
       printf("uh\n");
-      sendErr((int)405, socket, NULL);
+      sendErr(405, socket, NULL);
       return;
    }
    printf("yeah\n");
@@ -547,11 +542,8 @@ void displayLog(int socket,char * realpath) {
    //</body></html>
    char * numReqs = (char*)malloc(100);
    char * timeOpen = (char *) malloc(200);
-   float dur = (clock() - timer1) / CLOCKS_PER_SEC;
-   
    sprintf(numReqs, "<h2>The current number of requests is: %d requests</h2></body></html>", numRequests);
-   sprintf(timeOpen, "<h2>The current number of requests is: %d requests</h2></body></html>", numRequests);
-
+   //sprintf(time, "<h2>The current number of requests is: %d requests</h2></body></html>", numRequests);
 
    send(socket, nameHead, strlen(nameBody), MSG_NOSIGNAL);
    send(socket, nameBody, strlen(nameBody), MSG_NOSIGNAL);
