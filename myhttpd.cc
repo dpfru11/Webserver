@@ -559,6 +559,14 @@ void processCGI(int socket, char * realpath, char * docpath, char * args) {
    const char * message = "HTTP/1.1 200 Document follows\r\nServer: CS 252 lab5\r\n";
    send(socket, message, strlen(message), MSG_NOSIGNAL);
    printf("deezargs: %s\ndocp: %s\n", args, realpath);
+   char * newPath = malloc(500);
+   for(int i = 0; i < strlen(realpath); i++) {
+      if (realpath[i] == '?') {
+         newPath[i] = '\0';
+         break;
+      }
+      newPath[i] = realpath[i];
+   }
    if (docpath[strlen(docpath) - 3] == '.' && docpath[strlen(docpath) - 2] == 's' 
                                                    && docpath[strlen(docpath) - 1] == 'o') {
       processLoad(socket, realpath);
@@ -578,9 +586,9 @@ void processCGI(int socket, char * realpath, char * docpath, char * args) {
       dup2(socket, 1);
       close(socket);
       if (args != NULL) {
-         execl(realpath, args,0,(char*)0);
+         execl(newPath, args,0,(char*)0);
       } else {
-         execl(realpath, NULL,0,(char*)0);
+         execl(newPath, NULL,0,(char*)0);
       }
       exit(1);
    } else {
