@@ -291,7 +291,7 @@ void processRequest(int socket) {
    
    if (isCGI == 1) {
       printf("hereyes\n");
-      char * args;
+      char * args = (char*)malloc(500);
       int conArgs = 0;
       int index = 0;
       int startArgs = 0;
@@ -310,6 +310,7 @@ void processRequest(int socket) {
          }
       }
       docpath[startArgs] = '\0';
+      const char * constargs = args;
       processCGI(socket, filepath, docpath, args);
       return;
 
