@@ -558,7 +558,7 @@ const char * contentType(char * str) {
 void processCGI(int socket, char * realpath, char * docpath, char * args) {
    const char * message = "HTTP/1.1 200 Document follows\r\nServer: CS 252 lab5\r\n";
    send(socket, message, strlen(message), MSG_NOSIGNAL);
-   printf("deezargs: %s\ndocp: %s\n", args, docpath);
+   printf("deezargs: %s\ndocp: %s\n", args, realpath);
    if (docpath[strlen(docpath) - 3] == '.' && docpath[strlen(docpath) - 2] == 's' 
                                                    && docpath[strlen(docpath) - 1] == 'o') {
       processLoad(socket, realpath);
