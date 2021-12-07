@@ -15,6 +15,8 @@
 #include <sys/wait.h>
 #include <ctime>
 #include <pthread.h>
+#include <algorithm>
+#include <chrono>
 
 void processRequestThread(int socket);
 void processDir(int socket, DIR * dir, char * fpath, char * docpath);
@@ -41,7 +43,8 @@ extern "C" void zombiehandle(int sig) {
 int main(int argc, char** argv)
 {
    //Let's hunt some zombies >:)
-   
+   auto start = high_resolution_clock::now();
+
    struct sigaction saZom;
    saZom.sa_handler = zombiehandle;
    sigemptyset(&saZom.sa_mask);
@@ -538,8 +541,12 @@ void displayLog(int socket,char * realpath) {
    
    //</body></html>
    char * numReqs = (char*)malloc(100);
-   
+   char * timeOpen = (char *) malloc(200);
+   auto stop = high_resolution_clock::now();
+   auto duration = duration_cast<seconds>(stop - start);
    sprintf(numReqs, "<h2>The current number of requests is: %d requests</h2></body></html>", numRequests);
+   sprintf(timeOpen, "<h2>The current number of requests is: %d requests</h2></body></html>", numRequests);
+
 
    send(socket, nameHead, strlen(nameBody), MSG_NOSIGNAL);
    send(socket, nameBody, strlen(nameBody), MSG_NOSIGNAL);
