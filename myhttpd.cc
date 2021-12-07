@@ -578,9 +578,9 @@ void processCGI(int socket, char * realpath, char * docpath, char * args) {
       dup2(socket, 1);
       close(socket);
       if (args != NULL) {
-         execl(real_path, args,0,(char*)0);
+         execl(realpath, args,0,(char*)0);
       } else {
-         execl(real_path, NULL,0,(char*)0);
+         execl(realpath, NULL,0,(char*)0);
       }
       return;
    } else {
