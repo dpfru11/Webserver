@@ -326,6 +326,7 @@ void processRequest(int socket) {
    realpath(filepath, newPath);
 
    if (strstr(newPath, "/stats") != NULL) {
+      printf("display\n");
       displayLog(socket, newPath);
    }
    printf("newPath: %s", newPath);
