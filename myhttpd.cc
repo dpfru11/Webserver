@@ -326,7 +326,7 @@ void processRequest(int socket) {
    realpath(filepath, newPath);
 
    if (strstr(realpath, "/stats") != NULL) {
-      displayLog(socket, realpath);
+      displayLog(socket, newPath);
    }
    printf("newPath: %s", newPath);
    printf("oh? youre approaching me?\n");
@@ -533,7 +533,7 @@ void displayLog(int socket,int realpath) {
    send(socket, nameHead, strlen(nameBody), MSG_NOSIGNAL);
    send(socket, nameBody, strlen(nameBody), MSG_NOSIGNAL);
 
-   
+
 }
 
 //send found file/directory response
