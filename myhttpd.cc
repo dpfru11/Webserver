@@ -325,7 +325,7 @@ void processRequest(int socket) {
    char * newPath = (char *) malloc((maxHead)*sizeof(char));
    realpath(filepath, newPath);
 
-   if (strstr(realpath, "/stats") != NULL) {
+   if (strstr(newPath, "/stats") != NULL) {
       displayLog(socket, newPath);
    }
    printf("newPath: %s", newPath);
