@@ -578,7 +578,7 @@ void processCGI(int socket, char * realpath, char * docpath, char * args) {
 }
 
 void processLoad(int socket, char * realpath) {
-   dlopen(realpath, )
+   //dlopen(realpath, )
 }
 
 void processRequestThread(int socket) {
