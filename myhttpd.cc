@@ -304,12 +304,17 @@ void processRequest(int socket) {
          if (conArgs == 1) {
             args[index] = docpath[i];
             index++;
+            if (index == strlen(docpath)) {
+               args[index] = '\0';
+               break;
+            }
          }
          if (conArgs == 0) {
             startArgs++;
          }
       }
       docpath[startArgs] = '\0';
+      
       processCGI(socket, filepath, docpath, args);
       return;
 
