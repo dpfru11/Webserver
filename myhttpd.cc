@@ -32,6 +32,7 @@ const char * pass = "ZGFuaWVsc29uOmZlbmNl";
 
 const char * contentType(char * str);
 const char * realm = "CS252-DANREALM";
+clock_t timer1;
 int QueueLength = 5;
 int numRequests = 0;
 pthread_mutex_t mutex;
@@ -43,8 +44,8 @@ extern "C" void zombiehandle(int sig) {
 int main(int argc, char** argv)
 {
    //Let's hunt some zombies >:)
-   auto start = high_resolution_clock::now();
-
+   timer1 = clock();
+   timer1 = clock() - timer1;
    struct sigaction saZom;
    saZom.sa_handler = zombiehandle;
    sigemptyset(&saZom.sa_mask);
