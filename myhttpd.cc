@@ -18,8 +18,9 @@
 void processRequestThread(int socket);
 void processDir(int socket, DIR * dir, char * fpath, char * docpath);
 void poolSlave(int socket);
+void processLoad(int socket, char * realpath);
 void processRequest(int socket);
-void processCGI(int socket, char * realpath, char * args);
+void processCGI(int socket, char * realpath, char * docpath, char * args);
 void expandFilePath(char * fpath, char * cwd, int socket);
 void sendErr(int errno, int socket, const char * conttype);
 void follow200(int socket, const char * conttype, int fd);
@@ -304,7 +305,7 @@ void processRequest(int socket) {
             index++;
          }
       }
-      processCGI(socket, filepath, args);
+      processCGI(socket, filepath, docpath, args);
       return;
 
    }
@@ -425,7 +426,6 @@ void processDir(int socket, DIR * dirp, char * fpath, char * docpath) {
    }
    char * fpathDup = strdup(docpath); //Parent directory
    fpathDup[lastSlashInd + 1] = '\0';
-   printf("parent: %s\n", fpathDup);
    const char * message = "HTTP/1.1 200 Document follows\r\nServer: CS 252 lab5\r\nContent-Type: text/html\r\n\r\n";
    send(socket, message ,strlen(message),MSG_NOSIGNAL);
 
@@ -438,12 +438,15 @@ void processDir(int socket, DIR * dirp, char * fpath, char * docpath) {
    printf("ope");
    sprintf(headIndex, "<html><head><title>%s</title></head><body><h1>%s</h1>", indexPath, indexPath);
    send(socket, headIndex, strlen(headIndex), MSG_NOSIGNAL);
+
    const char * body1 = "<table><tr><th valign=\"top\"><img src=\"/icons/menu.gif\" alt=\"[ICO]\"></th><th>"
                               "<a href=\"?C=N;O=D\">Name</a></th><th><a href=\"?C=M;O=A\">Last modified</a></th><th><a href=\"?C=S;O=A\">Size</a></th><th><a href=\"?C=D;O=A\">Description</a></th></tr><tr><th colspan=\"5\"><hr></th></tr>";
    send(socket, body1, strlen(body1), MSG_NOSIGNAL);
+
    char * bodyp =(char *) malloc(500);
    sprintf(bodyp, "<tr><td valign=\"top\"><img src=\"/icons/index.gif\" alt=\"[PARENTDIR]\"></td><td><a href=\"%s\">Parent Directory</a></td><td>&nbsp;</td><td align=\"right\">  - </td><td>&nbsp;</td></tr>", fpathDup);
    send(socket, bodyp, strlen(bodyp), MSG_NOSIGNAL);
+
    int nentries = 0;
    struct dirent * d;
    //const char * tableEnt = "";
@@ -542,10 +545,15 @@ const char * contentType(char * str) {
 }
 
 //Process requests for CGI bins
-void processCGI(int socket, char * realpath, char * args) {
+void processCGI(int socket, char * realpath, char * docpath, char * args) {
    const char * message = "HTTP/1.1 200 Document follows\r\nServer: CS 252 lab5\r\n";
    send(socket, message, strlen(message), MSG_NOSIGNAL);
 
+   if (docpath[strlen(docpath) - 3] == '.' && docpath[strlen(docpath) - 2] == 's' 
+                                                   && docpath[strlen(docpath) - 1] == 'o') {
+      processLoad(socket, realpath);
+      return;
+   }
    int pid = fork();
    if (pid < 0) {
       perror("fork");
@@ -566,6 +574,11 @@ void processCGI(int socket, char * realpath, char * args) {
    }
 
    
+   
+}
+
+void processLoad(int socket, char * realpath) {
+   dlopen(realpath, )
 }
 
 void processRequestThread(int socket) {
