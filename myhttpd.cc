@@ -250,7 +250,7 @@ void processRequest(int socket) {
    }
 
    if (authorized == false) {
-      sendErr(401, socket, NULL);
+      sendErr((int)401, socket, NULL);
       return;
    }
 
@@ -376,7 +376,7 @@ void expandFilePath(char * fpath, char * cwd, int socket) {
    printf("cwd: %s", cwd);
    if (strlen(fpath) < (strlen(cwd) + strlen("/http-root-dir"))) {
       printf("uh\n");
-      sendErr(405, socket, NULL);
+      sendErr((int)405, socket, NULL);
       return;
    }
    printf("yeah\n");
