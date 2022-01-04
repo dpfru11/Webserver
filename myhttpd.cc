@@ -113,7 +113,7 @@ int main(int argc, char** argv)
       exit(1);
    }
 
-   //if a concurrency is requested, use preferred method for user processing
+   //if a concurrency type is requested, use preferred method for user processing
    if (argc == 3) {
       if (method == 'f') {
          while (1)
@@ -172,7 +172,7 @@ int main(int argc, char** argv)
 
    //simple iterative server processing
    if (argc != 3) {
-         while(1) {
+      while(1) {
          struct sockaddr_in clientIPAddress;
          int alen = sizeof( clientIPAddress );
          int slaveSocket = accept( masterSocket, (struct sockaddr *)&clientIPAddress,
@@ -274,8 +274,7 @@ void processRequest(int socket) {
    char *cwd = (char *)malloc(maxHead * 5);
 	cwd = getcwd(cwd, 256);
 	char *filepath = (char *)malloc(maxHead * 5);
-	//strcpy(filepath, cwd);
-   printf("cwd early: %s\n", cwd);
+	
    char * cwdCopy = strdup(cwd);
    int isCGI = 0;
  
@@ -298,7 +297,6 @@ void processRequest(int socket) {
    }
    
    if (isCGI == 1) {
-      printf("hereyes\n");
       char * args = (char*)malloc(500);
       int conArgs = 0;
       int index = 0;
@@ -333,18 +331,13 @@ void processRequest(int socket) {
    realpath(filepath, newPath);
 
    if (strstr(newPath, "/stats") != NULL) {
-      printf("display\n");
       displayLog(socket, newPath);
       return;
    }
-   printf("newPath: %s", newPath);
-   printf("oh? youre approaching me?\n");
+  
    DIR * dirp = opendir(newPath);
-   if (dirp == NULL) {
-      printf("empty\n");
-   }
+ 
    if (dirp != NULL) {
-      printf("in here?");
       processDir(socket, dirp, newPath, docpath);
       return;
    }
@@ -426,18 +419,6 @@ void sendErr(int errno, int socket, const char * conttype) {
 }
 
 void processDir(int socket, DIR * dirp, char * fpath, char * docpath) {
-   char C = '\0';
-   char O = '\0';
-   printf("MODIFIERS\n");
-   //Look for the modifiers in the path
-   /*const char * possibleChoices[] = {"?C=M;O=A", "?C=M;O=D", "?C=N;O=A", "?C=N;O=D", "?C=S;O=A", "?C=S;O=D", "?C=D;O=A", "?C=D;O=D"};
-   for (int i = 0; i < sizeof(possibleChoices); i++) {
-      printf("it");
-      if (strncmp(fpath, possibleChoices[i], strlen(fpath)) == 0) {
-         C = possibleChoices[i][3];
-         O = possibleChoices[i][7];
-      }
-   }*/
    
    //Get Parent Dir
    int count = 0;
@@ -473,7 +454,6 @@ void processDir(int socket, DIR * dirp, char * fpath, char * docpath) {
 
    int nentries = 0;
    struct dirent * d;
-   //const char * tableEnt = "";
    while ((d = readdir(dirp)) != NULL) {
 		
       char* code = (char*) malloc(2000);
@@ -540,7 +520,6 @@ void displayLog(int socket,char * realpath) {
    const char* nameHead = "<html><head><title>Daniel (Daniel Son's) Realm Stats</title></head>";
    const char * nameBody = "<body><h2>Daniel Fruland's (Daniel Son's) Realm Stats</h2><br>\n";
    
-   //</body></html>
    char * numReqs = (char*)malloc(100);
    char * timeOpen = (char *) malloc(200);
    timer1 = clock() - timer1;
@@ -569,9 +548,7 @@ void follow200(int socket, const char * conttype, int fd) {
    send(socket, message, strlen(message), MSG_NOSIGNAL);
    send(socket, conttype, strlen(conttype), MSG_NOSIGNAL);
    send(socket, "\r\n\r\n", 4, MSG_NOSIGNAL);
-  /* write(socket, message, strlen(message));
-   write(socket, conttype, strlen(conttype));
-   write(socket, "\r\n\r\n", 4);*/
+  
    int n;
    char c;
    while(n = read(fd, &c, 1) > 0) {
@@ -632,11 +609,6 @@ void processCGI(int socket, char * realpath, char * docpath, char * args) {
 
    
    
-}
-
-void processLoad(int socket, char * realpath) {
-   //dlopen(realpath, RTLD_NOW);
-
 }
 
 void processRequestThread(int socket) {
